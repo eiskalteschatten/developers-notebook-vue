@@ -15,8 +15,7 @@
     "docker:rebuild": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up --build\"",
     "devdb": "docker exec -it backend_postgres_1 psql cms -U cms -W",
     "test": "echo 'Tests should be run here'",
-    "test:unit": "NODE_CONFIG_DIR='./src/config' jest --forceExit --detectOpenHandles",
-    "lint": "./node_modules/.bin/eslint 'src/**/*.{js,vue}'"
+    "test:unit": "NODE_CONFIG_DIR='./src/config' jest --forceExit --detectOpenHandles"
   },
   "repository": {
     "type": "git",
