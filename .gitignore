@@ -34,4 +34,4 @@ node_modules
 
 server/src/config/local.js
 
-frontend/src/static/dist
+frontend/public/dist
