@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueI18n from 'vue-i18n';
+import { mapState } from 'vuex';
 
 import cookies from 'browser-cookies';
 
@@ -22,12 +23,22 @@ new Vue({
     store,
     router,
     i18n,
-    watch:{
+    computed: {
+        ...mapState('user', [
+            'currentJwt'
+        ])
+    },
+    watch: {
         '$route'(to) {
             const lang = to.params.lang;
             this.$i18n.locale = lang;
             document.title = this.buildDocumentTitle(routeTitles[lang][to.name]);
             cookies.set('preferedLanguage', lang);
+        }
+    },
+    created() {
+        if (!this.currentJWT && this.$route.name !== 'login') {
+            this.$router.push({ name: 'login' });
         }
     },
     mounted() {

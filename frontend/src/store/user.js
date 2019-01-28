@@ -1,18 +1,18 @@
 export default {
     state: {
-        currentJWT: ''
+        currentJwt: ''
     },
 
     getters: {
-        jwt: state => state.currentJWT,
-        jwtData: (state, getters) => state.currentJWT ? JSON.parse(atob(getters.jwt.split('.')[1])) : null,
+        jwt: state => state.currentJwt,
+        jwtData: (state, getters) => state.currentJwt ? JSON.parse(atob(getters.jwt.split('.')[1])) : null,
         jwtSubject: (state, getters) => getters.jwtData ? getters.jwtData.sub : null,
         jwtIssuer: (state, getters) => getters.jwtData ? getters.jwtData.iss : null
     },
 
     mutations: {
         setJWT(state, jwt) {
-            state.currentJWT = jwt;
+            state.currentJwt = jwt;
         }
     },
 
