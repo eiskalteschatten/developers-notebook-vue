@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "0.1.0",
-  "description": "",
+  "description": "A digital notebook for developers",
   "main": "./src/server.js",
   "private": true,
   "scripts": {
