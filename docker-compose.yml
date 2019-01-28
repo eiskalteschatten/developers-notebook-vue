@@ -8,7 +8,7 @@ services:
         volumes:
             - "./server/src:/app/src"
         ports:
-            - "3025:3025"
+            - "3021:3021"
             - "5858:5858"
         depends_on:
             - postgres
@@ -26,8 +26,8 @@ services:
         volumes:
             - "./frontend/src:/app/src"
         ports:
-            - "3025:3025"
-            - "5858:5858"
+            - "3020:8080"
+            - "5859:5858"
         depends_on:
             - server
         cap_drop:
