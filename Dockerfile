@@ -26,7 +26,8 @@ COPY ./server /app/server
 RUN adduser -h /home/devnotebook -D -s /bin/sh devnotebook && \
     chown -R devnotebook:devnotebook ./frontend/src && \
     chown -R devnotebook:devnotebook ./frontend/public && \
-    chown -R devnotebook:devnotebook ./server/src
+    chown -R devnotebook:devnotebook ./server/src && \
+    chown devnotebook:devnotebook ./server/node_modules
 
 USER devnotebook
 
