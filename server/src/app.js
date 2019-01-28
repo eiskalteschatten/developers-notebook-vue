@@ -59,13 +59,6 @@ module.exports = async () => {
     // Setup Passport authentication
     require('./lib/authentication/setupPassport')();
 
-    app.use(/^((?!login|dist|images|favicon).)*$/, (req, res, next) => {
-        if (req.isAuthenticated()) {
-            return next();
-        }
-        res.redirect('/auth/login');
-    });
-
 
     // Add the user's preferred language to the request
     app.use((req, res, next) => {

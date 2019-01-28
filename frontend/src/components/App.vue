@@ -4,8 +4,17 @@
 
 <script>
     import Vue from 'vue';
+    import { mapState } from 'vuex';
 
     export default Vue.extend({
+        computed: {
+            ...mapState('users')
+        },
+        created() {
+            if (!this.users.jwt && this.$router.name !== 'login') {
+                this.$router.push({ to: 'login' });
+            }
+        }
     });
 </script>
 
