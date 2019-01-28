@@ -22,7 +22,6 @@ const path = require('path');
 const config = require('config');
 const translations = config.get('translations');
 
-// const configureFrontend = require('./lib/configureFrontend');
 const {setupErrorHandling} = require('./lib/errorHandling');
 
 const setupCronjobs = require('./cronjobs');
@@ -94,7 +93,6 @@ module.exports = async () => {
 
 
     // Setup frontend
-    // const frontendPath = await configureFrontend();
     app.use(express.static(path.join(__dirname, '..', 'node_modules', 'developers-notebook-frontend', 'public')));
 
 
