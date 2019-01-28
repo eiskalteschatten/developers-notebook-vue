@@ -26,7 +26,7 @@
             ])
         },
         created() {
-            if (this.currentJWT) {
+            if (this.currentJwt) {
                 this.$router.push({ name: 'home' });
             }
         }

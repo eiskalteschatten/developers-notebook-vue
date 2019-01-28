@@ -37,7 +37,7 @@ new Vue({
         }
     },
     created() {
-        if (!this.currentJWT && this.$route.name !== 'login') {
+        if (!this.currentJwt && this.$route.name !== 'login') {
             this.$router.push({ name: 'login' });
         }
     },
