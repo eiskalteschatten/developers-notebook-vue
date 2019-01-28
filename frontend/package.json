@@ -1,0 +1,16 @@
+{
+    "name": "frontend",
+    "version": "0.1.0",
+    "description": "",
+    "main": "./src/server.js",
+    "private": true,
+    "scripts": {
+      "lint": "echo 'Should lint frontend'"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git@gitlab.com:eiskalteschatten/developers-notebook.git"
+    },
+    "author": "Alex Seifert"
+  }
+  
