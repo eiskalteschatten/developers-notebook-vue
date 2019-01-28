@@ -11,7 +11,7 @@ services:
         volumes:
             - "./server/src:/app/server/src"
             - "./frontend/src:/app/frontend/src"
-            - "./frontend/pbulic:/app/server/node_modules/developers-notebook-frontend/public"
+            - "./frontend/public:/app/server/node_modules/developers-notebook-frontend/public"
         ports:
             - "3021:3021"
             - "5858:5858"
