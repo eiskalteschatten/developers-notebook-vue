@@ -7,6 +7,8 @@ variables:
 
 stages:
   - lint
+  - test-electron
+  - test-frontend
   - test-server
   # - build
   # - package
@@ -22,6 +24,16 @@ lint:
   image: node:10-alpine
   stage: lint
   script: "npm ci && npm run lint"
+
+test-electron:
+  image: node:10-alpine
+  stage: test-electron
+  script: "cd ./electron && npm ci && npm run test"
+
+test-frontend:
+  image: node:10-alpine
+  stage: test-frontend
+  script: "cd ./frontend && npm ci && npm run test"
 
 test-server:
   image: node:10-alpine
