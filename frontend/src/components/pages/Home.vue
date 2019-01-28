@@ -1,6 +1,6 @@
 <template>
     <div>
-        Home tesfdsfdsfs
+        Home test
     </div>
 </template>
 

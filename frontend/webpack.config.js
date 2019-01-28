@@ -71,15 +71,6 @@ const commonConfig = {
             'vue$': 'vue/dist/vue.esm.js'
         }
     },
-    devServer: {
-        contentBase: path.resolve(__dirname, 'src', 'static'),
-        compress: true,
-        port: 3020,
-        historyApiFallback: true,
-        hot: true,
-        overlay: true,
-        inline: true
-    },
     performance: {
         hints: false
     },
