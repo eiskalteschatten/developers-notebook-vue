@@ -1,60 +1,60 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
-  "description": "A digital notebook for developers",
-  "main": "./src/app.js",
-  "private": true,
-  "scripts": {
-    "start": "node ./src/server",
-    "start:dev": "NODE_ENV=development ./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 -e html,njk,js,json,vue,scss --ignore 'static/**/*.js'",
-    "start:staging": "NODE_ENV=staging npm start",
-    "start:prod": "NODE_ENV=production npm start",
-    "build": "webpack",
-    "build:watch": "webpack --watch",
-    "docker": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up\"",
-    "docker:rebuild": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up --build\"",
-    "devdb": "docker exec -it backend_postgres_1 psql cms -U cms -W",
-    "test": "echo 'Tests should be run here'",
-    "test:unit": "NODE_CONFIG_DIR='./src/config' jest --forceExit --detectOpenHandles"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@gitlab.com:alexseifertwebsites/developers-notebook.git"
-  },
-  "author": "Alex Seifert",
-  "dependencies": {
-    "@kazupon/vue-i18n-loader": "^0.3.0",
-    "bootstrap": "^4.2.1",
-    "compile-sass": "0.0.5",
-    "css-loader": "^1.0.1",
-    "file-loader": "^2.0.0",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
-    "vue": "^2.5.22",
-    "vue-i18n": "^8.7.0",
-    "vue-loader": "^15.6.1",
-    "vue-quill-editor": "^3.0.6",
-    "vue-router": "^3.0.2",
-    "vue-swatches": "^1.0.2",
-    "vue-template-compiler": "^2.5.22",
-    "vue2-datepicker": "^2.8.1",
-    "vuex": "^3.1.0",
-    "webpack": "^4.29.0"
-  },
-  "devDependencies": {
-    "debug": "^4.1.1",
-    "jest": "^23.6.0",
-    "nodemon": "^1.18.6",
-    "supertest": "^3.4.2",
-    "webpack-cli": "^3.2.1"
-  },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/src/config"
-    ],
-    "collectCoverage": true,
-    "verbose": false,
-    "testEnvironment": "node"
-  }
+    "name": "frontend",
+    "version": "0.1.0",
+    "description": "A digital notebook for developers",
+    "main": "./src/app.js",
+    "private": true,
+    "scripts": {
+        "start": "node ./src/server",
+        "start:dev": "NODE_ENV=development ./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 -e html,njk,js,json,vue,scss --ignore 'static/**/*.js'",
+        "start:staging": "NODE_ENV=staging npm start",
+        "start:prod": "NODE_ENV=production npm start",
+        "build": "webpack",
+        "build:watch": "webpack --watch",
+        "docker": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up\"",
+        "docker:rebuild": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up --build\"",
+        "devdb": "docker exec -it backend_postgres_1 psql cms -U cms -W",
+        "test": "echo 'Tests should be run here'",
+        "test:unit": "NODE_CONFIG_DIR='./src/config' jest --forceExit --detectOpenHandles"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@gitlab.com:alexseifertwebsites/developers-notebook.git"
+    },
+    "author": "Alex Seifert",
+    "dependencies": {
+        "@kazupon/vue-i18n-loader": "^0.3.0",
+        "bootstrap": "^4.2.1",
+        "compile-sass": "0.0.5",
+        "css-loader": "^1.0.1",
+        "file-loader": "^2.0.0",
+        "node-sass": "^4.11.0",
+        "sass-loader": "^7.1.0",
+        "vue": "^2.5.22",
+        "vue-i18n": "^8.7.0",
+        "vue-loader": "^15.6.1",
+        "vue-quill-editor": "^3.0.6",
+        "vue-router": "^3.0.2",
+        "vue-swatches": "^1.0.2",
+        "vue-template-compiler": "^2.5.22",
+        "vue2-datepicker": "^2.8.1",
+        "vuex": "^3.1.0",
+        "webpack": "^4.29.0"
+    },
+    "devDependencies": {
+        "debug": "^4.1.1",
+        "jest": "^23.6.0",
+        "nodemon": "^1.18.6",
+        "supertest": "^3.4.2",
+        "webpack-cli": "^3.2.1"
+    },
+    "jest": {
+        "testPathIgnorePatterns": [
+        "/node_modules/",
+        "/src/config"
+        ],
+        "collectCoverage": true,
+        "verbose": false,
+        "testEnvironment": "node"
+    }
 }
