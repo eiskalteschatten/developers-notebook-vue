@@ -26,7 +26,7 @@ services:
         volumes:
             - "./frontend/src:/app/src"
         ports:
-            - "3020:8080"
+            - "3020:3020"
             - "5859:5858"
         depends_on:
             - server
