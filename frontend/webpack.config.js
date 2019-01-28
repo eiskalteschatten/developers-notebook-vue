@@ -60,7 +60,7 @@ const commonConfig = {
                 name: '[path][name].[ext]',
                 publicPath: '/',
                 useRelativePath: true,
-                context: path.resolve(__dirname, 'src', 'static'),
+                context: path.resolve(__dirname, 'public'),
                 emitFile: false
             }
         }]
@@ -89,7 +89,7 @@ module.exports = [
         },
         output: {
             filename: 'index.js',
-            path: path.resolve(__dirname, 'src', 'static', 'dist')
+            path: path.resolve(__dirname, 'public', 'dist')
         }
     })
 ];

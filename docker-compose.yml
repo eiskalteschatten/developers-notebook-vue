@@ -3,10 +3,15 @@ services:
 
     server:
         build:
-            context: ./server/.
-        command: npm run start:dev
+            context: .
+        command: >
+            ./node_modules/.bin/concurrently
+                "cd ./frontend && npm start"
+                "cd ./server && npm run start:dev"
         volumes:
-            - "./server/src:/app/src"
+            - "./server/src:/app/server/src"
+            - "./frontend/src:/app/frontend/src"
+            - "./frontend/pbulic:/app/server/node_modules/developers-notebook-frontend/public"
         ports:
             - "3021:3021"
             - "5858:5858"
@@ -18,22 +23,6 @@ services:
             - CHOWN
         # environment:
         #   - SETUP_DEFAULT_USER=true
-
-    frontend:
-        build:
-            context: ./frontend/.
-        command: npm start
-        volumes:
-            - "./frontend/src:/app/src"
-        ports:
-            - "3020:3020"
-            - "5859:5858"
-        depends_on:
-            - server
-        cap_drop:
-            - ALL
-        cap_add:
-            - CHOWN
 
     postgres:
         image: postgres:11-alpine
