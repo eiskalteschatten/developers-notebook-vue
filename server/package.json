@@ -12,7 +12,8 @@
     "docker": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up\"",
     "docker:rebuild": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up --build\"",
     "devdb": "docker exec -it backend_postgres_1 psql cms -U cms -W",
-    "test": "NODE_CONFIG_DIR='./src/config' jest --forceExit --detectOpenHandles"
+    "test": "echo 'Tests should be run here'",
+    "test:unit": "NODE_CONFIG_DIR='./src/config' jest --forceExit --detectOpenHandles"
   },
   "repository": {
     "type": "git",
