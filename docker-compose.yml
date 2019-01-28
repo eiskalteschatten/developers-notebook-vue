@@ -1,38 +1,54 @@
 version: '3.7'
 services:
 
-  server:
-    build:
-      context: ./server/.
-    command: npm run start:dev
-    volumes:
-      - "./server/src:/app/src"
-    ports:
-      - "3025:3025"
-      - "5858:5858"
-    depends_on:
-      - postgres
-    cap_drop:
-      - ALL
-    cap_add:
-      - CHOWN
-    # environment:
-    #   - SETUP_DEFAULT_USER=true
+    server:
+        build:
+            context: ./server/.
+        command: npm run start:dev
+        volumes:
+            - "./server/src:/app/src"
+        ports:
+            - "3025:3025"
+            - "5858:5858"
+        depends_on:
+            - postgres
+        cap_drop:
+            - ALL
+        cap_add:
+            - CHOWN
+        # environment:
+        #   - SETUP_DEFAULT_USER=true
 
-  postgres:
-    image: postgres:11-alpine
-    volumes:
-      - "./.data/postgres:/var/lib/postgresql/data"
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_DB: cms
-      POSTGRES_USER: cms
-      POSTGRES_PASSWORD: cms
-    cap_drop:
-      - ALL
-    cap_add:
-      - CHOWN
-      - FOWNER
-      - SETGID
-      - SETUID
+    frontend:
+        build:
+            context: ./frontend/.
+        command: npm start
+        volumes:
+            - "./frontend/src:/app/src"
+        ports:
+            - "3025:3025"
+            - "5858:5858"
+        depends_on:
+            - server
+        cap_drop:
+            - ALL
+        cap_add:
+            - CHOWN
+
+    postgres:
+        image: postgres:11-alpine
+        volumes:
+            - "./.data/postgres:/var/lib/postgresql/data"
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_DB: devnotebook
+            POSTGRES_USER: devnotebook
+            POSTGRES_PASSWORD: devnotebook
+        cap_drop:
+            - ALL
+        cap_add:
+            - CHOWN
+            - FOWNER
+            - SETGID
+            - SETUID

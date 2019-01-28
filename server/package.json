@@ -6,12 +6,9 @@
     "private": true,
     "scripts": {
         "start": "node ./src/server",
-        "start:dev": "NODE_ENV=development ./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 -e html,njk,js,json,vue,scss --ignore 'static/**/*.js'",
+        "start:dev": "NODE_ENV=development ./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 -e html,js,json",
         "start:staging": "NODE_ENV=staging npm start",
         "start:prod": "NODE_ENV=production npm start",
-        "docker": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up\"",
-        "docker:rebuild": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up --build\"",
-        "devdb": "docker exec -it backend_postgres_1 psql cms -U cms -W",
         "test": "echo 'Tests should be run here'",
         "test:unit": "NODE_CONFIG_DIR='./src/config' jest --forceExit --detectOpenHandles"
     },

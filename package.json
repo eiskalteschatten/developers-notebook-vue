@@ -7,7 +7,10 @@
     "scripts": {
         "test": "npm run lint",
         "lint": "./node_modules/.bin/eslint 'electron/src/**/*.{js,vue}' 'frontend/src/**/*.{js,vue}' 'server/src/**/*.js'",
-        "install-all": "cd electron && npm ci && cd ../frontend && npm ci && cd ../server npm ci"
+        "install-all": "cd electron && npm ci && cd ../frontend && npm ci && cd ../server npm ci",
+        "docker": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up\"",
+        "docker:rebuild": "bash -c \"trap 'docker-compose down' EXIT; docker-compose up --build\"",
+        "devdb": "docker exec -it developers-notebook_postgres_1 psql devnotebook -U devnotebook -W"
     },
     "repository": {
         "type": "git",
