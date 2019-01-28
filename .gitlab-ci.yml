@@ -1,0 +1,41 @@
+image: docker:latest
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay
+
+stages:
+  - lint
+  - test-server
+  # - build
+  # - package
+
+cache:
+  paths:
+    - node_modules
+    - electron/node_modules
+    - frontend/node_modules
+    - server/node_modules
+
+lint:
+  image: node:10-alpine
+  stage: lint
+  script: "npm install && npm run lint"
+
+test-server:
+  image: node:10-alpine
+  stage: test-server
+  script: "cd ./server && npm install && npm run test"
+
+# node-build:
+#   image: node:10-alpine
+#   stage: build
+#   script: "npm run install-all --only=production"
+
+# docker-build:
+#   stage: package
+#   script:
+#     - docker build -t registry.gitlab.com/alexseifertwebsites/developers-notebook .
+#     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+#     - docker push registry.gitlab.com/alexseifertwebsites/developers-notebook
