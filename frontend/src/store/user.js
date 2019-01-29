@@ -18,7 +18,7 @@ export default {
     },
 
     actions: {
-        async fetchJwt ({ commit }, { username, password }) {
+        async fetchJwt({ commit }, { username, password }) {
             const res = await fetch(`http://localhost/vuejs-jwt-example/auth?u=${username}&p=${password}`);
             commit('setJwt', await res.text());
         }

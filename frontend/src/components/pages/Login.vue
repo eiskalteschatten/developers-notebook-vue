@@ -4,13 +4,17 @@
         "login": "Login",
         "username": "Username",
         "password": "Password",
-        "loginVerb": "Log In"
+        "loginVerb": "Log In",
+        "required": "Required",
+        "chooseLanguage": "Choose Language"
     },
     "de": {
         "login": "Anmeldung",
         "username": "Benutzername",
         "password": "Passwort",
-        "loginVerb": "Anmelden"
+        "loginVerb": "Anmelden",
+        "required": "Erforderlich",
+        "chooseLanguage": "Sprache auswählen"
     }
 }
 </i18n>
@@ -19,10 +23,10 @@
     <div>
         <v-layout>
             <v-flex xs12 sm6 offset-sm3>
-                <v-card>
+                <v-card class="mt-4">
                     <v-card-title primary-title>
                         <div>
-                            <div class="headline">{{ $t('login') }}</div>
+                            <div class="headline">Developer's Notebook &mdash; {{ $t('login') }}</div>
                         </div>
                     </v-card-title>
                     <v-form ref="form" lazy-validation>
@@ -30,19 +34,37 @@
                             <v-text-field
                                 :label="$t('username')"
                                 data-vv-name="username"
-                                :rules="[required]"
+                                :rules="rules"
                                 v-model="username"
                             />
                             <v-text-field
                                 :label="$t('password')"
                                 type="password"
                                 data-vv-name="password"
-                                :rules="[required]"
+                                :rules="rules"
                                 v-model="password"
                             />
                         </v-card-text>
-                        <v-card-actions>
-                            <v-btn @click="submit">{{ $t('loginVerb') }}</v-btn>
+                        <v-card-actions class="pl-3 pr-3 pb-3">
+                            <v-flex xs6>
+                                <v-menu offset-y>
+                                    <v-btn slot="activator">
+                                        {{ $t('chooseLanguage') }}
+                                    </v-btn>
+                                    <v-list>
+                                        <v-list-tile
+                                            v-for="(language, index) in languages"
+                                            :key="index"
+                                            @click="switchLanguages(language.code)"
+                                        >
+                                            <v-list-tile-title>{{ language.title }}</v-list-tile-title>
+                                        </v-list-tile>
+                                    </v-list>
+                                </v-menu>
+                            </v-flex>
+                            <v-flex xs6 class="text-xs-right">
+                                <v-btn primary color="primary" @click="submit">{{ $t('loginVerb') }}</v-btn>
+                            </v-flex>
                         </v-card-actions>
                     </v-form>
                 </v-card>
@@ -53,18 +75,24 @@
 
 <script>
     import Vue from 'vue';
-    import { mapState } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
 
     export default Vue.extend({
         data() {
             return {
                 username: '',
-                password: ''
+                password: '',
+                rules: [
+                    value => !!value || this.$t('required')
+                ]
             };
         },
         computed: {
             ...mapState('user', [
                 'currentJwt'
+            ]),
+            ...mapState('settings', [
+                'languages'
             ])
         },
         created() {
@@ -73,11 +101,16 @@
             }
         },
         methods: {
+            ...mapActions('user', [
+                'fetchJwt'
+            ]),
             submit() {
-                console.log(this.username, this.password);
+                if (this.username && this.password) {
+                    this.fetchJwt(this.username, this.password);
+                }
             },
-            required(value) {
-                return value ? true : false;
+            switchLanguages(lang) {
+                this.$router.push({ params: { lang } });
             }
         }
     });
