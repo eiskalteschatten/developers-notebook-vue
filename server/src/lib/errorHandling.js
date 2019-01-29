@@ -1,10 +1,5 @@
 'use strict';
 
-module.exports = {
-    returnError,
-    setupErrorHandling
-};
-
 const translations = {
     en: {
         anErrorOccurred: 'An error occurred.',
@@ -38,9 +33,6 @@ function setupErrorHandling(app) {
     // 404 Page
     app.use((req, res) => {
         res.status(404).send(translations[req.preferedLanguage].pageNotFound);
-        // res.status(404).render('error/404.njk', {
-        //     translations: translations[req.preferedLanguage]
-        // });
     });
 
     // Development error handler - will print stacktrace
@@ -48,12 +40,6 @@ function setupErrorHandling(app) {
         app.use((error, req, res) => {
             console.error(error.message);
             res.status(error.status || 500).send(error.message);
-
-            // res.render('error/500.njk', {
-            //     message: error.message,
-            //     error: error,
-            //     translations: translations[req.preferedLanguage]
-            // });
         });
     }
 
@@ -61,11 +47,12 @@ function setupErrorHandling(app) {
     app.use((error, req, res) => {
         console.error(error.message);
         res.status(error.status || 500).send(translations[req.preferedLanguage].anErrorOccurred);
-
-        // res.render('error/500.njk', {
-        //     translations: translations[req.preferedLanguage]
-        // });
     });
 
     return app;
 }
+
+module.exports = {
+    returnError,
+    setupErrorHandling
+};

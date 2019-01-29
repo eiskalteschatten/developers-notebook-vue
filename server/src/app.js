@@ -8,11 +8,6 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const {setupSequelize} = require('./lib/db');
-const session = require('express-session');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const flash = require('connect-flash');
-
 // const proxies = require('./lib/proxies');
 // const {cmdMigrate} = require('./lib/dbMigrate');
 
@@ -29,7 +24,6 @@ const setupCronjobs = require('./cronjobs');
 
 module.exports = async () => {
     let app = express();
-    const db = await setupSequelize();
     // cmdMigrate();
 
     // Express setup
@@ -41,22 +35,8 @@ module.exports = async () => {
     app.disable('x-powered-by');
 
 
-    // Session setup
-    const sequelizeStore = new SequelizeStore({ db });
-    app.use(session({
-        secret: 'f1h5t6r4n564894e5845n6h5556H%$H%$htr644§"/&145htr4n5',
-        saveUninitialized: false,
-        resave: false,
-        store: sequelizeStore,
-        proxy: true
-    }));
-    sequelizeStore.sync();
-    app.use(passport.initialize());
-    app.use(passport.session());
-    app.use(flash());
-
-
     // Setup Passport authentication
+    app.use(passport.initialize());
     require('./lib/authentication/setupPassport')();
 
     // app.use(/^((?!auth|dist|images|favicon).)*$/, (req, res, next) => {

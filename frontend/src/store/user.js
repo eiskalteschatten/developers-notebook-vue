@@ -1,3 +1,5 @@
+import { http } from '../app';
+
 export default {
     namespaced: true,
     state: {
@@ -19,8 +21,20 @@ export default {
 
     actions: {
         async fetchJwt({ commit }, { username, password }) {
-            const res = await fetch(`http://localhost/vuejs-jwt-example/auth?u=${username}&p=${password}`);
-            commit('setJwt', await res.text());
+            try {
+                const res = await http.post('/auth/login', { username, password });
+
+                if (res.body.user) {
+                    commit('setJwt', res.body.token);
+                    return true;
+                }
+
+                return false;
+            }
+            catch(error) {
+                console.error(error);
+                return false;
+            }
         }
     }
 };

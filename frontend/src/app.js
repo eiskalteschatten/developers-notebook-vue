@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueI18n from 'vue-i18n';
 import Vuetify from 'vuetify';
+import VueResource from 'vue-resource';
 import { mapState } from 'vuex';
 
 import cookies from 'browser-cookies';
@@ -16,6 +17,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.use(VueRouter);
 Vue.use(VueI18n);
+Vue.use(VueResource);
 Vue.use(Vuetify, {
     theme,
     iconfont: 'md'
@@ -26,12 +28,19 @@ const i18n = new VueI18n({
     fallbackLocale: 'en'
 });
 
+export const http = Vue.http;
 export const eventBus = new Vue();
 
 new Vue({
     store,
     router,
     i18n,
+    http: {
+        root: '/',
+        headers: {
+            // Authorization: this.currentJwt ? `Bearer ${this.currentJwt}` : ''
+        }
+    },
     computed: {
         ...mapState('user', [
             'currentJwt'

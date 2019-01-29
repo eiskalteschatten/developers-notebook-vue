@@ -15,5 +15,8 @@ module.exports = {
         emailAddress: 'alex@alexseifert.com',
         roles: ['admin', 'user']
     },
-    translations: ['en', 'de']
+    translations: ['en', 'de'],
+    jwt: {
+        secret: 'jfwoepu8g94pu38ihrefdskfa&%()$=&%43gjrj434$§%$§%$Fsfdsds'
+    }
 };

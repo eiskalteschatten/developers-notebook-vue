@@ -6,7 +6,8 @@
         "password": "Password",
         "loginVerb": "Log In",
         "required": "Required",
-        "chooseLanguage": "Choose Language"
+        "chooseLanguage": "Choose Language",
+        "incorrectUsernameOrPassword": "Incorrect username or password."
     },
     "de": {
         "login": "Anmeldung",
@@ -14,7 +15,8 @@
         "password": "Passwort",
         "loginVerb": "Anmelden",
         "required": "Erforderlich",
-        "chooseLanguage": "Sprache auswählen"
+        "chooseLanguage": "Sprache auswählen",
+        "incorrectUsernameOrPassword": "Falscher Benutzername oder falsches Passwort."
     }
 }
 </i18n>
@@ -31,6 +33,14 @@
                     </v-card-title>
                     <v-form ref="form" lazy-validation>
                         <v-card-text>
+                            <v-alert
+                                :value="errorLoggingIn"
+                                type="error"
+                                class="mb-4"
+                            >
+                                {{ $t('incorrectUsernameOrPassword') }}
+                            </v-alert>
+
                             <v-text-field
                                 :label="$t('username')"
                                 data-vv-name="username"
@@ -98,7 +108,8 @@
                 rules: [
                     value => !!value || this.$t('required')
                 ],
-                loading: false
+                loading: false,
+                errorLoggingIn: false
             };
         },
         computed: {
@@ -118,7 +129,7 @@
             ...mapActions('user', [
                 'fetchJwt'
             ]),
-            submit() {
+            async submit() {
                 if (!this.username) {
                     this.usernameError = true;
                     return;
@@ -130,7 +141,15 @@
                 }
 
                 this.loading = true;
-                this.fetchJwt(this.username, this.password);
+                const loggedIn = await this.fetchJwt(this.username, this.password);
+                this.loading = false;
+
+                if (loggedIn) {
+                    this.$router.replace({ name: 'home' });
+                }
+                else {
+                    this.errorLoggingIn = true;
+                }
             },
             switchLanguages(lang) {
                 this.$router.push({ params: { lang } });

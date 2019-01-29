@@ -1,5 +1,6 @@
 'use strict';
 
+const config = require('config');
 const passport = require('passport');
 
 const LocalStrategy = require('passport-local').Strategy;
@@ -8,14 +9,6 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const User = require('../../models/User');
 
-const translations = {
-    en: {
-        incorrectUsernameOrPassword: 'Incorrect username or password.'
-    },
-    de: {
-        incorrectUsernameOrPassword: 'Falscher Benutzername oder falsches Passwort.'
-    }
-};
 
 const localConfig = {
     usernameField: 'username',
@@ -25,7 +18,7 @@ const localConfig = {
 
 const jwtConfig = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'jfwoepu8g94pu38ihrefdskfa&%()$=&%43gjrj434$§%$§%$Fsfdsds',
+    secretOrKey: config.get('jwt.secret'),
     issuer: 'developers-notebook',
     audience: 'developers-notebook'
 };
@@ -42,7 +35,7 @@ module.exports = () => {
                 });
 
                 if (!user || !user.validPassword(password) || user.roles.includes('inactive')) {
-                    return done(null, false, req.flash('loginMessage', translations[req.preferedLanguage].incorrectUsernameOrPassword));
+                    return done(null, false);
                 }
 
                 return done(null, user);
