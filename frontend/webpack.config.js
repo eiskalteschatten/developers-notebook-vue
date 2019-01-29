@@ -54,7 +54,7 @@ const commonConfig = {
             ],
         },
         {
-            test: /\.(png|jpg|gif|svg)$/,
+            test: /\.(png|jpg|gif|svg|woff|woff2|ttf|eot)$/,
             loader: 'file-loader',
             options: {
                 name: '[path][name].[ext]',

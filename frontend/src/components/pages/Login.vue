@@ -50,6 +50,7 @@
                                 <v-menu offset-y>
                                     <v-btn slot="activator">
                                         {{ $t('chooseLanguage') }}
+                                        <v-icon right dark>arrow_drop_down</v-icon>
                                     </v-btn>
                                     <v-list>
                                         <v-list-tile
@@ -63,7 +64,15 @@
                                 </v-menu>
                             </v-flex>
                             <v-flex xs6 class="text-xs-right">
-                                <v-btn primary color="primary" @click="submit">{{ $t('loginVerb') }}</v-btn>
+                                <v-btn
+                                    primary
+                                    color="primary"
+                                    @click="submit"
+                                    :loading="loading"
+                                    :disabled="loading"
+                                >
+                                    {{ $t('loginVerb') }}
+                                </v-btn>
                             </v-flex>
                         </v-card-actions>
                     </v-form>
@@ -84,7 +93,8 @@
                 password: '',
                 rules: [
                     value => !!value || this.$t('required')
-                ]
+                ],
+                loading: false
             };
         },
         computed: {
@@ -106,6 +116,7 @@
             ]),
             submit() {
                 if (this.username && this.password) {
+                    this.loading = true;
                     this.fetchJwt(this.username, this.password);
                 }
             },

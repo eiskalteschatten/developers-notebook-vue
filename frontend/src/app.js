@@ -12,10 +12,14 @@ import router, {routeTitles} from './router';
 import App from './components/App.vue';
 
 import 'vuetify/dist/vuetify.min.css';
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.use(VueRouter);
 Vue.use(VueI18n);
-Vue.use(Vuetify, { theme });
+Vue.use(Vuetify, {
+    theme,
+    iconfont: 'md'
+});
 
 const i18n = new VueI18n({
     locale: cookies.get('preferedLanguage') || 'en',
