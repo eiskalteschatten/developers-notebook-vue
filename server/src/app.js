@@ -8,6 +8,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const {setupSequelize} = require('./lib/db');
+
 // const proxies = require('./lib/proxies');
 // const {cmdMigrate} = require('./lib/dbMigrate');
 
@@ -24,6 +26,7 @@ const setupCronjobs = require('./cronjobs');
 
 module.exports = async () => {
     let app = express();
+    await setupSequelize();
     // cmdMigrate();
 
     // Express setup
