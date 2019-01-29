@@ -9,11 +9,21 @@
         <meta name="copyright" content="Copyright (c) Alex Seifert">
 
         <title>Developer's Notebook</title>
+
+        <style>
+            .initial-page-loader {
+                left: 50%;
+                position: absolute;
+                top: 50%;
+                transform: (-50%, -50%);
+            }
+        </style>
     </head>
     <body>
         <div id="vueAnchor">
-            <img src="/images/loader.svg" class="page-loader">
+            <img src="/images/loader.svg" class="initial-page-loader">
         </div>
+
         <script src="/dist/index.js"></script>
     </body>
 </html>
