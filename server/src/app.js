@@ -21,6 +21,7 @@ const translations = config.get('translations');
 const configureFrontend = require('./lib/configureFrontend');
 const {setupErrorHandling} = require('./lib/errorHandling');
 
+const setupPassport = require('./lib/authentication/setupPassport');
 const setupCronjobs = require('./cronjobs');
 
 
@@ -28,6 +29,7 @@ module.exports = async () => {
     let app = express();
     await setupSequelize();
     // cmdMigrate();
+
 
     // Express setup
     app.use(logger('dev'));
@@ -40,7 +42,8 @@ module.exports = async () => {
 
     // Setup Passport authentication
     app.use(passport.initialize());
-    require('./lib/authentication/setupPassport')();
+    app.use(passport.session());
+    setupPassport();
 
     // app.use(/^((?!auth|dist|images|favicon).)*$/, (req, res, next) => {
     //     if (req.isAuthenticated()) {
