@@ -3,6 +3,8 @@
 const passport = require('passport');
 
 const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const User = require('../../models/User');
 
@@ -21,6 +23,13 @@ const localConfig = {
     passReqToCallback: true
 };
 
+const jwtConfig = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: 'jfwoepu8g94pu38ihrefdskfa&%()$=&%43gjrj434$§%$§%$Fsfdsds',
+    issuer: 'developers-notebook',
+    audience: 'developers-notebook'
+};
+
 module.exports = () => {
     passport.use('local-login', new LocalStrategy(localConfig, (req, username, password, done) => {
         process.nextTick(async () => {
@@ -32,7 +41,7 @@ module.exports = () => {
                     }
                 });
 
-                if (! user || ! user.validPassword(password) || user.roles.includes('inactive')) {
+                if (!user || !user.validPassword(password) || user.roles.includes('inactive')) {
                     return done(null, false, req.flash('loginMessage', translations[req.preferedLanguage].incorrectUsernameOrPassword));
                 }
 
@@ -45,38 +54,21 @@ module.exports = () => {
         });
     }));
 
-    // Uncomment when ready to add user registration
-    // passport.use('local-register', new LocalStrategy(localConfig, (req, username, password, done) => {
-    //     process.nextTick(() => {
-    //         const body = req.body;
+    passport.use(new JwtStrategy(jwtConfig, async (jwtPayload, done) => {
+        try {
+            const user = await User.findOne({ id: jwtPayload.sub });
 
-    //         User.findOne({ where: { username: username } }).then(user => {
-    //             if (user) {
-    //                 return done(null, false, req.flash('registerMessage', 'A user with this username already exists.'));
-    //             }
+            if (!user) {
+                return done(null, false);
+            }
 
-    //             if (body.password !== body.repeatPassword) {
-    //                 return done(null, false, req.flash('registerMessage', 'The passwords do not match.'));
-    //             }
-
-    //             const password = User.generateHash(body.password);
-
-    //             return User.create({
-    //                 firstName: body.firstName,
-    //                 lastName: body.lastName,
-    //                 username: body.username,
-    //                 emailAddress: body.emailAddress,
-    //                 password,
-    //                 role: body.role
-    //             });
-    //         }).then(user => {
-    //             return done(null, user);
-    //         }).catch(error => {
-    //             console.error(error);
-    //             done(error);
-    //         });
-    //     });
-    // }));
+            return done(null, user);
+        }
+        catch(error) {
+            console.error(error);
+            done(error);
+        }
+    }));
 
     passport.serializeUser((user, done) => {
         done(null, user.id);
