@@ -5,7 +5,7 @@ export default {
     },
 
     getters: {
-        theme: state => state.light
+        theme: state => state.theme
     },
 
     mutations: {

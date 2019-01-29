@@ -36,12 +36,12 @@ export default new VueRouter({
             path: '',
             name: 'home',
             component: Home
-        },
-        {
-            path: 'login',
-            name: 'login',
-            component: Login
         }]
+    },
+    {   // Login should be a child of PageWrapper
+        path: '/:lang/login',
+        name: 'login',
+        component: Login
     },
     {
         path: '*',

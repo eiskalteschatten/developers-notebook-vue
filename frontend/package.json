@@ -17,7 +17,6 @@
     "author": "Alex Seifert",
     "dependencies": {
         "@kazupon/vue-i18n-loader": "^0.3.0",
-        "bootstrap-vue": "^2.0.0-rc.11",
         "browser-cookies": "^1.2.0",
         "compile-sass": "0.0.5",
         "css-loader": "^1.0.1",
@@ -34,6 +33,7 @@
         "vue-swatches": "^1.0.2",
         "vue-template-compiler": "^2.5.22",
         "vue2-datepicker": "^2.8.1",
+        "vuetify": "^1.4.3",
         "vuex": "^3.1.0",
         "webpack": "^4.29.0"
     },
