@@ -36,6 +36,7 @@
                                 data-vv-name="username"
                                 :rules="rules"
                                 v-model="username"
+                                :error="usernameError"
                             />
                             <v-text-field
                                 :label="$t('password')"
@@ -43,6 +44,7 @@
                                 data-vv-name="password"
                                 :rules="rules"
                                 v-model="password"
+                                :error="passwordError"
                             />
                         </v-card-text>
                         <v-card-actions class="pl-3 pr-3 pb-3">
@@ -50,7 +52,7 @@
                                 <v-menu offset-y>
                                     <v-btn slot="activator">
                                         {{ $t('chooseLanguage') }}
-                                        <v-icon right dark>arrow_drop_down</v-icon>
+                                        <v-icon dark>arrow_drop_down</v-icon>
                                     </v-btn>
                                     <v-list>
                                         <v-list-tile
@@ -91,6 +93,8 @@
             return {
                 username: '',
                 password: '',
+                usernameError: false,
+                passwordError: false,
                 rules: [
                     value => !!value || this.$t('required')
                 ],
@@ -115,10 +119,18 @@
                 'fetchJwt'
             ]),
             submit() {
-                if (this.username && this.password) {
-                    this.loading = true;
-                    this.fetchJwt(this.username, this.password);
+                if (!this.username) {
+                    this.usernameError = true;
+                    return;
                 }
+
+                if (!this.password) {
+                    this.passwordError = true;
+                    return;
+                }
+
+                this.loading = true;
+                this.fetchJwt(this.username, this.password);
             },
             switchLanguages(lang) {
                 this.$router.push({ params: { lang } });
