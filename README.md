@@ -6,7 +6,7 @@ A mono-repository for the server, the frontend and the Electron application.
 
 ## Notes
 
-- Icons from https://glyph.smarticons.co and https://material.io/tools/icons/?style=sharp
+- Icons from https://material.io/tools/icons/
 
 ---
 
