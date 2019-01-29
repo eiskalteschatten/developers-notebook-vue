@@ -57,11 +57,9 @@ const commonConfig = {
             test: /\.(png|jpg|gif|svg|woff|woff2|ttf|eot)$/,
             loader: 'file-loader',
             options: {
-                name: '[path][name].[ext]',
-                publicPath: '/',
-                useRelativePath: true,
-                context: path.resolve(__dirname, 'public'),
-                emitFile: false
+                name: '[name].[ext]',
+                outputPath: 'resources',
+                publicPath: 'dist/resources'
             }
         }]
     },
