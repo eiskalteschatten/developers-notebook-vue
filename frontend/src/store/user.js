@@ -20,16 +20,34 @@ export default {
     },
 
     actions: {
-        async fetchJwt({ commit }, { username, password }) {
+        async fetchJwt({ commit }, body) {
             try {
-                const res = await http.post('/auth/login', { username, password });
+                let jwt = localStorage.getItem('jwt');
 
-                if (res.body.user) {
-                    commit('setJwt', res.body.token);
+                if (!jwt) {
+                    const res = await http.post('/auth/login', body);
+                    jwt = res.body.user && res.body.token ? res.body.token : null;
+                }
+
+                if (jwt) {
+                    commit('setJwt', jwt);
+                    localStorage.setItem('jwt', jwt);
                     return true;
                 }
 
                 return false;
+            }
+            catch(error) {
+                console.error(error);
+                return false;
+            }
+        },
+        async removeJwt({ commit }) {
+            try {
+                await http.post('/auth/logout');
+                commit('setJwt', '');
+                localStorage.removeItem('jwt');
+                return true;
             }
             catch(error) {
                 console.error(error);

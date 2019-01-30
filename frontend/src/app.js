@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import VueI18n from 'vue-i18n';
 import Vuetify from 'vuetify';
 import VueResource from 'vue-resource';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 import cookies from 'browser-cookies';
 
@@ -56,8 +56,13 @@ new Vue({
         }
     },
     created() {
-        if (!this.currentJwt && this.$route.name !== 'login') {
+        const jwt = localStorage.getItem('jwt');
+
+        if (!jwt && !this.currentJwt && this.$route.name !== 'login') {
             this.$router.push({ name: 'login' });
+        }
+        else if (jwt && !this.currentJwt) {
+            this.fetchJwt();
         }
     },
     mounted() {
@@ -65,6 +70,9 @@ new Vue({
         document.title = this.buildDocumentTitle(title);
     },
     methods: {
+        ...mapActions('user', [
+            'fetchJwt'
+        ]),
         buildDocumentTitle(title) {
             return `${title} - ${routeTitles.primaryTitle}`;
         }

@@ -50,7 +50,8 @@ module.exports = router => {
         }
     });
 
-    router.get('/logout', req => {
+    router.post('/logout', (req, res) => {
         req.logout();
+        res.send('');
     });
 };
