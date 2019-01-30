@@ -20,7 +20,7 @@ export default {
     },
 
     actions: {
-        async fetchJwt({ commit }, body) {
+        async fetchJwt({ commit, dispatch }, body) {
             try {
                 let jwt = localStorage.getItem('jwt');
                 let jwtIsValid = false;
@@ -32,9 +32,7 @@ export default {
                         }
                     });
 
-                    if (res.status !== 401) {
-                        jwtIsValid = true;
-                    }
+                    jwtIsValid = res.status === 401 ? false : true;
                 }
                 else {
                     const res = await http.post('/auth/login', body);
@@ -48,10 +46,12 @@ export default {
                     return true;
                 }
 
+                await dispatch('removeJwt');
                 return false;
             }
             catch(error) {
                 console.error(error);
+                await dispatch('removeJwt');
                 return false;
             }
         },

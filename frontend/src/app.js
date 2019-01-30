@@ -55,14 +55,17 @@ new Vue({
             cookies.set('preferedLanguage', lang);
         }
     },
-    created() {
+    async created() {
         const jwt = localStorage.getItem('jwt');
 
         if (!jwt && !this.currentJwt && this.$route.name !== 'login') {
             this.$router.push({ name: 'login' });
         }
         else if (jwt && !this.currentJwt) {
-            this.fetchJwt();
+            const isLoggedIn = await this.fetchJwt();
+            if (!isLoggedIn) {
+                this.$router.push({ name: 'login' });
+            }
         }
     },
     mounted() {
