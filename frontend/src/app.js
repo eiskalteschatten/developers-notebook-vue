@@ -56,17 +56,7 @@ new Vue({
         }
     },
     async created() {
-        const jwt = localStorage.getItem('jwt');
-
-        if (!jwt && !this.currentJwt && this.$route.name !== 'login') {
-            this.$router.push({ name: 'login' });
-        }
-        else if (jwt && !this.currentJwt) {
-            const isLoggedIn = await this.fetchJwt();
-            if (!isLoggedIn) {
-                this.$router.push({ name: 'login' });
-            }
-        }
+        await this.determineAuthentication();
     },
     mounted() {
         const title = routeTitles[this.$i18n.locale][this.$route.name];
@@ -78,6 +68,19 @@ new Vue({
         ]),
         buildDocumentTitle(title) {
             return `${title} - ${routeTitles.primaryTitle}`;
+        },
+        async determineAuthentication() {
+            const jwt = localStorage.getItem('jwt');
+
+            if (!jwt && !this.currentJwt && this.$route.name !== 'login') {
+                this.$router.push({ name: 'login' });
+            }
+            else if (jwt && !this.currentJwt) {
+                const isLoggedIn = await this.fetchJwt();
+                if (!isLoggedIn) {
+                    this.$router.push({ name: 'login' });
+                }
+            }
         }
     },
     render: createElement => createElement(App)

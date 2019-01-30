@@ -54,23 +54,47 @@ new Vue({
             cookies.set('preferedLanguage', lang);
         }
     },
-    async created() {
-        const jwt = localStorage.getItem('jwt');
+    created() {
+        const hasServerConfig = this.hasServerConfig();
 
-        if (!jwt && !this.currentJwt && this.$route.name !== 'login') {
-            this.$router.push({ name: 'login' });
-        }
-        else if (jwt && !this.currentJwt) {
-            const isLoggedIn = await this.fetchJwt();
-            if (!isLoggedIn) {
-                this.$router.push({ name: 'login' });
-            }
+        if (hasServerConfig) {
+            this.determineAuthentication();
         }
     },
     methods: {
         ...mapActions('user', [
             'fetchJwt'
-        ])
+        ]),
+        async determineAuthentication() {
+            const jwt = localStorage.getItem('jwt');
+
+            if (!jwt && !this.currentJwt && this.$route.name !== 'login') {
+                this.$router.push({ name: 'login' });
+            }
+            else if (jwt && !this.currentJwt) {
+                const isLoggedIn = await this.fetchJwt();
+                if (!isLoggedIn) {
+                    this.$router.push({ name: 'login' });
+                }
+            }
+        },
+        hasServerConfig() {
+            try {
+                let serverConfig = localStorage.getItem('serverConfig');
+
+                if (!serverConfig) {
+                    this.$router.replace({ name: 'electronServerConfig' });
+                    return false;
+                }
+
+                serverConfig = JSON.parse(serverConfig);
+                return true;
+            }
+            catch(error) {
+                console.error(error);
+                return false;
+            }
+        }
     },
     render: createElement => createElement(App)
 }).$mount('#vueAnchor');

@@ -6,6 +6,8 @@ import Login from './components/pages/Login.vue';
 
 import Home from './components/pages/Home.vue';
 
+import ServerConfig from './components/pages/electron/ServerConfig.vue';
+
 import NotFound from './components/pages/404.vue';
 
 const preferedLanguage = cookies.get('preferedLanguage') || 'en';
@@ -42,6 +44,11 @@ export default new VueRouter({
         path: '/:lang/login',
         name: 'login',
         component: Login
+    },
+    {   // Server config should be a child of PageWrapper
+        path: '/:lang/electron/server-config',
+        name: 'electronServerConfig',
+        component: ServerConfig
     },
     {
         path: '*',
