@@ -38,7 +38,8 @@ new Vue({
     http: {
         root: '/',
         headers: {
-            // Authorization: this.currentJwt ? `Bearer ${this.currentJwt}` : ''
+            // Authorization: this.currentJwt ? `Bearer ${this.currentJwt}` : '',
+            'Content-Type': 'application/json'
         }
     },
     computed: {
