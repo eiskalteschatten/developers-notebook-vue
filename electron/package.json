@@ -4,8 +4,8 @@
     "description": "A digital notebook for developers",
     "main": "./src/main.js",
     "scripts": {
-        "build": "node ./build-scripts/build.js && cd ../frontend && npm run build",
-        "build:prod": "node ./build-scripts/build.js && cd ../frontend && npm run build:prod",
+        "build": "node ./build-scripts/build.js && cd ../frontend && WEBPACK_TARGET=electron npm run build",
+        "build:prod": "node ./build-scripts/build.js && cd ../frontend && WEBPACK_TARGET=electron npm run build:prod",
         "prestart": "NODE_ENV=development npm run build",
         "start": "NODE_ENV=development electron .",
         "prestart:prod": "npm run build:prod",

@@ -43,7 +43,7 @@ async function createWindow() {
             }
 
             mainWindow = new BrowserWindow(browserWindow);
-            mainWindow.loadFile(`${config.app.frontendPaths.public}/index.html`);
+            mainWindow.loadFile(`${config.app.frontendPaths.public}/electron.html`);
 
             if (windowSettings.isMaximized) {
                 mainWindow.maximize();
