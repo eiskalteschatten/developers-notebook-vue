@@ -2,7 +2,6 @@ export default {
     namespaced: true,
     state: {
         theme: 'light',
-        isElectron: false,
         languages: [{
             title: 'English',
             code: 'en'
@@ -15,8 +14,7 @@ export default {
 
     getters: {
         theme: state => state.theme,
-        languages: state => state.languages,
-        isElectron: state => state.isElectron
+        languages: state => state.languages
     },
 
     mutations: {
@@ -25,9 +23,6 @@ export default {
         },
         setLanguages(state, languages) {
             state.languages = languages;
-        },
-        setIsElectron(state, isElectron) {
-            state.isElectron = isElectron;
         }
     },
 
