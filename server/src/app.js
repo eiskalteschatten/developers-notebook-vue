@@ -44,7 +44,7 @@ module.exports = async () => {
     app.use(passport.initialize());
     setupPassport();
 
-    app.use(/^((?!\/$|login|dist|images|favicon).)*$/, passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    app.use(/^((?!\/$|login|status|dist|images|favicon).)*$/, passport.authenticate('jwt', { session: false }), (req, res, next) => {
         return next();
     });
 

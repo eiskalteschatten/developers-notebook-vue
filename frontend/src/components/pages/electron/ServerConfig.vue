@@ -2,9 +2,6 @@
 {
     "en": {
         "host": "Host",
-        "login": "Login",
-        "username": "Username",
-        "password": "Password",
         "save": "Save",
         "required": "Required",
         "configureServer": "Configure Server",
@@ -12,9 +9,6 @@
     },
     "de": {
         "host": "Host",
-        "login": "Anmeldung",
-        "username": "Benutzername",
-        "password": "Passwort",
         "save": "Speichern",
         "required": "Erforderlich",
         "configureServer": "Server konfigurieren",
@@ -48,35 +42,22 @@
                                 data-vv-name="host"
                                 :rules="rules"
                                 v-model="host"
+                                placeholder="https://www.your-server.com:3021"
                                 :error="hostError"
-                            />
-                            <v-text-field
-                                :label="$t('username')"
-                                data-vv-name="username"
-                                :rules="rules"
-                                v-model="username"
-                                :error="usernameError"
-                            />
-                            <v-text-field
-                                :label="$t('password')"
-                                type="password"
-                                data-vv-name="password"
-                                :rules="rules"
-                                v-model="password"
-                                :error="passwordError"
                             />
                         </v-card-text>
                         <v-card-actions class="pl-3 pr-3 pb-3">
-                            <v-space />
-                            <v-btn
-                                primary
-                                color="primary"
-                                type="submit"
-                                :loading="loading"
-                                :disabled="loading"
-                            >
-                                {{ $t('save') }}
-                            </v-btn>
+                            <v-flex xs12 class="text-xs-right">
+                                <v-btn
+                                    primary
+                                    color="primary"
+                                    type="submit"
+                                    :loading="loading"
+                                    :disabled="loading"
+                                >
+                                    {{ $t('save') }}
+                                </v-btn>
+                            </v-flex>
                         </v-card-actions>
                     </v-form>
                 </v-card>
@@ -92,11 +73,7 @@
         data() {
             return {
                 host: '',
-                username: '',
-                password: '',
                 hostError: false,
-                usernameError: false,
-                passwordError: false,
                 rules: [
                     value => !!value || this.$t('required')
                 ],
@@ -114,19 +91,20 @@
                     return;
                 }
 
-                if (!this.username) {
-                    this.usernameError = true;
-                    return;
-                }
-
-                if (!this.password) {
-                    this.passwordError = true;
-                    return;
-                }
-
                 this.loading = true;
-                // Check server connection here before saving to localStorage
-                const canConnectToServer = true;
+                let canConnectToServer = false;
+
+                try {
+                    const res = await this.$http.get(`${this.host}/status/is-dev-notebook`);
+                    if (res.body === 'true') {
+                        canConnectToServer = true;
+                        localStorage.setItem('serverConfigHost', this.host);
+                    }
+                }
+                catch(error) {
+                    canConnectToServer = false;
+                }
+
                 this.loading = false;
 
                 if (canConnectToServer) {

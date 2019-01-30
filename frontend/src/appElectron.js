@@ -84,21 +84,14 @@ new Vue({
             }
         },
         hasServerConfig() {
-            try {
-                let serverConfig = localStorage.getItem('serverConfig');
+            const serverConfigHost = localStorage.getItem('serverConfigHost');
 
-                if (!serverConfig) {
-                    this.$router.replace({ name: 'electronServerConfig' });
-                    return false;
-                }
-
-                serverConfig = JSON.parse(serverConfig);
-                return true;
-            }
-            catch(error) {
-                console.error(error);
+            if (!serverConfigHost) {
+                this.$router.replace({ name: 'electronServerConfig' });
                 return false;
             }
+
+            return true;
         }
     },
     render: createElement => createElement(App)
