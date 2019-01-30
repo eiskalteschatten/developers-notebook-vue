@@ -4,8 +4,9 @@ const config = require('config');
 const passport = require('passport');
 
 const LocalStrategy = require('passport-local').Strategy;
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
+const passportJwt = require('passport-jwt');
+const JwtStrategy = passportJwt.Strategy;
+const ExtractJwt = passportJwt.ExtractJwt;
 
 const User = require('../../models/User');
 
@@ -18,9 +19,7 @@ const localConfig = {
 
 const jwtConfig = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: config.get('jwt.secret'),
-    issuer: 'developers-notebook',
-    audience: 'developers-notebook'
+    secretOrKey: config.get('jwt.secret')
 };
 
 module.exports = () => {
@@ -47,9 +46,9 @@ module.exports = () => {
         });
     }));
 
-    passport.use(new JwtStrategy(jwtConfig, async (jwtPayload, done) => {
+    passport.use('jwt', new JwtStrategy(jwtConfig, async (jwtPayload, done) => {
         try {
-            const user = await User.findOne({ id: jwtPayload.sub });
+            const user = await User.findById(jwtPayload.id);
 
             if (!user) {
                 return done(null, false);

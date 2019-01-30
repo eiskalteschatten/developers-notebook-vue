@@ -42,7 +42,6 @@ module.exports = async () => {
 
     // Setup Passport authentication
     app.use(passport.initialize());
-    app.use(passport.session());
     setupPassport();
 
     // app.use(/^((?!auth|dist|images|favicon).)*$/, (req, res, next) => {

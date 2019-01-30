@@ -40,7 +40,7 @@ module.exports = router => {
                     delete userRaw.createdAt;
                     delete userRaw.updatedAt;
 
-                    return res.json({ userRaw, token });
+                    return res.json({ user: userRaw, token });
                 });
             })(req, res, next);
         }
@@ -62,6 +62,6 @@ module.exports = router => {
     });
 
     router.post('/validate', passport.authenticate('jwt', { session: false }), (req, res) => {
-        res.send('true');
+        res.json({ user: req.user });
     });
 };
