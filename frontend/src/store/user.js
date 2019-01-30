@@ -1,4 +1,4 @@
-import { http } from '../app';
+import http from '../http';
 
 export default {
     namespaced: true,

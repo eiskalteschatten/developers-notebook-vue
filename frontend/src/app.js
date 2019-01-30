@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueI18n from 'vue-i18n';
-import VueResource from 'vue-resource';
 import { mapState, mapActions } from 'vuex';
 
 import Vuetify from 'vuetify';
@@ -12,6 +11,7 @@ import cookies from 'browser-cookies';
 
 import theme from './theme';
 import store from './store';
+import http from './http';
 import router, {routeTitles} from './router';
 import App from './components/App.vue';
 
@@ -22,7 +22,6 @@ const locale = cookies.get('preferedLanguage') || 'en';
 
 Vue.use(VueRouter);
 Vue.use(VueI18n);
-Vue.use(VueResource);
 Vue.use(Vuetify, {
     theme,
     iconfont: 'md',
@@ -36,13 +35,6 @@ const i18n = new VueI18n({
     locale,
     fallbackLocale: 'en'
 });
-
-Vue.http.interceptors.push(request => {
-    request.headers.set('Authorization', localStorage.getItem('jwt') ? `Bearer ${localStorage.getItem('jwt')}` : '');
-});
-
-export const http = Vue.http;
-export const eventBus = new Vue();
 
 new Vue({
     store,

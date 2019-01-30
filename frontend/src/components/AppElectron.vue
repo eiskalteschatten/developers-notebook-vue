@@ -31,9 +31,6 @@
         methods: {
             maximizeWindow() {
                 remote.getCurrentWindow().maximize();
-            },
-            closeModal() {
-                eventBus.$emit('toggle-modal');
             }
         }
     });
