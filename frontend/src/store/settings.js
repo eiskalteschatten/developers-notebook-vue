@@ -2,6 +2,7 @@ export default {
     namespaced: true,
     state: {
         theme: 'light',
+        isElectron: false,
         languages: [{
             title: 'English',
             code: 'en'
@@ -14,7 +15,8 @@ export default {
 
     getters: {
         theme: state => state.theme,
-        languages: state => state.languages
+        languages: state => state.languages,
+        isElectron: state => state.isElectron
     },
 
     mutations: {
@@ -23,13 +25,12 @@ export default {
         },
         setLanguages(state, languages) {
             state.languages = languages;
+        },
+        setIsElectron(state, isElectron) {
+            state.isElectron = isElectron;
         }
     },
 
     actions: {
-        // async fetchTheme ({ commit }, { username, password }) {
-        //     const res = await fetch(`http://localhost/vuejs-jwt-example/auth?u=${username}&p=${password}`);
-        //     commit('setJWT', await res.text());
-        // }
     }
 };

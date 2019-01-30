@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueI18n from 'vue-i18n';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 
 import Vuetify from 'vuetify';
 import en from 'vuetify/es5/locale/en';
@@ -55,6 +55,8 @@ new Vue({
         }
     },
     created() {
+        this.setIsElectron(true);
+
         const hasServerConfig = this.hasServerConfig();
 
         if (hasServerConfig) {
@@ -64,6 +66,9 @@ new Vue({
     methods: {
         ...mapActions('user', [
             'fetchJwt'
+        ]),
+        ...mapMutations('settings', [
+            'setIsElectron'
         ]),
         async determineAuthentication() {
             const jwt = localStorage.getItem('jwt');
