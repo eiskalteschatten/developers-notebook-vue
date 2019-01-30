@@ -31,7 +31,7 @@
                             <div class="headline">Developer's Notebook &mdash; {{ $t('login') }}</div>
                         </div>
                     </v-card-title>
-                    <v-form ref="form" lazy-validation>
+                    <v-form ref="form" lazy-validation @submit="submit">
                         <v-card-text>
                             <v-alert
                                 :value="errorLoggingIn"
@@ -79,7 +79,7 @@
                                 <v-btn
                                     primary
                                     color="primary"
-                                    @click="submit"
+                                    type="submit"
                                     :loading="loading"
                                     :disabled="loading"
                                 >
