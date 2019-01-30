@@ -39,6 +39,7 @@ export default {
                 else {
                     const res = await http.post('/auth/login', body);
                     jwt = res.body.user && res.body.token ? res.body.token : null;
+                    jwtIsValid = jwt ? true : false;
                 }
 
                 if (jwt && jwtIsValid) {
