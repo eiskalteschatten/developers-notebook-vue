@@ -141,7 +141,10 @@
                 }
 
                 this.loading = true;
-                const loggedIn = await this.fetchJwt(this.username, this.password);
+                const loggedIn = await this.fetchJwt({
+                    username: this.username,
+                    password: this.password
+                });
                 this.loading = false;
 
                 if (loggedIn) {
