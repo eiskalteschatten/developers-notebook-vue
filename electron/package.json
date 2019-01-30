@@ -4,9 +4,9 @@
     "description": "A digital notebook for developers",
     "main": "./src/main.js",
     "scripts": {
-        "build": "node ./build-scripts/build.js && ./node_modules/.bin/webpack --mode=development",
-        "build:prod": "node ./build-scripts/build.js && ./node_modules/.bin/webpack --mode=production",
-        "prestart": "npm run build",
+        "build": "node ./build-scripts/build.js && cd ../frontend && npm run build",
+        "build:prod": "node ./build-scripts/build.js && cd ../frontend && npm run build:prod",
+        "prestart": "NODE_ENV=development npm run build",
         "start": "NODE_ENV=development electron .",
         "prestart:prod": "npm run build:prod",
         "start:prod": "electron .",
@@ -59,7 +59,8 @@
     },
     "devDependencies": {
         "electron": "^4.0.2",
-        "electron-builder": "^20.34.0"
+        "electron-builder": "^20.34.0",
+        "mkdirp": "^0.5.1"
     },
     "dependencies": {}
 }
