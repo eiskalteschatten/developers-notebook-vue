@@ -28,6 +28,10 @@ const i18n = new VueI18n({
     fallbackLocale: 'en'
 });
 
+Vue.http.interceptors.push(request => {
+    request.headers.set('Authorization', localStorage.getItem('jwt') ? `Bearer ${localStorage.getItem('jwt')}` : '');
+});
+
 export const http = Vue.http;
 export const eventBus = new Vue();
 
@@ -35,13 +39,7 @@ new Vue({
     store,
     router,
     i18n,
-    http: {
-        root: '/',
-        headers: {
-            // Authorization: this.currentJwt ? `Bearer ${this.currentJwt}` : '',
-            'Content-Type': 'application/json'
-        }
-    },
+    http,
     computed: {
         ...mapState('user', [
             'currentJwt'

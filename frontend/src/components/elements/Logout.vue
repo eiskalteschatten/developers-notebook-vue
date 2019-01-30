@@ -11,7 +11,7 @@
 
 <template>
     <div>
-        <a href="" @click="logout">{{ $t('logout') }}</a>
+        <v-btn @click="logout">{{ $t('logout') }}</v-btn>
     </div>
 </template>
 
