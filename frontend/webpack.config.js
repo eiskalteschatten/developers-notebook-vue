@@ -79,34 +79,22 @@ const commonConfig = {
     mode: process.env.NODE_ENV !== 'test' ? process.env.NODE_ENV : 'development'
 };
 
-if (process.env.WEBPACK_TARGET === 'electron') {
-    module.exports = [
-        Object.assign({}, commonConfig, {
-            target: 'electron-renderer',
-            entry: {
-                app: path.resolve(__dirname, 'src', 'app.js')
-            },
-            output: {
-                filename: 'electron.js',
-                path: path.resolve(__dirname, 'public', 'dist')
-            }
-        })
-    ];
-}
-else {
-    module.exports = [
-        Object.assign({}, commonConfig, {
-            target: 'web',
-            entry: {
-                app: path.resolve(__dirname, 'src', 'app.js')
-            },
-            output: {
-                filename: 'index.js',
-                path: path.resolve(__dirname, 'public', 'dist')
-            }
-        })
-    ];
-}
+const isElectron = process.env.WEBPACK_TARGET === 'electron';
+
+module.exports = [
+    Object.assign({}, commonConfig, {
+        target: isElectron ? 'electron-renderer' : 'web',
+        entry: {
+            app: isElectron
+                ? path.resolve(__dirname, 'src', 'appElectron.js')
+                : path.resolve(__dirname, 'src', 'app.js')
+        },
+        output: {
+            filename: isElectron ? 'electron.js' : 'index.js',
+            path: path.resolve(__dirname, 'public', 'dist')
+        }
+    })
+];
 
 if (process.env.NODE_ENV === 'production') {
     module.exports.devtool = '#source-map';
