@@ -33,8 +33,14 @@ module.exports = router => {
                         });
                     }
 
-                    const token = jwt.sign(user.get(), config.get('jwt.secret'));
-                    return res.json({ user, token });
+                    const userRaw = user.get();
+                    const token = jwt.sign(userRaw, config.get('jwt.secret'));
+
+                    delete userRaw.password;
+                    delete userRaw.createdAt;
+                    delete userRaw.updatedAt;
+
+                    return res.json({ userRaw, token });
                 });
             })(req, res, next);
         }
