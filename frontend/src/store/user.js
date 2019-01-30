@@ -23,13 +23,25 @@ export default {
         async fetchJwt({ commit }, body) {
             try {
                 let jwt = localStorage.getItem('jwt');
+                let jwtIsValid = false;
 
-                if (!jwt) {
+                if (jwt) {
+                    const res = await http.post('/auth/validate', {}, {
+                        headers: {
+                            Authorization: `Bearer ${jwt}`
+                        }
+                    });
+
+                    if (res.status !== 401) {
+                        jwtIsValid = true;
+                    }
+                }
+                else {
                     const res = await http.post('/auth/login', body);
                     jwt = res.body.user && res.body.token ? res.body.token : null;
                 }
 
-                if (jwt) {
+                if (jwt && jwtIsValid) {
                     commit('setJwt', jwt);
                     localStorage.setItem('jwt', jwt);
                     return true;
