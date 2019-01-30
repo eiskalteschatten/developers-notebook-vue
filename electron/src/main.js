@@ -16,6 +16,10 @@ const windowSettingsPath = path.join(appConfig.storagePath, appConfig.windowSett
 let mainWindow;
 
 async function createWindow() {
+    if (process.env.NODE_ENV !== 'production') {
+        require('vue-devtools').install();
+    }
+
     fs.readFile(windowSettingsPath, 'utf8', async (error, data) => {
         if (error) {
             return console.error(error);

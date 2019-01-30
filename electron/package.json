@@ -60,7 +60,8 @@
     "devDependencies": {
         "electron": "^4.0.2",
         "electron-builder": "^20.34.0",
-        "mkdirp": "^0.5.1"
+        "mkdirp": "^0.5.1",
+        "vue-devtools": "^5.0.0-beta.1"
     },
     "dependencies": {}
 }
