@@ -53,9 +53,7 @@
         }
 
         .main-structure {
-            .main-view {
-                padding-top: $titleBarHeight;
-            }
+            padding-top: $titleBarHeight;
         }
     }
 </style>

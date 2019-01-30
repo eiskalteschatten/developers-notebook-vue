@@ -17,6 +17,13 @@
                 transform: (-50%, -50%);
             }
         </style>
+
+        <script>
+            window.onload = () => {
+                const body = document.getElementsByTagName('body')[0];
+                body.classList.add(process.platform);
+            };
+        </script>
     </head>
     <body>
         <div id="vueAnchor">

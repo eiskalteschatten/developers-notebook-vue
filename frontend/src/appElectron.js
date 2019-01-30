@@ -12,8 +12,9 @@ import cookies from 'browser-cookies';
 import theme from './theme';
 import store from './store';
 import http from './http';
-import router, {routeTitles} from './router';
-import App from './components/App.vue';
+import router from './router';
+
+import App from './components/AppElectron.vue';
 
 import 'vuetify/dist/vuetify.min.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
@@ -50,7 +51,6 @@ new Vue({
         '$route'(to) {
             const lang = to.params.lang;
             this.$i18n.locale = lang;
-            document.title = this.buildDocumentTitle(routeTitles[lang][to.name]);
             cookies.set('preferedLanguage', lang);
         }
     },
@@ -67,17 +67,10 @@ new Vue({
             }
         }
     },
-    mounted() {
-        const title = routeTitles[this.$i18n.locale][this.$route.name];
-        document.title = this.buildDocumentTitle(title);
-    },
     methods: {
         ...mapActions('user', [
             'fetchJwt'
-        ]),
-        buildDocumentTitle(title) {
-            return `${title} - ${routeTitles.primaryTitle}`;
-        }
+        ])
     },
     render: createElement => createElement(App)
 }).$mount('#vueAnchor');

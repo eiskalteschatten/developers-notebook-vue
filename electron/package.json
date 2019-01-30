@@ -34,7 +34,8 @@
             ],
             "category": "public.app-category.developer-tools",
             "entitlements": "build/entitlements.mac.plist",
-            "type": "development"
+            "type": "development",
+            "darkModeSupport": true
         },
         "linux": {
             "target": [

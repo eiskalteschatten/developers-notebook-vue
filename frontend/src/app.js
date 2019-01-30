@@ -13,6 +13,7 @@ import theme from './theme';
 import store from './store';
 import http from './http';
 import router, {routeTitles} from './router';
+
 import App from './components/App.vue';
 
 import 'vuetify/dist/vuetify.min.css';
