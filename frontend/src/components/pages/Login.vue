@@ -129,7 +129,9 @@
             ...mapActions('user', [
                 'fetchJwt'
             ]),
-            async submit() {
+            async submit(event) {
+                event.preventDefault();
+
                 if (!this.username) {
                     this.usernameError = true;
                     return;
