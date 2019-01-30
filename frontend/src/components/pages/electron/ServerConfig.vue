@@ -68,6 +68,7 @@
 
 <script>
     import Vue from 'vue';
+    import { setRoot } from '../../../http';
 
     export default Vue.extend({
         data() {
@@ -96,10 +97,7 @@
 
                 try {
                     const res = await this.$http.get(`${this.host}/status/is-dev-notebook`);
-                    if (res.body === 'true') {
-                        canConnectToServer = true;
-                        localStorage.setItem('serverConfigHost', this.host);
-                    }
+                    canConnectToServer = res.body === 'true';
                 }
                 catch(error) {
                     canConnectToServer = false;
@@ -108,6 +106,8 @@
                 this.loading = false;
 
                 if (canConnectToServer) {
+                    localStorage.setItem('serverConfigHost', this.host);
+                    setRoot(this.host);
                     this.$router.replace({ name: 'login' });
                 }
                 else {

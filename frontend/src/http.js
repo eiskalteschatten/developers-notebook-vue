@@ -9,8 +9,10 @@ Vue.http.interceptors.push(request => {
 
 const isElectron = localStorage.getItem('isElectron');
 
-if (isElectron) {
-    Vue.http.options.root = localStorage.getItem('serverConfigHost');
+Vue.http.options.root = isElectron ? localStorage.getItem('serverConfigHost') : '/';
+
+export function setRoot(root) {
+    Vue.http.options.root = root;
 }
 
 export default Vue.http;

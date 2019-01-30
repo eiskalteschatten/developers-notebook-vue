@@ -33,7 +33,7 @@ export default {
 
                 if (jwt) {
                     // If the response status isn't 200, it throws an error and is caught below
-                    const res = await http.post('/auth/validate', {}, {
+                    const res = await http.post('auth/validate', {}, {
                         headers: {
                             Authorization: `Bearer ${jwt}`
                         }
@@ -43,7 +43,7 @@ export default {
                     user = res.body.user || {};
                 }
                 else {
-                    const res = await http.post('/auth/login', body);
+                    const res = await http.post('auth/login', body);
                     const hasUserData = res.body.user && res.body.token;
                     jwt = hasUserData ? res.body.token : null;
                     user = hasUserData ? res.body.user : {};
@@ -68,7 +68,7 @@ export default {
         },
         async removeJwt({ commit }) {
             try {
-                await http.post('/auth/logout');
+                await http.post('auth/logout');
                 commit('setJwt', '');
                 localStorage.removeItem('jwt');
                 return true;
