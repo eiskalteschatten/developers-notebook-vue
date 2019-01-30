@@ -26,13 +26,13 @@ export default {
                 let jwtIsValid = false;
 
                 if (jwt) {
-                    const res = await http.post('/auth/validate', {}, {
+                    await http.post('/auth/validate', {}, {
                         headers: {
                             Authorization: `Bearer ${jwt}`
                         }
                     });
 
-                    jwtIsValid = res.status === 401 ? false : true;
+                    // If the response status isn't 200, it throws an error and is caught below
                 }
                 else {
                     const res = await http.post('/auth/login', body);
