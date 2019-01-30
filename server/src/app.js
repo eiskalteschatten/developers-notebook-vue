@@ -44,12 +44,9 @@ module.exports = async () => {
     app.use(passport.initialize());
     setupPassport();
 
-    // app.use(/^((?!auth|dist|images|favicon).)*$/, (req, res, next) => {
-    //     if (req.isAuthenticated()) {
-    //         return next();
-    //     }
-    //     res.redirect('/');
-    // });
+    app.use(/^((?!\/$|login|logout|dist|images|favicon).)*$/, passport.authenticate('jwt', { session: false }), (req, res, next) => {
+        return next();
+    });
 
 
     // Add the user's preferred language to the request

@@ -61,7 +61,7 @@ module.exports = router => {
         res.send('');
     });
 
-    router.post('/validate', passport.authenticate('jwt', { session: false }), (req, res) => {
+    router.post('/validate', (req, res) => {
         res.json({ user: req.user });
     });
 };
