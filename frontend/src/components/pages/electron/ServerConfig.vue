@@ -19,6 +19,7 @@
 
 <template>
     <div>
+        <toolbar />
         <v-layout>
             <v-flex xs12 sm6 offset-sm3>
                 <v-card class="mt-4">
@@ -70,7 +71,12 @@
     import Vue from 'vue';
     import { setRoot } from '../../../http';
 
+    import Toolbar from '../../elements/toolbars/NoMenu.vue';
+
     export default Vue.extend({
+        components: {
+            Toolbar
+        },
         data() {
             return {
                 host: '',

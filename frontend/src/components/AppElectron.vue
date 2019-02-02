@@ -37,10 +37,11 @@
 </script>
 
 <style lang="scss" scoped>
-    $titleBarHeight: 22px;
+    $titleBarHeight: 10px;
 
     .darwin {
         .title-bar {
+            background: #000000;
             display: block;
             height: $titleBarHeight;
             left: 0;
