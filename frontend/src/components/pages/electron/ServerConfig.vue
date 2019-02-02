@@ -71,7 +71,7 @@
     import Vue from 'vue';
     import { setRoot } from '../../../http';
 
-    import Toolbar from '../../elements/toolbars/NoMenu.vue';
+    import Toolbar from '../../elements/toolbars/LoggedOut.vue';
 
     export default Vue.extend({
         components: {

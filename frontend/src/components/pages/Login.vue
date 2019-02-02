@@ -99,7 +99,7 @@
     import Vue from 'vue';
     import { mapState, mapActions } from 'vuex';
 
-    import Toolbar from '../elements/toolbars/NoMenu.vue';
+    import Toolbar from '../elements/toolbars/LoggedOut.vue';
 
     export default Vue.extend({
         components: {
