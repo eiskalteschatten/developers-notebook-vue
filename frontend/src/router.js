@@ -1,7 +1,7 @@
 import VueRouter from 'vue-router';
 import cookies from 'browser-cookies';
 
-import PageWrapper from './components/PageWrapper.vue';
+import MainLayout from './components/MainLayout.vue';
 import Login from './components/pages/Login.vue';
 
 import Home from './components/pages/Home.vue';
@@ -33,14 +33,14 @@ export default new VueRouter({
     },
     {
         path: '/:lang',
-        component: PageWrapper,
+        component: MainLayout,
         children: [{
             path: '',
             name: 'home',
             component: Home
         }]
     },
-    {   // Login should be a child of PageWrapper
+    {   // Login should be a child of MainLayout
         path: '/:lang/login',
         name: 'login',
         component: Login

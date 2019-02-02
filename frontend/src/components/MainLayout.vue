@@ -1,5 +1,6 @@
 <template>
     <div>
+        <toolbar />
         <router-view />
         <logout />
     </div>
@@ -8,10 +9,12 @@
 <script>
     import Vue from 'vue';
 
+    import Toolbar from './elements/toolbars/Main.vue';
     import Logout from './elements/Logout.vue';
 
     export default Vue.extend({
         components: {
+            Toolbar,
             Logout
         }
     });
