@@ -11,32 +11,23 @@
 
 <template>
     <div>
-        &copy; {{ copyrightYear }} <a :href="$t('alexseifertWebsite')" @click="openWebsite" target="_blank">Alex Seifert</a>
+        &copy; {{ copyrightYear }} <external-link :href="$t('alexseifertWebsite')" link-content="Alex Seifert" />
     </div>
 </template>
 
 <script>
     import Vue from 'vue';
 
+    import ExternalLink from '../../ExternalLink.vue';
+
     export default Vue.extend({
-        data() {
-            return {
-                isElectron: localStorage.getItem('isElectron')
-            };
+        components: {
+            ExternalLink
         },
         computed: {
             copyrightYear() {
                 const year = new Date().getFullYear();
                 return year === 2019 ? year : `2019 - ${year}`;
-            }
-        },
-        methods: {
-            openWebsite(event) {
-                if (this.isElectron) {
-                    event.preventDefault();
-                    const { shell } = require('electron');
-                    shell.openExternal(this.$t('alexseifertWebsite'));
-                }
             }
         }
     });
