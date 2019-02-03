@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar dark color="secondary" class="toolbar">
+    <v-toolbar dark color="secondary" class="toolbar" app>
         <v-flex xs12 class="text-xs-center">
             <img src="images/white-icon.svg" class="main-icon" />
         </v-flex>
