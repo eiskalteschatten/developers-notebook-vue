@@ -2,6 +2,15 @@ const path = require('path');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+const isElectron = process.env.WEBPACK_TARGET === 'electron';
+const plugins = [
+    new VueLoaderPlugin()
+];
+
+if (!isElectron) {
+    plugins.push(new webpack.IgnorePlugin(/electron/));
+}
+
 const commonConfig = {
     module: {
         rules: [{
@@ -73,13 +82,9 @@ const commonConfig = {
         hints: false
     },
     devtool: '#eval-source-map',
-    plugins: [
-        new VueLoaderPlugin()
-    ],
+    plugins,
     mode: process.env.NODE_ENV !== 'test' ? process.env.NODE_ENV : 'development'
 };
-
-const isElectron = process.env.WEBPACK_TARGET === 'electron';
 
 module.exports = [
     Object.assign({}, commonConfig, {
