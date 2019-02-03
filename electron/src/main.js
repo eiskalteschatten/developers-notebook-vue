@@ -29,6 +29,9 @@ async function createWindow() {
             const windowSettings = JSON.parse(data);
 
             const browserWindow = {
+                webPreferences: {
+                    nodeIntegration: true
+                },
                 width: windowSettings.width,
                 height: windowSettings.height,
                 icon: path.join(__dirname, './assets/images/icon128.png')
