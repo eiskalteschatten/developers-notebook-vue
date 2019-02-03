@@ -1,6 +1,8 @@
 <template>
     <v-toolbar dark color="secondary" class="toolbar">
-        <v-toolbar-title class="white--text">Developer's Notebook</v-toolbar-title>
+        <v-flex xs12 class="text-xs-center">
+            <img src="images/white-icon.svg" class="main-icon" />
+        </v-flex>
     </v-toolbar>
 </template>
 
@@ -12,6 +14,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .main-icon {
+        height: 30px;
+    }
+
     .electron {
         .toolbar {
             -webkit-app-region: drag;
