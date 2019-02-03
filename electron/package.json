@@ -59,11 +59,10 @@
         "url": "git@gitlab.com:eiskalteschatten/developers-notebook.git"
     },
     "devDependencies": {
+        "electron": "^4.0.4",
         "electron-builder": "^20.38.5",
         "mkdirp": "^0.5.1",
         "vue-devtools": "^5.0.0-beta.1"
     },
-    "dependencies": {
-        "electron": "^4.0.4"
-    }
+    "dependencies": {}
 }
