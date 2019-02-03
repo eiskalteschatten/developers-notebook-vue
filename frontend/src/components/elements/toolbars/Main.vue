@@ -17,7 +17,7 @@
             <v-toolbar-side-icon v-if="$vuetify.breakpoint.mdAndDown" @click="toggleSidebar" />
         </v-flex>
         <v-flex xs4 class="text-xs-center">
-            <img src="images/white-icon.svg" class="main-icon" />
+            <img src="images/white-icon.svg" class="main-icon">
         </v-flex>
         <v-flex xs4 class="text-xs-right">
             <v-menu left :nudge-bottom="40">
@@ -53,7 +53,6 @@
                     </v-list-tile>
                 </v-list>
             </v-menu>
-
         </v-flex>
     </v-toolbar>
 </template>
