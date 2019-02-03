@@ -6,6 +6,7 @@
     "scripts": {
         "build": "node ./build-scripts/build.js && cd ../frontend && WEBPACK_TARGET=electron npm run build",
         "build:prod": "node ./build-scripts/build.js && cd ../frontend && WEBPACK_TARGET=electron npm run build:prod",
+        "prestart": "NODE_ENV=development node ./build-scripts/build.js",
         "start": "bash startDev.sh",
         "prestart:prod": "npm run build:prod",
         "start:prod": "electron .",
