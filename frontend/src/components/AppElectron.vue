@@ -28,8 +28,14 @@
                 this.showTitlebar = true;
             }
 
-            const theme = remote.systemPreferences.isDarkMode() ? 'dark' : 'light';
-            this.setTheme(theme);
+            this.setVueTheme();
+
+            if (process.platform === 'darwin') {
+                remote.systemPreferences.subscribeNotification(
+                    'AppleInterfaceThemeChangedNotification',
+                    this.setVueTheme
+                );
+            }
         },
         methods: {
             ...mapMutations('settings', [
@@ -37,6 +43,10 @@
             ]),
             maximizeWindow() {
                 remote.getCurrentWindow().maximize();
+            },
+            setVueTheme() {
+                const theme = remote.systemPreferences.isDarkMode() ? 'dark' : 'light';
+                this.setTheme(theme);
             }
         }
     });
