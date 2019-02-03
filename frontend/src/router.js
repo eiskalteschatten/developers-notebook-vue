@@ -2,6 +2,7 @@ import VueRouter from 'vue-router';
 import cookies from 'browser-cookies';
 
 import MainLayout from './components/MainLayout.vue';
+import LoggedOutLayout from './components/LoggedOutLayout.vue';
 import Login from './components/pages/Login.vue';
 
 import Home from './components/pages/Home.vue';
@@ -40,15 +41,23 @@ export default new VueRouter({
             component: Home
         }]
     },
-    {   // Login should be a child of MainLayout
+    {   // Login should not be a child of MainLayout
         path: '/:lang/login',
-        name: 'login',
-        component: Login
+        component: LoggedOutLayout,
+        children: [{
+            path: '',
+            name: 'login',
+            component: Login
+        }]
     },
-    {   // Server config should be a child of PageWrapper
+    {   // Server config should not be a child of PageWrapper
         path: '/:lang/electron/server-config',
-        name: 'electronServerConfig',
-        component: ServerConfig
+        component: LoggedOutLayout,
+        children: [{
+            path: '',
+            name: 'electronServerConfig',
+            component: ServerConfig
+        }]
     },
     {
         path: '*',

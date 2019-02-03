@@ -6,7 +6,6 @@
         "password": "Password",
         "loginVerb": "Log In",
         "required": "Required",
-        "chooseLanguage": "Choose Language",
         "incorrectUsernameOrPassword": "Incorrect username or password."
     },
     "de": {
@@ -15,96 +14,70 @@
         "password": "Passwort",
         "loginVerb": "Anmelden",
         "required": "Erforderlich",
-        "chooseLanguage": "Sprache auswählen",
         "incorrectUsernameOrPassword": "Falscher Benutzername oder falsches Passwort."
     }
 }
 </i18n>
 
 <template>
-    <div>
-        <toolbar />
-        <v-layout>
-            <v-flex xs12 md6 offset-md3>
-                <v-card class="mt-5">
-                    <v-card-title primary-title>
-                        <div>
-                            <div class="headline">{{ $t('login') }}</div>
-                        </div>
-                    </v-card-title>
-                    <v-form ref="form" lazy-validation @submit="submit">
-                        <v-card-text>
-                            <v-alert
-                                :value="errorLoggingIn"
-                                type="error"
-                                class="mb-4"
-                            >
-                                {{ $t('incorrectUsernameOrPassword') }}
-                            </v-alert>
+    <v-layout>
+        <v-flex xs12 md6 offset-md3>
+            <v-card class="mt-5">
+                <v-card-title primary-title>
+                    <div>
+                        <div class="headline">{{ $t('login') }}</div>
+                    </div>
+                </v-card-title>
+                <v-form ref="form" lazy-validation @submit="submit">
+                    <v-card-text>
+                        <v-alert
+                            :value="errorLoggingIn"
+                            type="error"
+                            class="mb-4"
+                        >
+                            {{ $t('incorrectUsernameOrPassword') }}
+                        </v-alert>
 
-                            <v-text-field
-                                :label="$t('username')"
-                                data-vv-name="username"
-                                :rules="rules"
-                                v-model="username"
-                                :error="usernameError"
-                            />
-                            <v-text-field
-                                :label="$t('password')"
-                                type="password"
-                                data-vv-name="password"
-                                :rules="rules"
-                                v-model="password"
-                                :error="passwordError"
-                            />
-                        </v-card-text>
-                        <v-card-actions class="pl-3 pr-3 pb-3">
-                            <v-flex xs6>
-                                <v-menu offset-y>
-                                    <v-btn slot="activator">
-                                        {{ $t('chooseLanguage') }}
-                                        <v-icon dark>arrow_drop_down</v-icon>
-                                    </v-btn>
-                                    <v-list>
-                                        <v-list-tile
-                                            v-for="(language, index) in languages"
-                                            :key="index"
-                                            @click="switchLanguages(language.code)"
-                                        >
-                                            <v-list-tile-title>{{ language.title }}</v-list-tile-title>
-                                        </v-list-tile>
-                                    </v-list>
-                                </v-menu>
-                            </v-flex>
-                            <v-flex xs6 class="text-xs-right">
-                                <v-btn
-                                    primary
-                                    color="primary"
-                                    type="submit"
-                                    :loading="loading"
-                                    :disabled="loading"
-                                >
-                                    {{ $t('loginVerb') }}
-                                </v-btn>
-                            </v-flex>
-                        </v-card-actions>
-                    </v-form>
-                </v-card>
-            </v-flex>
-        </v-layout>
-    </div>
+                        <v-text-field
+                            :label="$t('username')"
+                            data-vv-name="username"
+                            :rules="rules"
+                            v-model="username"
+                            :error="usernameError"
+                        />
+                        <v-text-field
+                            :label="$t('password')"
+                            type="password"
+                            data-vv-name="password"
+                            :rules="rules"
+                            v-model="password"
+                            :error="passwordError"
+                        />
+                    </v-card-text>
+                    <v-card-actions class="pl-3 pr-3 pb-3">
+                        <v-flex xs12 class="text-xs-right">
+                            <v-btn
+                                primary
+                                color="primary"
+                                type="submit"
+                                :loading="loading"
+                                :disabled="loading"
+                            >
+                                {{ $t('loginVerb') }}
+                            </v-btn>
+                        </v-flex>
+                    </v-card-actions>
+                </v-form>
+            </v-card>
+        </v-flex>
+    </v-layout>
 </template>
 
 <script>
     import Vue from 'vue';
     import { mapState, mapActions } from 'vuex';
 
-    import Toolbar from '../elements/toolbars/LoggedOut.vue';
-
     export default Vue.extend({
-        components: {
-            Toolbar
-        },
         data() {
             return {
                 username: '',
@@ -121,9 +94,6 @@
         computed: {
             ...mapState('user', [
                 'currentJwt'
-            ]),
-            ...mapState('settings', [
-                'languages'
             ])
         },
         created() {
@@ -161,9 +131,6 @@
                 else {
                     this.errorLoggingIn = true;
                 }
-            },
-            switchLanguages(lang) {
-                this.$router.push({ params: { lang } });
             }
         }
     });
