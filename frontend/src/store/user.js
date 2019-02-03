@@ -3,7 +3,7 @@ import http from '../http';
 export default {
     namespaced: true,
     state: {
-        user: {},
+        info: {},
         currentJwt: ''
     },
 
@@ -16,8 +16,8 @@ export default {
     },
 
     mutations: {
-        setUser(state, user) {
-            state.user = user;
+        setInfo(state, info) {
+            state.info = info;
         },
         setJwt(state, jwt) {
             state.currentJwt = jwt;
@@ -51,7 +51,7 @@ export default {
                 }
 
                 if (jwt && jwtIsValid) {
-                    commit('setUser', user);
+                    commit('setInfo', user);
                     commit('setJwt', jwt);
                     localStorage.setItem('jwt', jwt);
                     return true;

@@ -4,7 +4,6 @@
         <toolbar />
         <v-content>
             <router-view />
-            <logout />
         </v-content>
     </div>
 </template>
@@ -14,13 +13,11 @@
 
     import Toolbar from './elements/toolbars/Main.vue';
     import SideNav from './elements/SideNav.vue';
-    import Logout from './elements/Logout.vue';
 
     export default Vue.extend({
         components: {
             Toolbar,
-            SideNav,
-            Logout
+            SideNav
         }
     });
 </script>
