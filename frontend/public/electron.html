@@ -22,11 +22,10 @@
             window.onload = () => {
                 const body = document.getElementsByTagName('body')[0];
                 body.classList.add(process.platform);
-                body.classList.add('electron');
             };
         </script>
     </head>
-    <body>
+    <body class="electron">
         <div id="vueAnchor">
             <img src="images/loader.svg" class="initial-page-loader">
         </div>
