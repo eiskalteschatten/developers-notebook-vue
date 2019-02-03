@@ -26,7 +26,7 @@ async function createWindow() {
         }
 
         try {
-            const windowSettings = JSON.parse(data);
+            const windowSettings = typeof data === 'object' ? JSON.parse(data) : {};
 
             const browserWindow = {
                 webPreferences: {
