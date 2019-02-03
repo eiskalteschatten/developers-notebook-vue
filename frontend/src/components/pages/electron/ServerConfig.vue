@@ -21,8 +21,8 @@
 
 <template>
     <v-layout>
-        <v-flex xs12 sm6 offset-sm3>
-            <v-card class="mt-4">
+        <v-flex xs12 md6 offset-md3>
+            <v-card class="mt-5">
                 <v-card-title primary-title>
                     <div class="headline">{{ $t('configureServer') }}</div>
                 </v-card-title>

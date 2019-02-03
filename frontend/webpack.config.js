@@ -8,7 +8,7 @@ const plugins = [
 ];
 
 if (!isElectron) {
-    plugins.push(new webpack.IgnorePlugin(/electron/));
+    plugins.push(new webpack.IgnorePlugin(/^electron$/));
 }
 
 const commonConfig = {
