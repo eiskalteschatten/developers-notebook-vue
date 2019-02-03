@@ -1,12 +1,7 @@
 <i18n>
 {
     "en": {
-        "chooseLanguage": "Choose Language",
-        "alexseifertWebsite": "https://www.alexseifert.com"
-    },
-    "de": {
-        "chooseLanguage": "Sprache auswählen",
-        "alexseifertWebsite": "https://www.alexseifert.de"
+        "chooseLanguage": "Sprache auswählen"
     }
 }
 </i18n>
@@ -19,7 +14,7 @@
             </v-flex>
 
             <v-flex py-3 pr-3 text-xs-right xs12 sm6>
-                &copy; {{ copyrightYear }} <a :href="$t('alexseifertWebsite')" target="_blank">Alex Seifert</a>
+                <copyright />
             </v-flex>
         </v-layout>
     </v-footer>
@@ -29,16 +24,12 @@
     import Vue from 'vue';
 
     import LanguageSwitcher from '../LanguageSwitcher.vue';
+    import Copyright from './elements/Copyright.vue';
 
     export default Vue.extend({
         components: {
-            LanguageSwitcher
-        },
-        computed: {
-            copyrightYear() {
-                const year = new Date().getFullYear();
-                return year === 2019 ? year : `2019 - ${year}`;
-            }
+            LanguageSwitcher,
+            Copyright
         }
     });
 </script>
