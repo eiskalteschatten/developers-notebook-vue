@@ -9,7 +9,7 @@
 
 <script>
     import Vue from 'vue';
-    import { mapState } from 'vuex';
+    import { mapState, mapMutations } from 'vuex';
     import { remote } from 'electron';
 
     export default Vue.extend({
@@ -27,8 +27,14 @@
             if (process.platform === 'darwin') {
                 this.showTitlebar = true;
             }
+
+            const theme = remote.systemPreferences.isDarkMode() ? 'dark' : 'light';
+            this.setTheme(theme);
         },
         methods: {
+            ...mapMutations('settings', [
+                'setTheme'
+            ]),
             maximizeWindow() {
                 remote.getCurrentWindow().maximize();
             }
