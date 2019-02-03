@@ -3,7 +3,10 @@
         <side-nav />
         <toolbar />
         <v-content>
-            <router-view />
+            <v-container fluid>
+                <router-view />
+            </v-container>
+            <main-footer />
         </v-content>
     </div>
 </template>
@@ -13,11 +16,13 @@
 
     import Toolbar from './elements/toolbars/Main.vue';
     import SideNav from './elements/SideNav.vue';
+    import MainFooter from './elements/footers/Main.vue';
 
     export default Vue.extend({
         components: {
             Toolbar,
-            SideNav
+            SideNav,
+            MainFooter
         }
     });
 </script>

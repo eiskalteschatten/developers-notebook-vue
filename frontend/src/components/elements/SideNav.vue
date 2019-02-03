@@ -42,7 +42,7 @@
                     </v-list-tile-action>
 
                     <v-list-tile-content>
-                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                        <v-list-tile-title>{{ $t(item.title) }}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
@@ -83,9 +83,9 @@
             return {
                 drawer: !this.$vuetify.breakpoint.mdAndDown,
                 items: [
-                    { title: this.$t('dashboard'), icon: 'dashboard', routeName: 'dashboard' },
-                    { title: this.$t('clients'), icon: 'people', routeName: 'clients' },
-                    { title: this.$t('categories'), icon: 'category', routeName: 'categories' }
+                    { title: 'dashboard', icon: 'dashboard', routeName: 'home' },
+                    { title: 'clients', icon: 'people', routeName: 'clients' },
+                    { title: 'categories', icon: 'category', routeName: 'categories' }
                 ],
                 miniData: true
             };
