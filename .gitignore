@@ -32,8 +32,10 @@ node_modules
 
 .data
 
-server/src/config/local.js
+electron/dist
 
 frontend/public/dist
+
+server/src/config/local.js
 
 *.code-workspace
