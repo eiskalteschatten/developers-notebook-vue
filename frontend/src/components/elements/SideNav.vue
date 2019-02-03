@@ -32,17 +32,6 @@
     >
         <v-layout column fill-height>
             <v-list>
-                <v-list-tile @click="toggleMini" v-if="$vuetify.breakpoint.lgAndUp">
-                    <v-list-tile-action>
-                        <v-icon>{{ toggleIcon }}</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{ toggleLabel }}</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-
-                <v-divider v-if="$vuetify.breakpoint.lgAndUp" />
-
                 <v-list-tile
                     v-for="item in items"
                     :key="item.title"
@@ -61,7 +50,17 @@
             <v-spacer />
 
             <v-list>
+                <v-list-tile @click="toggleMini" v-if="$vuetify.breakpoint.lgAndUp">
+                    <v-list-tile-action>
+                        <v-icon>{{ toggleIcon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{ toggleLabel }}</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+
                 <v-divider />
+
                 <v-list-tile @click="$router.push({ name: 'settings' })">
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
