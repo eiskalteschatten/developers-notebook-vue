@@ -4,12 +4,9 @@ const config = require('config');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-// const tempToken = require('../lib/authentication/tempToken');
-
 module.exports = router => {
     router.post('/login', async (req, res, next) => {
         try {
-            // await tempToken.checkIfTokenIsValid(req.body.authToken);
             passport.authenticate('local-login', { session: false }, (error, user) => {
                 if (error) {
                     console.error(new Error(error));
