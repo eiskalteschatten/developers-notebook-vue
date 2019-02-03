@@ -23,7 +23,8 @@
     <v-navigation-drawer
         clipped
         fixed
-        permanent="false"
+        disable-route-watcher
+        :permanent="false"
         :mini-variant="mini"
         v-model="drawer"
         app
@@ -31,7 +32,7 @@
     >
         <v-layout column fill-height>
             <v-list>
-                <v-list-tile @click="toggleMiniDrawer">
+                <v-list-tile @click="toggleMini" v-if="$vuetify.breakpoint.lgAndUp">
                     <v-list-tile-action>
                         <v-icon>{{ toggleIcon }}</v-icon>
                     </v-list-tile-action>
@@ -40,7 +41,7 @@
                     </v-list-tile-content>
                 </v-list-tile>
 
-                <v-divider />
+                <v-divider v-if="$vuetify.breakpoint.lgAndUp" />
 
                 <v-list-tile
                     v-for="item in items"
@@ -76,17 +77,18 @@
 
 <script>
     import Vue from 'vue';
+    import eventBus from '../../eventBus';
 
     export default Vue.extend({
         data () {
             return {
-                drawer: true,
+                drawer: !this.$vuetify.breakpoint.mdAndDown,
                 items: [
                     { title: this.$t('dashboard'), icon: 'dashboard', routeName: 'dashboard' },
                     { title: this.$t('clients'), icon: 'people', routeName: 'clients' },
                     { title: this.$t('categories'), icon: 'category', routeName: 'categories' }
                 ],
-                mini: true
+                miniData: true
             };
         },
         computed: {
@@ -95,11 +97,25 @@
             },
             toggleLabel() {
                 return this.mini ? this.$t('showSidebar') : this.$t('hideSidebar');
+            },
+            mini: {
+                get() {
+                    return this.$vuetify.breakpoint.mdAndDown ? false : this.miniData;
+                },
+                set(mini) {
+                    this.miniData = mini;
+                }
             }
         },
-        methods:{
-             toggleMiniDrawer() {
+        created() {
+            eventBus.$on('toggleSidebar', this.toggleSidebar);
+        },
+        methods: {
+            toggleMini() {
                 this.mini = !this.mini;
+            },
+            toggleSidebar() {
+                this.drawer = !this.drawer;
             }
         }
     });
