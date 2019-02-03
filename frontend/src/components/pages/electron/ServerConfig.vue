@@ -5,6 +5,7 @@
         "save": "Save",
         "required": "Required",
         "configureServer": "Configure Server",
+        "description": "Enter the host of the server application. Both the protocol as well as the port (if applicable) must be included.",
         "couldNotConnectToServer": "There was an error connecting to the server."
     },
     "de": {
@@ -12,6 +13,7 @@
         "save": "Speichern",
         "required": "Erforderlich",
         "configureServer": "Server konfigurieren",
+        "description": "Geben Sie den Host des Anwendungsservers ein. Sowohl das Protokoll als auch der Port (falls nötig) müssen mit eingegeben werden.",
         "couldNotConnectToServer": "Die Serververbindung ist fehlgeschlagen."
     }
 }
@@ -22,10 +24,11 @@
         <v-flex xs12 sm6 offset-sm3>
             <v-card class="mt-4">
                 <v-card-title primary-title>
-                    <div>
-                        <div class="headline">{{ $t('configureServer') }}</div>
-                    </div>
+                    <div class="headline">{{ $t('configureServer') }}</div>
                 </v-card-title>
+                <v-card-text>
+                    {{ $t('description') }}
+                </v-card-text>
                 <v-form ref="form" lazy-validation @submit="submit">
                     <v-card-text>
                         <v-alert

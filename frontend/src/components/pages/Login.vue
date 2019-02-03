@@ -24,9 +24,7 @@
         <v-flex xs12 md6 offset-md3>
             <v-card class="mt-5">
                 <v-card-title primary-title>
-                    <div>
-                        <div class="headline">{{ $t('login') }}</div>
-                    </div>
+                    <div class="headline">{{ $t('login') }}</div>
                 </v-card-title>
                 <v-form ref="form" lazy-validation @submit="submit">
                     <v-card-text>
