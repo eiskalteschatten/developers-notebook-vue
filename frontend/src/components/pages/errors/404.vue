@@ -12,10 +12,24 @@
 </i18n>
 
 <template>
-    <div>
-        <h1 class="page-title">{{ $t('pageNotFound') }}</h1>
-        <p>{{ $t('pageNotFoundSentence') }}</p>
-    </div>
+    <v-layout>
+        <v-flex xs12 md6 offset-md3>
+            <v-card class="mt-5">
+                <v-card-title primary-title>
+                    <div class="headline">{{ $t('pageNotFound') }}</div>
+                </v-card-title>
+                <v-card-text>
+                    <v-alert
+                        :value="true"
+                        type="error"
+                        class="mb-4"
+                    >
+                        {{ $t('pageNotFoundSentence') }}
+                    </v-alert>
+                </v-card-text>
+            </v-card>
+        </v-flex>
+    </v-layout>
 </template>
 
 <script>

@@ -73,7 +73,11 @@ export default new VueRouter({
     },
     {
         path: '*',
-        name: '404',
-        component: NotFound
+        component: MainLayout,
+        children: [{
+            path: '',
+            name: '404',
+            component: NotFound
+        }]
     }]
 });
