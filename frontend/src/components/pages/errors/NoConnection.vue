@@ -1,20 +1,14 @@
 <i18n>
 {
     "en": {
-        "login": "Login",
-        "username": "Username",
-        "password": "Password",
-        "loginVerb": "Log In",
-        "required": "Required",
-        "incorrectUsernameOrPassword": "Incorrect username or password."
+        "tryAgain": "Try Again",
+        "noConnection": "No Connection to the Server",
+        "noConnectionText": "Developer's Notebook cannot connect to the server."
     },
     "de": {
-        "login": "Anmeldung",
-        "username": "Benutzername",
-        "password": "Passwort",
-        "loginVerb": "Anmelden",
-        "required": "Erforderlich",
-        "incorrectUsernameOrPassword": "Falscher Benutzername oder falsches Passwort."
+        "tryAgain": "Noch einmal versuchen",
+        "noConnection": "Keine Verbindung zum Server",
+        "noConnectionText": "Developer's Notebook kann nicht mit dem Server verbinden."
     }
 }
 </i18n>
@@ -24,7 +18,7 @@
         <v-flex xs12 md6 offset-md3>
             <v-card class="mt-5">
                 <v-card-title primary-title>
-                    <div class="headline">{{ $t('login') }}</div>
+                    <div class="headline">{{ $t('noConnection') }}</div>
                 </v-card-title>
                 <v-card-text>
                     <v-alert
@@ -32,7 +26,7 @@
                         type="error"
                         class="mb-4"
                     >
-                        {{ $t('incorrectUsernameOrPassword') }}
+                        {{ $t('noConnectionText') }}
                     </v-alert>
                 </v-card-text>
                 <v-card-actions class="pl-3 pr-3 pb-3">
@@ -44,7 +38,7 @@
                             :loading="loading"
                             :disabled="loading"
                         >
-                            {{ $t('loginVerb') }}
+                            {{ $t('tryAgain') }}
                         </v-btn>
                     </v-flex>
                 </v-card-actions>

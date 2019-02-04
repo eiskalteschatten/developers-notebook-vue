@@ -9,6 +9,7 @@ import de from 'vuetify/es5/locale/de';
 
 import cookies from 'browser-cookies';
 
+import checkOnlineStatus from './lib/checkOnlineStatus';
 import theme from './theme';
 import store from './store';
 import http from './http';
@@ -60,6 +61,7 @@ new Vue({
         const hasServerConfig = this.hasServerConfig();
 
         if (hasServerConfig) {
+            checkOnlineStatus(this.$router, this.$route);
             this.determineAuthentication();
         }
     },
