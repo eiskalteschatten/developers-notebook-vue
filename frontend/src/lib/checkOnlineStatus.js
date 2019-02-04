@@ -8,7 +8,7 @@ let numberOfAttempts = 0;
 function goOnline() {
     clearInterval(interval);
     numberOfAttempts = 0;
-    interval = setInterval(pingServer, 300000);
+    interval = setInterval(pingServer, 60000);
     router.replace({ name: route.name });
 }
 
