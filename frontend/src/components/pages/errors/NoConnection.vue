@@ -50,25 +50,18 @@
 <script>
     import Vue from 'vue';
 
+    import { pingServer } from '../../../lib/checkOnlineStatus';
+
     export default Vue.extend({
         data() {
             return {
                 loading: false
             };
         },
-        created() {
-            if (this.currentJwt) {
-                this.$router.push({ name: 'home' });
-            }
-        },
         methods: {
             async refresh() {
                 this.loading = true;
-
-                if (loggedIn) {
-                    this.$router.replace({ name: 'home' });
-                }
-
+                await pingServer();
                 this.loading = false;
             }
         }
