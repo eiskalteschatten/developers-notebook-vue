@@ -2,10 +2,7 @@
 
 const {app, shell} = require('electron');
 
-const path = require('path');
-
 const config = require('../config/config');
-
 
 const template = [
     {
@@ -57,23 +54,6 @@ const template = [
         label: 'View',
         submenu: [
             {
-                id: 'lightTheme',
-                label: 'Light Theme',
-                type: 'checkbox',
-                // click: (item, focusedWindow) => {
-                //     themePreferences.changeTheme('light', focusedWindow);
-                // }
-            },
-            {
-                id: 'darkTheme',
-                label: 'Dark Theme',
-                type: 'checkbox',
-                // click: (item, focusedWindow) => {
-                //     themePreferences.changeTheme('dark', focusedWindow);
-                // }
-            },
-            {type: 'separator'},
-            {
                 label: 'Clients',
                 accelerator: 'CmdOrCtrl+1',
                 click: async (item, focusedWindow) => {
@@ -120,15 +100,6 @@ const template = [
     {
         role: 'help',
         submenu: [
-            {
-                label: 'Show Database Location',
-                click: () => {
-                    const dbConfig = config.database;
-                    const databasePath = path.join(dbConfig.path, dbConfig.fileName);
-                    shell.showItemInFolder(databasePath);
-                }
-            },
-            {type: 'separator'},
             {
                 label: 'About Alex Seifert',
                 click: () => { shell.openExternal('https://www.alexseifert.com'); }
