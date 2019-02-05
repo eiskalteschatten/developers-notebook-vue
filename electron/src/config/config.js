@@ -4,8 +4,6 @@ const path = require('path');
 const os = require('os');
 const fs = require('fs');
 
-const env = process.env.NODE_ENV;
-
 let storagePath;
 
 switch(process.platform) {
@@ -40,9 +38,5 @@ module.exports = {
     },
     updates: {
         url: 'https://www.alexseifert.com/devnotebook/api/check-for-updates/'
-    },
-    database: {
-        path: storagePath,
-        fileName: env === 'development' ? 'devnotebook-dev.sqlite' : 'devnotebook.sqlite'
     }
 };
