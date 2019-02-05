@@ -29,6 +29,7 @@
         v-model="drawer"
         app
         dark
+        mobile-break-point="960"
     >
         <v-layout column fill-height>
             <v-list>
@@ -50,7 +51,7 @@
             <v-spacer />
 
             <v-list>
-                <v-list-tile @click="toggleMini" v-if="$vuetify.breakpoint.lgAndUp">
+                <v-list-tile @click="toggleMini" v-if="$vuetify.breakpoint.mdAndUp">
                     <v-list-tile-action>
                         <v-icon>{{ toggleIcon }}</v-icon>
                     </v-list-tile-action>
@@ -81,7 +82,7 @@
     export default Vue.extend({
         data () {
             return {
-                drawer: !this.$vuetify.breakpoint.mdAndDown,
+                drawer: !this.$vuetify.breakpoint.smAndDown,
                 items: [
                     { title: 'dashboard', icon: 'dashboard', routeName: 'home' },
                     { title: 'clients', icon: 'people', routeName: 'clients' },
@@ -99,7 +100,7 @@
             },
             mini: {
                 get() {
-                    return this.$vuetify.breakpoint.mdAndDown ? false : this.miniData;
+                    return this.$vuetify.breakpoint.smAndDown ? false : this.miniData;
                 },
                 set(mini) {
                     this.miniData = mini;

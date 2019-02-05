@@ -14,7 +14,7 @@
 <template>
     <v-toolbar dark color="secondary" class="toolbar" app clipped-left>
         <v-flex xs4>
-            <v-toolbar-side-icon v-if="$vuetify.breakpoint.mdAndDown" @click="toggleSidebar" />
+            <v-toolbar-side-icon v-if="$vuetify.breakpoint.smAndDown" @click="toggleSidebar" />
         </v-flex>
         <v-flex xs4 class="text-xs-center">
             <img src="images/white-icon.svg" class="main-icon">
