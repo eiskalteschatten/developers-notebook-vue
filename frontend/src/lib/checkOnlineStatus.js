@@ -9,7 +9,9 @@ function goOnline() {
     clearInterval(interval);
     numberOfAttempts = 0;
     interval = setInterval(pingServer, 60000);
-    router.replace({ name: route.name });
+
+    const newRoute = route.name === 'errorNoConnection' ? 'home' : route.name;
+    router.replace({ name: newRoute });
 }
 
 function goOffline() {
