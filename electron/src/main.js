@@ -10,6 +10,7 @@ const appConfig = config.app;
 const appMenu = require('./menus/app');
 
 const windowSettingsPath = path.join(appConfig.storagePath, appConfig.windowSettingsFile);
+const defaultSettings = require('./config/windowSettings');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -26,7 +27,7 @@ async function createWindow() {
         }
 
         try {
-            const windowSettings = typeof data === 'object' ? JSON.parse(data) : {};
+            const windowSettings = typeof data === 'string' ? JSON.parse(data) : defaultSettings;
 
             const browserWindow = {
                 webPreferences: {
