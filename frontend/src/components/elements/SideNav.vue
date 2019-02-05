@@ -121,5 +121,11 @@
 </script>
 
 <style lang="scss">
-
+    .electron {
+        &.darwin {
+            .v-navigation-drawer--is-mobile {
+                padding-top: 25px;
+            }
+        }
+    }
 </style>

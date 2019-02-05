@@ -92,9 +92,12 @@
     }
 
     .electron {
-        .toolbar {
-            -webkit-app-region: drag;
-            -webkit-user-select: none;
+        &.darwin {
+            .toolbar {
+                padding-top: 10px;
+                -webkit-app-region: drag;
+                -webkit-user-select: none;
+            }
         }
     }
 </style>
