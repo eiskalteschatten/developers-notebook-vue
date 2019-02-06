@@ -24,12 +24,13 @@ module.exports = app => {
             res.status(error.status || 500).send(error.message);
         });
     }
-
-    // Production error handler - no stacktraces leaked to user
-    app.use((error, req, res) => {
-        console.error(error.message);
-        res.status(error.status || 500).send(translations[req.preferedLanguage].anErrorOccurred);
-    });
+    else {
+        // Production error handler - no stacktraces leaked to user
+        app.use((error, req, res) => {
+            console.error(error.message);
+            res.status(error.status || 500).send(translations[req.preferedLanguage].anErrorOccurred);
+        });
+    }
 
     return app;
 };
