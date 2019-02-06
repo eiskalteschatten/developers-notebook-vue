@@ -9,12 +9,14 @@ import de from 'vuetify/es5/locale/de';
 
 import cookies from 'browser-cookies';
 
-import setupMenuEvents from './electron/menuEvents';
 import checkOnlineStatus from './lib/checkOnlineStatus';
 import theme from './theme';
 import store from './store';
 import http from './http';
 import router from './router';
+
+import setupMenuEvents from './electron/menuEvents';
+import setupContextMenus from './electron/setupContextMenus';
 
 import App from './components/AppElectron.vue';
 
@@ -67,6 +69,7 @@ new Vue({
         }
 
         setupMenuEvents();
+        setupContextMenus();
     },
     methods: {
         ...mapActions('user', [
