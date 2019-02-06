@@ -57,21 +57,21 @@ const template = [
                 label: 'Clients',
                 accelerator: 'CmdOrCtrl+1',
                 click: async (item, focusedWindow) => {
-                    focusedWindow.webContents.send('open-route', '/clients');
+                    focusedWindow.webContents.send('open-route-name', 'clients');
                 }
             },
             {
                 label: 'Categories',
                 accelerator: 'CmdOrCtrl+2',
                 click: async (item, focusedWindow) => {
-                    focusedWindow.webContents.send('open-route', '/categories');
+                    focusedWindow.webContents.send('open-route-name', 'categories');
                 }
             },
             // {
             //     label: 'Projects',
             //     accelerator: 'CmdOrCtrl+1',
             //     click: async (item, focusedWindow) => {
-            //         focusedWindow.webContents.send('open-route', '/projects');
+            //         focusedWindow.webContents.send('open-route-name', '/projects');
             //     }
             // },
             {type: 'separator'},
@@ -123,7 +123,7 @@ if (process.platform === 'darwin') {
                 label: 'Preferences',
                 accelerator: 'Cmd+,',
                 click: (item, focusedWindow) => {
-                    focusedWindow.webContents.send('open-route', '/preferences');
+                    focusedWindow.webContents.send('open-route-name', 'preferences');
                 }
             },
             {type: 'separator'},
@@ -165,7 +165,7 @@ else {
             label: 'Preferences',
             accelerator: 'Ctrl+,',
             click: (item, focusedWindow) => {
-                focusedWindow.webContents.send('open-route', '/preferences');
+                focusedWindow.webContents.send('open-route-name', 'preferences');
             }
         }
     );

@@ -9,6 +9,7 @@ import de from 'vuetify/es5/locale/de';
 
 import cookies from 'browser-cookies';
 
+import setupMenuEvents from './electron/menuEvents';
 import checkOnlineStatus from './lib/checkOnlineStatus';
 import theme from './theme';
 import store from './store';
@@ -64,6 +65,8 @@ new Vue({
             checkOnlineStatus(this.$router, this.$route);
             this.determineAuthentication();
         }
+
+        setupMenuEvents();
     },
     methods: {
         ...mapActions('user', [
