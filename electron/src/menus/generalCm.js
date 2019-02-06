@@ -3,7 +3,6 @@
 
 const template = [
     {
-        id: 'copy',
         role: 'copy'
     }
 ];
