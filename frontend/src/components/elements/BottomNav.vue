@@ -18,14 +18,16 @@
         absolute
         color="transparent"
     >
-        <v-btn color="primary" flat value="home">
-            <span>{{ $t('dashboard') }}</span>
-            <v-icon>dashboard</v-icon>
-        </v-btn>
-
-        <v-btn color="primary" flat value="clients">
-            <span>{{ $t('clients') }}</span>
-            <v-icon>people</v-icon>
+        <v-btn
+            v-for="item in items"
+            :key="item.title"
+            color="primary"
+            flat
+            :value="item.routeName"
+            @click="$router.push({ name: item.routeName })"
+        >
+            <span>{{ $t(item.title) }}</span>
+            <v-icon>{{ item.icon }}</v-icon>
         </v-btn>
     </v-bottom-nav>
 </template>
@@ -34,6 +36,14 @@
     import Vue from 'vue';
 
     export default Vue.extend({
+        data () {
+            return {
+                items: [
+                    { title: 'dashboard', icon: 'dashboard', routeName: 'home' },
+                    { title: 'clients', icon: 'people', routeName: 'clients' },
+                ]
+            };
+        },
         computed: {
             bottomNav() {
                 return this.$route.name;
