@@ -19,7 +19,7 @@ const config = require('config');
 const translations = config.get('translations');
 
 const configureFrontend = require('./lib/configureFrontend');
-const {setupErrorHandling} = require('./lib/errorHandling');
+const setupErrorHandling = require('./lib/errorHandling');
 
 const setupPassport = require('./lib/authentication/setupPassport');
 const setupCronjobs = require('./cronjobs');
