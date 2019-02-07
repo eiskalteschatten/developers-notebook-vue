@@ -20,12 +20,14 @@ export const routeTitles = {
     en: {
         home: 'Dashboard',
         login: 'Login',
+        accountSettings: 'Account Settings',
         errorNoConnection: 'No Connection',
         '404': 'Page not found'
     },
     de: {
         home: 'Dashboard',
-        login: 'Anmeldung',
+        login: 'Login',
+        accountSettings: 'Kontoeinstellungen',
         errorNoConnection: 'Keine Verbindung',
         '404': 'Seite nicht gefunden'
     }
@@ -45,7 +47,7 @@ export default new VueRouter({
             component: Home
         },
         {
-            path: '/account-settings',
+            path: 'account-settings',
             name: 'accountSettings',
             component: AccountSettings
         }]
