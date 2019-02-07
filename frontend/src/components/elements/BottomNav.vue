@@ -45,8 +45,11 @@
             };
         },
         computed: {
-            bottomNav() {
-                return this.$route.name;
+            bottomNav: {
+                get() {
+                    return this.$route.name || '';
+                },
+                set() {}
             }
         }
     });
