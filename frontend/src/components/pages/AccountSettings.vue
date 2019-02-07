@@ -122,6 +122,9 @@
                 this.values = userInfo;
             }
         },
+        mounted() {
+            this.values = this.userInfo;
+        },
         methods: {
             ...mapActions('user', [
                 'saveUserInfo'
