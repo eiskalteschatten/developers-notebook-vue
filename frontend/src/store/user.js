@@ -76,6 +76,9 @@ export default {
             catch(error) {
                 return false;
             }
+        },
+        async saveUserInfo({ commit }, body) {
+            console.log(commit, body);
         }
     }
 };
