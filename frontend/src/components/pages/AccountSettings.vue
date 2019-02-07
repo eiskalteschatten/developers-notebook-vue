@@ -11,22 +11,22 @@
 
 <template>
     <v-layout>
-        <centered-colunn>
+        <centered-column>
             <v-card class="pa-3">
                 <h1>{{ $t('accountSettings') }}</h1>
             </v-card>
-        </centered-colunn>
+        </centered-column>
     </v-layout>
 </template>
 
 <script>
     import Vue from 'vue';
 
-    import CenteredColunn from '../elements/layout/CenteredColumn.vue';
+    import CenteredColumn from '../elements/layout/CenteredColumn.vue';
 
     export default Vue.extend({
         components: {
-            CenteredColunn
+            CenteredColumn
         }
     });
 </script>
