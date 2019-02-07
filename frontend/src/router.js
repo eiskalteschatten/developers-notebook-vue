@@ -5,6 +5,7 @@ import MainLayout from './components/MainLayout.vue';
 import LoggedOutLayout from './components/LoggedOutLayout.vue';
 
 import Home from './components/pages/Home.vue';
+import AccountSettings from './components/pages/AccountSettings.vue';
 
 import Login from './components/pages/Login.vue';
 import ServerConfig from './components/pages/electron/ServerConfig.vue';
@@ -42,6 +43,11 @@ export default new VueRouter({
             path: '',
             name: 'home',
             component: Home
+        },
+        {
+            path: '/account-settings',
+            name: 'accountSettings',
+            component: AccountSettings
         }]
     },
     {   // Login should not be a child of MainLayout
