@@ -1,8 +1,6 @@
 <template>
     <div>
-        Home test
-
-        <input type="text">
+        <h1>Developer's Notebook</h1>
     </div>
 </template>
 
