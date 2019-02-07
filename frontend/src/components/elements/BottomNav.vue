@@ -15,6 +15,7 @@
     <v-bottom-nav
         :active.sync="bottomNav"
         :value="$vuetify.breakpoint.smAndDown"
+        v-if="$vuetify.breakpoint.smAndDown"
         absolute
         color="transparent"
     >
