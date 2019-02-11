@@ -247,20 +247,25 @@
 
                 this.loading = true;
 
-                // Save passwords here
-                const code = 200;
+                try {
+                    const res = await this.$http.put('api/user/change-password', this.passwords);
+
+                    if (res.status >= 300) {
+                        this.passwordAlertType = 'error';
+                        this.passwordAlertMessage = this.$te(res.bodyText) ? res.bodyText : 'anErrorOccurred';
+                    }
+                    else {
+                        this.passwordAlertType = 'success';
+                        this.passwordAlertMessage = 'changesSaved';
+                    }
+                }
+                catch(error) {
+                    console.error(error);
+                    this.passwordAlertType = 'error';
+                    this.passwordAlertMessage = this.$te(error.bodyText) ? error.bodyText : 'anErrorOccurred';
+                }
 
                 this.loading = false;
-
-                if (code >= 300) {
-                    this.passwordAlertType = 'error';
-                    this.alertMessage = this.$te(message) ? message : 'anErrorOccurred';
-                }
-                else {
-                    this.passwordAlertType = 'success';
-                    this.passwordAlertMessage = 'changesSaved';
-                }
-
                 this.passwordAlert = true;
             },
             allFieldsValid(fields) {
