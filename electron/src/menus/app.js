@@ -120,10 +120,16 @@ if (process.platform === 'darwin') {
             },
             {type: 'separator'},
             {
-                label: 'Preferences',
+                label: 'Preferences...',
                 accelerator: 'Cmd+,',
                 click: (item, focusedWindow) => {
                     focusedWindow.webContents.send('open-route-name', 'preferences');
+                }
+            },
+            {
+                label: 'Account Settings...',
+                click: (item, focusedWindow) => {
+                    focusedWindow.webContents.send('open-route-name', 'accountSettings');
                 }
             },
             {type: 'separator'},
@@ -162,10 +168,16 @@ else {
     template[1].submenu.push(
         {type: 'separator'},
         {
-            label: 'Preferences',
+            label: 'Preferences...',
             accelerator: 'Ctrl+,',
             click: (item, focusedWindow) => {
                 focusedWindow.webContents.send('open-route-name', 'preferences');
+            }
+        },
+        {
+            label: 'Account Settings...',
+            click: (item, focusedWindow) => {
+                focusedWindow.webContents.send('open-route-name', 'accountSettings');
             }
         }
     );
