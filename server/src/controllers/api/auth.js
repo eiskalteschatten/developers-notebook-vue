@@ -4,6 +4,13 @@ const config = require('config');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
+function cleanUser(user) {
+    delete user.password;
+    delete user.createdAt;
+    delete user.updatedAt;
+    return user;
+}
+
 module.exports = router => {
     router.post('/login', async (req, res, next) => {
         try {
@@ -33,11 +40,7 @@ module.exports = router => {
                     const userRaw = user.get();
                     const token = jwt.sign(userRaw, config.get('jwt.secret'));
 
-                    delete userRaw.password;
-                    delete userRaw.createdAt;
-                    delete userRaw.updatedAt;
-
-                    return res.json({ user: userRaw, token });
+                    return res.json({ user: cleanUser(userRaw), token });
                 });
             })(req, res, next);
         }
@@ -59,6 +62,6 @@ module.exports = router => {
     });
 
     router.post('/validate', (req, res) => {
-        res.json({ user: req.user });
+        res.json({ user: cleanUser(req.user.get()) });
     });
 };
