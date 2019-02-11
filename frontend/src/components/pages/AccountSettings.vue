@@ -6,7 +6,10 @@
         "firstName": "First Name",
         "lastName": "Last Name",
         "emailAddress": "Email Address",
+        "changePassword": "Change Password",
+        "currentPassword": "Current Password",
         "password": "Password",
+        "confirmPassword": "Confirm New Password",
         "required": "Required",
         "incorrectUsernameOrPassword": "Incorrect username or password.",
         "save": "Save"
@@ -17,7 +20,10 @@
         "firstName": "Vorname",
         "lastName": "Nachname",
         "emailAddress": "Emailadresse",
+        "changePassword": "Passwort ändern",
+        "currentPassword": "Aktuelles Passwort",
         "password": "Passwort",
+        "confirmPassword": "Neues Passwort bestätigen",
         "required": "Erforderlich",
         "incorrectUsernameOrPassword": "Falscher Benutzername oder falsches Passwort.",
         "save": "Speichern"
@@ -28,7 +34,7 @@
 <template>
     <v-layout>
         <centered-column>
-            <v-card class="pa-3">
+            <v-card class="pa-3 mb-5">
                 <v-card-title primary-title>
                     <h1>{{ $t('accountSettings') }}</h1>
                 </v-card-title>
@@ -86,6 +92,61 @@
                     </v-card-actions>
                 </v-form>
             </v-card>
+
+            <v-card class="pa-3">
+                <v-card-title primary-title>
+                    <h1>{{ $t('changePassword') }}</h1>
+                </v-card-title>
+                <v-form ref="passwordForm" lazy-validation @submit="submitPassword">
+                    <v-card-text>
+                        <v-alert
+                            :value="passwordAlertMessage"
+                            :type="passwordAlertType"
+                            class="mb-4"
+                        >
+                            {{ $t('incorrectUsernameOrPassword') }}
+                        </v-alert>
+
+                        <v-text-field
+                            :label="$t('currentPassword')"
+                            type="password"
+                            data-vv-name="currentPassword"
+                            :rules="rules"
+                            v-model="passwords.currentPassword"
+                            :error="errors.lastNameError"
+                        />
+                        <v-text-field
+                            :label="$t('password')"
+                            type="password"
+                            data-vv-name="password"
+                            :rules="rules"
+                            v-model="passwords.password"
+                            :error="errors.lastNameError"
+                        />
+                        <v-text-field
+                            :label="$t('confirmPassword')"
+                            type="password"
+                            data-vv-name="confirmPassword"
+                            :rules="rules"
+                            v-model="passwords.confirmPassword"
+                            :error="errors.emailError"
+                        />
+                    </v-card-text>
+                    <v-card-actions class="pl-3 pr-3 pb-3">
+                        <v-flex xs12 class="text-xs-right">
+                            <v-btn
+                                primary
+                                color="primary"
+                                type="submit"
+                                :loading="loadingPassword"
+                                :disabled="loadingPassword"
+                            >
+                                {{ $t('save') }}
+                            </v-btn>
+                        </v-flex>
+                    </v-card-actions>
+                </v-form>
+            </v-card>
         </centered-column>
     </v-layout>
 </template>
@@ -107,9 +168,13 @@
                     value => !!value || this.$t('required')
                 ],
                 values: {},
+                passwords: {},
                 loading: false,
+                loadingPassword: false,
                 alertMessage: '',
-                alertType: 'success'
+                alertType: 'success',
+                passwordAlertMessage: '',
+                passwordAlertType: 'success'
             };
         },
         computed: {
@@ -155,6 +220,11 @@
                 // else {
                 //     this.errorLoggingIn = true;
                 // }
+            },
+            async submitPassword(event) {
+                event.preventDefault();
+
+
             }
         }
     });
