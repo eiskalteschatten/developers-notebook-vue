@@ -80,7 +80,10 @@ export default {
         async saveUserInfo({ commit }, body) {
             console.log(commit, body);
 
-            return 200;
+            return {
+                code: 200,
+                message: ''
+            };
         }
     }
 };

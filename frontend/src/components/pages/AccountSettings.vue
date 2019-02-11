@@ -14,6 +14,8 @@
         "allFieldsRequired": "Please fill out all fields!",
         "changesSaved": "Your changes were successfully saved.",
         "anErrorOccurred": "An error occurred while trying to save your changes. Please try again.",
+        "oldPasswordIncorrect": "Your current password is incorrect.",
+        "passwordsDoNotMatch": "The new passwords you entered do not match.",
         "save": "Save"
     },
     "de": {
@@ -30,6 +32,8 @@
         "allFieldsRequired": "Bitte alle Felder ausfüllen!",
         "changesSaved": "Ihre Änderungen wurden erfolgreich gespeichert.",
         "anErrorOccurred": "Ein Fehler ist beim Speichern Ihrer Änderungen aufgetreten. Bitte versuchen Sie noch einmal.",
+        "oldPasswordIncorrect": "Ihr aktuelles Passwort ist falsch.",
+        "passwordsDoNotMatch": "Die neuen Passwörter stimmen nicht überein.",
         "save": "Speichern"
     }
 }
@@ -216,13 +220,13 @@
 
                 this.loading = true;
 
-                const code = await this.saveUserInfo(this.values);
+                const { code, message } = await this.saveUserInfo(this.values);
 
                 this.loading = false;
 
                 if (code >= 300) {
                     this.alertType = 'error';
-                    this.alertMessage = 'anErrorOccurred';
+                    this.alertMessage = this.$te(message) ? message : 'anErrorOccurred';
                 }
                 else {
                     this.alertType = 'success';
@@ -250,7 +254,7 @@
 
                 if (code >= 300) {
                     this.passwordAlertType = 'error';
-                    this.passwordAlertMessage = 'anErrorOccurred';
+                    this.alertMessage = this.$te(message) ? message : 'anErrorOccurred';
                 }
                 else {
                     this.passwordAlertType = 'success';
