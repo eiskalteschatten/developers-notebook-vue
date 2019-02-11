@@ -78,12 +78,23 @@ export default {
             }
         },
         async saveUserInfo({ commit }, body) {
-            console.log(commit, body);
+            try {
+                const res = await http.put('api/user/edit', body);
 
-            return {
-                code: 200,
-                message: ''
-            };
+                commit('setInfo', body);
+
+                return {
+                    code: res.status,
+                    message: res.bodyText
+                };
+            }
+            catch(error) {
+                console.error(error);
+                return {
+                    code: 500,
+                    message: error
+                };
+            }
         }
     }
 };
