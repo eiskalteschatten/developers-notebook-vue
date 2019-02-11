@@ -187,8 +187,6 @@ else {
     const helpMenu = template[4].submenu;
     template[4].submenu = [
         helpMenu[0],
-        {type: 'separator'},
-        helpMenu[2],
         {
             label: `About ${config.app.name}`,
             click: (item, focusedWindow) => {
