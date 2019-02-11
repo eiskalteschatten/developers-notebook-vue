@@ -11,7 +11,9 @@
         "password": "Password",
         "confirmPassword": "Confirm New Password",
         "required": "Required",
-        "incorrectUsernameOrPassword": "Incorrect username or password.",
+        "allFieldsRequired": "Please fill out all fields!",
+        "changesSaved": "Your changes were successfully saved.",
+        "anErrorOccurred": "An error occurred while trying to save your changes. Please try again.",
         "save": "Save"
     },
     "de": {
@@ -25,7 +27,9 @@
         "password": "Passwort",
         "confirmPassword": "Neues Passwort bestätigen",
         "required": "Erforderlich",
-        "incorrectUsernameOrPassword": "Falscher Benutzername oder falsches Passwort.",
+        "allFieldsRequired": "Bitte alle Felder ausfüllen!",
+        "changesSaved": "Ihre Änderungen wurden erfolgreich gespeichert.",
+        "anErrorOccurred": "Ein Fehler ist beim Speichern Ihrer Änderungen aufgetreten. Bitte versuchen Sie noch einmal.",
         "save": "Speichern"
     }
 }
@@ -41,11 +45,11 @@
                 <v-form ref="form" lazy-validation @submit="submit">
                     <v-card-text>
                         <v-alert
-                            :value="alertMessage"
+                            :value="alert"
                             :type="alertType"
                             class="mb-4"
                         >
-                            {{ $t('incorrectUsernameOrPassword') }}
+                            {{ $t(alertMessage) }}
                         </v-alert>
 
                         <v-text-field
@@ -100,11 +104,11 @@
                 <v-form ref="passwordForm" lazy-validation @submit="submitPassword">
                     <v-card-text>
                         <v-alert
-                            :value="passwordAlertMessage"
+                            :value="passwordAlert"
                             :type="passwordAlertType"
                             class="mb-4"
                         >
-                            {{ $t('incorrectUsernameOrPassword') }}
+                            {{ $t(passwordAlertMessage) }}
                         </v-alert>
 
                         <v-text-field
@@ -168,11 +172,17 @@
                     value => !!value || this.$t('required')
                 ],
                 values: {},
-                passwords: {},
+                passwords: {
+                    currentPassword: '',
+                    password: '',
+                    confirmPassword: ''
+                },
                 loading: false,
                 loadingPassword: false,
+                alert: false,
                 alertMessage: '',
                 alertType: 'success',
+                passwordAlert: false,
                 passwordAlertMessage: '',
                 passwordAlertType: 'success'
             };
@@ -198,54 +208,72 @@
                 event.preventDefault();
 
                 if (!this.allFieldsValid(this.values)) {
+                    this.alertType = 'error';
+                    this.alertMessage = 'allFieldsRequired';
+                    this.alert = true;
                     return;
                 }
 
-                // if (!this.username) {
-                //     this.usernameError = true;
-                //     return;
-                // }
+                this.loading = true;
 
-                // if (!this.password) {
-                //     this.passwordError = true;
-                //     return;
-                // }
+                const code = await this.saveUserInfo(this.values);
 
-                // this.loading = true;
-                // const loggedIn = await this.fetchJwt({
-                //     username: this.username,
-                //     password: this.password
-                // });
-                // this.loading = false;
+                this.loading = false;
 
-                // if (loggedIn) {
-                //     this.$router.replace({ name: 'home' });
-                // }
-                // else {
-                //     this.errorLoggingIn = true;
-                // }
+                if (code >= 300) {
+                    this.alertType = 'error';
+                    this.alertMessage = 'anErrorOccurred';
+                }
+                else {
+                    this.alertType = 'success';
+                    this.alertMessage = 'changesSaved';
+                }
+
+                this.alert = true;
             },
             async submitPassword(event) {
                 event.preventDefault();
 
                 if (!this.allFieldsValid(this.passwords)) {
+                    this.passwordAlertType = 'error';
+                    this.passwordAlertMessage = 'allFieldsRequired';
+                    this.passwordAlert = true;
                     return;
                 }
 
+                this.loading = true;
+
+                // Save passwords here
+                const code = 200;
+
+                this.loading = false;
+
+                if (code >= 300) {
+                    this.passwordAlertType = 'error';
+                    this.passwordAlertMessage = 'anErrorOccurred';
+                }
+                else {
+                    this.passwordAlertType = 'success';
+                    this.passwordAlertMessage = 'changesSaved';
+                }
+
+                this.passwordAlert = true;
             },
             allFieldsValid(fields) {
-                if (!Array.isArray(fields) || fields.length < 1) {
+                if (!fields || Object.keys(fields).length < 1) {
                     return false;
                 }
+
+                let allFieldsValid = true;
 
                 for (const field in fields) {
                     if (!fields[field]) {
                         this.errors[field] = true;
-                        return false;
+                        allFieldsValid = false;
                     }
                 }
 
-                return true;
+                return allFieldsValid;
             }
         }
     });
