@@ -35,7 +35,7 @@ async function createWindow() {
                 },
                 width: windowSettings.width,
                 height: windowSettings.height,
-                icon: path.join(__dirname, './assets/images/icon128.png')
+                icon: path.join(__dirname, './assets/icon128.png')
             };
 
             if (process.platform === 'darwin') {
