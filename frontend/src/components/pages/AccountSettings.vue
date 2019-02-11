@@ -59,14 +59,14 @@
                             data-vv-name="firstName"
                             :rules="rules"
                             v-model="values.firstName"
-                            :error="errors.firstNameError"
+                            :error="errors.firstName"
                         />
                         <v-text-field
                             :label="$t('lastName')"
                             data-vv-name="lastName"
                             :rules="rules"
                             v-model="values.lastName"
-                            :error="errors.lastNameError"
+                            :error="errors.lastName"
                         />
                         <v-text-field
                             :label="$t('emailAddress')"
@@ -74,7 +74,7 @@
                             data-vv-name="email"
                             :rules="rules"
                             v-model="values.emailAddress"
-                            :error="errors.emailError"
+                            :error="errors.email"
                         />
                     </v-card-text>
                     <v-card-actions class="pl-3 pr-3 pb-3">
@@ -113,7 +113,7 @@
                             data-vv-name="currentPassword"
                             :rules="rules"
                             v-model="passwords.currentPassword"
-                            :error="errors.lastNameError"
+                            :error="errors.currentPassword"
                         />
                         <v-text-field
                             :label="$t('password')"
@@ -121,7 +121,7 @@
                             data-vv-name="password"
                             :rules="rules"
                             v-model="passwords.password"
-                            :error="errors.lastNameError"
+                            :error="errors.password"
                         />
                         <v-text-field
                             :label="$t('confirmPassword')"
@@ -129,7 +129,7 @@
                             data-vv-name="confirmPassword"
                             :rules="rules"
                             v-model="passwords.confirmPassword"
-                            :error="errors.emailError"
+                            :error="errors.confirmPassword"
                         />
                     </v-card-text>
                     <v-card-actions class="pl-3 pr-3 pb-3">
@@ -197,6 +197,10 @@
             async submit(event) {
                 event.preventDefault();
 
+                if (!this.allFieldsValid(this.values)) {
+                    return;
+                }
+
                 // if (!this.username) {
                 //     this.usernameError = true;
                 //     return;
@@ -224,7 +228,24 @@
             async submitPassword(event) {
                 event.preventDefault();
 
+                if (!this.allFieldsValid(this.passwords)) {
+                    return;
+                }
 
+            },
+            allFieldsValid(fields) {
+                if (!Array.isArray(fields) || fields.length < 1) {
+                    return false;
+                }
+
+                for (const field in fields) {
+                    if (!fields[field]) {
+                        this.errors[field] = true;
+                        return false;
+                    }
+                }
+
+                return true;
             }
         }
     });
