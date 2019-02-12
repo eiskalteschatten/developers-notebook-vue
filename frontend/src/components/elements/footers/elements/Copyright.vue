@@ -10,9 +10,9 @@
 </i18n>
 
 <template>
-    <div>
+    <span>
         &copy; {{ copyrightYear }} <external-link :href="$t('alexseifertWebsite')" link-content="Alex Seifert" />
-    </div>
+    </span>
 </template>
 
 <script>

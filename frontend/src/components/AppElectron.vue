@@ -2,6 +2,7 @@
     <v-app :dark="theme === 'dark'">
         <div class="main-structure">
             <router-view />
+            <about />
         </div>
     </v-app>
 </template>
@@ -11,7 +12,12 @@
     import { mapState, mapMutations } from 'vuex';
     import { remote } from 'electron';
 
+    import About from './elements/About.vue';
+
     export default Vue.extend({
+        components: {
+            About
+        },
         data() {
             return {
                 showTitlebar: false

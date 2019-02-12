@@ -10,6 +10,6 @@ export default () => {
     });
 
     ipcRenderer.on('open-modal', (event, modal) => {
-        eventBus.$emit('toggle-modal', modal);
+        eventBus.$emit('open-modal', modal);
     });
 };
