@@ -40,123 +40,121 @@
 </i18n>
 
 <template>
-    <v-layout>
-        <centered-column>
-            <v-card class="pa-3 mb-5">
-                <v-card-title primary-title>
-                    <h1>{{ $t('accountSettings') }}</h1>
-                </v-card-title>
-                <v-form ref="form" lazy-validation @submit="submit">
-                    <v-card-text>
-                        <v-alert
-                            :value="alert"
-                            :type="alertType"
-                            class="mb-4"
+    <centered-column>
+        <v-card class="pa-2 mb-5">
+            <v-card-title primary-title>
+                <h1>{{ $t('accountSettings') }}</h1>
+            </v-card-title>
+            <v-form ref="form" lazy-validation @submit="submit">
+                <v-card-text>
+                    <v-alert
+                        :value="alert"
+                        :type="alertType"
+                        class="mb-4"
+                    >
+                        {{ $t(alertMessage) }}
+                    </v-alert>
+
+                    <v-text-field
+                        :label="$t('username')"
+                        data-vv-name="username"
+                        disabled
+                        v-model="values.username"
+                    />
+                    <v-text-field
+                        :label="$t('firstName')"
+                        data-vv-name="firstName"
+                        :rules="rules"
+                        v-model="values.firstName"
+                        :error="errors.firstName"
+                    />
+                    <v-text-field
+                        :label="$t('lastName')"
+                        data-vv-name="lastName"
+                        :rules="rules"
+                        v-model="values.lastName"
+                        :error="errors.lastName"
+                    />
+                    <v-text-field
+                        :label="$t('emailAddress')"
+                        type="email"
+                        data-vv-name="email"
+                        :rules="rules"
+                        v-model="values.emailAddress"
+                        :error="errors.email"
+                    />
+                </v-card-text>
+                <v-card-actions class="pl-3 pr-3 pb-3">
+                    <v-flex xs12 class="text-xs-right">
+                        <v-btn
+                            primary
+                            color="primary"
+                            type="submit"
+                            :loading="loading"
+                            :disabled="loading"
                         >
-                            {{ $t(alertMessage) }}
-                        </v-alert>
+                            {{ $t('save') }}
+                        </v-btn>
+                    </v-flex>
+                </v-card-actions>
+            </v-form>
+        </v-card>
 
-                        <v-text-field
-                            :label="$t('username')"
-                            data-vv-name="username"
-                            disabled
-                            v-model="values.username"
-                        />
-                        <v-text-field
-                            :label="$t('firstName')"
-                            data-vv-name="firstName"
-                            :rules="rules"
-                            v-model="values.firstName"
-                            :error="errors.firstName"
-                        />
-                        <v-text-field
-                            :label="$t('lastName')"
-                            data-vv-name="lastName"
-                            :rules="rules"
-                            v-model="values.lastName"
-                            :error="errors.lastName"
-                        />
-                        <v-text-field
-                            :label="$t('emailAddress')"
-                            type="email"
-                            data-vv-name="email"
-                            :rules="rules"
-                            v-model="values.emailAddress"
-                            :error="errors.email"
-                        />
-                    </v-card-text>
-                    <v-card-actions class="pl-3 pr-3 pb-3">
-                        <v-flex xs12 class="text-xs-right">
-                            <v-btn
-                                primary
-                                color="primary"
-                                type="submit"
-                                :loading="loading"
-                                :disabled="loading"
-                            >
-                                {{ $t('save') }}
-                            </v-btn>
-                        </v-flex>
-                    </v-card-actions>
-                </v-form>
-            </v-card>
+        <v-card class="pa-3">
+            <v-card-title primary-title>
+                <h1>{{ $t('changePassword') }}</h1>
+            </v-card-title>
+            <v-form ref="passwordForm" lazy-validation @submit="submitPassword">
+                <v-card-text>
+                    <v-alert
+                        :value="passwordAlert"
+                        :type="passwordAlertType"
+                        class="mb-4"
+                    >
+                        {{ $t(passwordAlertMessage) }}
+                    </v-alert>
 
-            <v-card class="pa-3">
-                <v-card-title primary-title>
-                    <h1>{{ $t('changePassword') }}</h1>
-                </v-card-title>
-                <v-form ref="passwordForm" lazy-validation @submit="submitPassword">
-                    <v-card-text>
-                        <v-alert
-                            :value="passwordAlert"
-                            :type="passwordAlertType"
-                            class="mb-4"
+                    <v-text-field
+                        :label="$t('currentPassword')"
+                        type="password"
+                        data-vv-name="currentPassword"
+                        :rules="rules"
+                        v-model="passwords.currentPassword"
+                        :error="errors.currentPassword"
+                    />
+                    <v-text-field
+                        :label="$t('password')"
+                        type="password"
+                        data-vv-name="password"
+                        :rules="rules"
+                        v-model="passwords.password"
+                        :error="errors.password"
+                    />
+                    <v-text-field
+                        :label="$t('confirmPassword')"
+                        type="password"
+                        data-vv-name="confirmPassword"
+                        :rules="rules"
+                        v-model="passwords.confirmPassword"
+                        :error="errors.confirmPassword"
+                    />
+                </v-card-text>
+                <v-card-actions class="pl-3 pr-3 pb-3">
+                    <v-flex xs12 class="text-xs-right">
+                        <v-btn
+                            primary
+                            color="primary"
+                            type="submit"
+                            :loading="loadingPassword"
+                            :disabled="loadingPassword"
                         >
-                            {{ $t(passwordAlertMessage) }}
-                        </v-alert>
-
-                        <v-text-field
-                            :label="$t('currentPassword')"
-                            type="password"
-                            data-vv-name="currentPassword"
-                            :rules="rules"
-                            v-model="passwords.currentPassword"
-                            :error="errors.currentPassword"
-                        />
-                        <v-text-field
-                            :label="$t('password')"
-                            type="password"
-                            data-vv-name="password"
-                            :rules="rules"
-                            v-model="passwords.password"
-                            :error="errors.password"
-                        />
-                        <v-text-field
-                            :label="$t('confirmPassword')"
-                            type="password"
-                            data-vv-name="confirmPassword"
-                            :rules="rules"
-                            v-model="passwords.confirmPassword"
-                            :error="errors.confirmPassword"
-                        />
-                    </v-card-text>
-                    <v-card-actions class="pl-3 pr-3 pb-3">
-                        <v-flex xs12 class="text-xs-right">
-                            <v-btn
-                                primary
-                                color="primary"
-                                type="submit"
-                                :loading="loadingPassword"
-                                :disabled="loadingPassword"
-                            >
-                                {{ $t('save') }}
-                            </v-btn>
-                        </v-flex>
-                    </v-card-actions>
-                </v-form>
-            </v-card>
-        </centered-column>
-    </v-layout>
+                            {{ $t('save') }}
+                        </v-btn>
+                    </v-flex>
+                </v-card-actions>
+            </v-form>
+        </v-card>
+    </centered-column>
 </template>
 
 <script>
