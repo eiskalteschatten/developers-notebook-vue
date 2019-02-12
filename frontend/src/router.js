@@ -7,6 +7,8 @@ import LoggedOutLayout from './components/LoggedOutLayout.vue';
 import Home from './components/pages/Home.vue';
 import AccountSettings from './components/pages/AccountSettings.vue';
 
+import Settings from './components/pages/Settings.vue';
+
 import Login from './components/pages/Login.vue';
 import ServerConfig from './components/pages/electron/ServerConfig.vue';
 
@@ -21,6 +23,7 @@ export const routeTitles = {
         home: 'Dashboard',
         login: 'Login',
         accountSettings: 'Account Settings',
+        settings: 'Settings',
         errorNoConnection: 'No Connection',
         '404': 'Page not found'
     },
@@ -28,6 +31,7 @@ export const routeTitles = {
         home: 'Dashboard',
         login: 'Login',
         accountSettings: 'Kontoeinstellungen',
+        settings: 'Einstellungen',
         errorNoConnection: 'Keine Verbindung',
         '404': 'Seite nicht gefunden'
     }
@@ -50,6 +54,11 @@ export default new VueRouter({
             path: 'account-settings',
             name: 'accountSettings',
             component: AccountSettings
+        },
+        {
+            path: 'settings',
+            name: 'settings',
+            component: Settings
         }]
     },
     {   // Login should not be a child of MainLayout

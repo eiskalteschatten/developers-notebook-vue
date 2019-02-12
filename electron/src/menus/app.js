@@ -123,7 +123,7 @@ if (process.platform === 'darwin') {
                 label: 'Preferences...',
                 accelerator: 'Cmd+,',
                 click: (item, focusedWindow) => {
-                    focusedWindow.webContents.send('open-route-name', 'preferences');
+                    focusedWindow.webContents.send('open-route-name', 'settings');
                 }
             },
             {
@@ -171,7 +171,7 @@ else {
             label: 'Preferences...',
             accelerator: 'Ctrl+,',
             click: (item, focusedWindow) => {
-                focusedWindow.webContents.send('open-route-name', 'preferences');
+                focusedWindow.webContents.send('open-route-name', 'settings');
             }
         },
         {
