@@ -26,14 +26,14 @@
                 <div class="mb-3">
                     <h3>{{ $t('theme') }}</h3>
 
-                    <div class="preferences-theme mt-3 mr-5" data-theme="light">
-                        <div class="theme-image light">
+                    <div class="preferences-theme mt-3 mr-5" @click="setTheme('light')">
+                        <div class="theme-image light" :class="{ 'selected': theme === 'light' }">
                             <div class="gradient"></div>
                         </div>
                         {{ $t('light') }}
                     </div>
-                    <div class="preferences-theme" data-theme="dark">
-                        <div class="theme-image dark">
+                    <div class="preferences-theme" @click="setTheme('dark')">
+                        <div class="theme-image dark" :class="{ 'selected': theme === 'dark' }">
                             <div class="gradient"></div>
                         </div>
                         {{ $t('dark') }}
@@ -47,6 +47,7 @@
 
 <script>
     import Vue from 'vue';
+    import { mapState, mapActions } from 'vuex';
 
     import CenteredColumn from '../elements/layout/CenteredColumn.vue';
 
@@ -54,6 +55,16 @@
         components: {
             CenteredColumn
         },
+        computed: {
+            ...mapState('settings', [
+                'theme'
+            ])
+        },
+        methods: {
+            ...mapActions('settings', [
+                'setTheme'
+            ])
+        }
     });
 </script>
 
@@ -83,12 +94,12 @@
 
             &.selected {
                 .gradient {
-                    border: 1px solid #0e0e0e;
+                    border: $borderSize solid #2261a1;
                 }
             }
 
             .gradient {
-                border: 1px solid rgba(0, 0, 0, 0.3);
+                border: $borderSize solid rgba(0, 0, 0, 0.3);
                 border-radius: 3px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                 height: 100%;

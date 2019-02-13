@@ -27,5 +27,8 @@ export default {
     },
 
     actions: {
+        async setTheme({ commit }, theme) {
+            commit('setTheme', theme);
+        }
     }
 };
