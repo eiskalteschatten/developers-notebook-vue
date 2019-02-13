@@ -22,7 +22,6 @@
                 <h1>{{ $t('settings') }}</h1>
             </v-card-title>
             <v-card-text>
-
                 <div class="mb-3">
                     <h3>{{ $t('theme') }}</h3>
 
@@ -39,7 +38,6 @@
                         {{ $t('dark') }}
                     </div>
                 </div>
-
             </v-card-text>
         </v-card>
     </centered-column>
