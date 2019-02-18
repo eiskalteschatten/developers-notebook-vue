@@ -12,14 +12,19 @@
 
 <script>
     import Vue from 'vue';
+    import { mapState } from 'vuex';
 
     export default Vue.extend({
         computed: {
+            ...mapState('nav', [
+                'backUrls',
+                'forwardUrls'
+            ]),
             backDisabled() {
-                return true;
+                return this.backUrls.length <= 0;
             },
             forwardDisabled() {
-                return true;
+                return this.forwardUrls.length <= 0;
             }
         },
         methods: {

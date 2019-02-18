@@ -1,24 +1,27 @@
 export default {
     namespaced: true,
     state: {
-        history: [],
-        historyPosition: 0
+        backUrls: [],
+        forwardUrls: []
     },
 
     getters: {
-        history: state => state.history,
-        historyPosition: state => state.historyPosition
+        backUrls: state => state.backUrls,
+        forwardUrls: state => state.forwardUrls
     },
 
     mutations: {
-        setHistory(state, history) {
-            state.history = history;
+        setBackUrls(state, backUrls) {
+            state.backUrls = backUrls;
         },
-        pushToHistory(state, history) {
-            state.history.push(history);
+        pushToBackUrls(state, url) {
+            state.backUrls.push(url);
         },
-        setHistoryPosition(state, historyPosition) {
-            state.historyPosition = historyPosition;
+        setForwardUrls(state, forwardUrls) {
+            state.forwardUrls = forwardUrls;
+        },
+        pushToForwardUrls(state, url) {
+            state.forwardUrls.push(url);
         }
     },
 

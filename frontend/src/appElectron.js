@@ -56,7 +56,7 @@ new Vue({
             const lang = to.params.lang;
             this.$i18n.locale = lang;
             cookies.set('preferedLanguage', lang);
-            this.pushToHistory(to.fullPath);
+            this.pushToBackUrls(to.fullPath);
         }
     },
     created() {
@@ -77,8 +77,7 @@ new Vue({
             'fetchJwt'
         ]),
         ...mapMutations('nav', [
-            'pushToHistory',
-            'setHistoryPosition'
+            'pushToBackUrls'
         ]),
         async determineAuthentication() {
             const jwt = localStorage.getItem('jwt');
