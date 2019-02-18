@@ -4,6 +4,7 @@ export default {
     namespaced: true,
     state: {
         theme: 'light',
+        settingsFromAccount: false,
         languages: [{
             title: 'English',
             code: 'en'
@@ -16,6 +17,7 @@ export default {
 
     getters: {
         theme: state => state.theme,
+        settingsFromAccount: state => state.settingsFromAccount,
         languages: state => state.languages
     },
 
@@ -25,6 +27,9 @@ export default {
         },
         setLanguages(state, languages) {
             state.languages = languages;
+        },
+        setSettingsFromAccount(state, settingsFromAccount) {
+            state.settingsFromAccount = settingsFromAccount;
         }
     },
 
@@ -53,6 +58,7 @@ export default {
 
                 if (res.body && res.status < 300) {
                     commit('setTheme', res.body.theme);
+                    commit('setSettingsFromAccount', true);
 
                     return {
                         code: res.status,

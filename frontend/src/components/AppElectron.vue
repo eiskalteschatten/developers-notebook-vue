@@ -25,7 +25,8 @@
         },
         computed: {
             ...mapState('settings', [
-                'theme'
+                'theme',
+                'settingsFromAccount'
             ])
         },
         mounted() {
@@ -50,8 +51,10 @@
                 remote.getCurrentWindow().maximize();
             },
             setVueTheme() {
-                const theme = remote.systemPreferences.isDarkMode() ? 'dark' : 'light';
-                this.setTheme(theme);
+                if (!this.settingsFromAccount) {
+                    const theme = remote.systemPreferences.isDarkMode() ? 'dark' : 'light';
+                    this.setTheme(theme);
+                }
             }
         }
     });
