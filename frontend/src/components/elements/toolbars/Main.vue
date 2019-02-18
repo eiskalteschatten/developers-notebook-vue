@@ -16,13 +16,7 @@
         <v-flex xs5>
             <v-toolbar-side-icon v-if="$vuetify.breakpoint.smAndDown" @click="toggleSidebar" />
 
-            <v-btn dark icon v-if="isElectron">
-                <v-icon>arrow_back</v-icon>
-            </v-btn>
-
-            <v-btn dark icon v-if="isElectron">
-                <v-icon>arrow_forward</v-icon>
-            </v-btn>
+            <back-forward v-if="isElectron" />
         </v-flex>
         <v-flex xs2 class="text-xs-center">
             <img src="images/white-icon.svg" class="main-icon">
@@ -70,7 +64,12 @@
     import { mapState, mapActions } from 'vuex';
     import eventBus from '../../../eventBus';
 
+    import BackForward from './electron/BackForward.vue';
+
     export default Vue.extend({
+        components: {
+            BackForward
+        },
         data() {
             return {
                 isElectron: localStorage.getItem('isElectron')
