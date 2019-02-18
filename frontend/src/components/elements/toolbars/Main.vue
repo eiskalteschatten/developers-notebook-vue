@@ -13,13 +13,21 @@
 
 <template>
     <v-toolbar dark color="secondary" class="toolbar" app clipped-left>
-        <v-flex xs4>
+        <v-flex xs5>
             <v-toolbar-side-icon v-if="$vuetify.breakpoint.smAndDown" @click="toggleSidebar" />
+
+            <v-btn dark icon v-if="isElectron">
+                <v-icon>arrow_back</v-icon>
+            </v-btn>
+
+            <v-btn dark icon v-if="isElectron">
+                <v-icon>arrow_forward</v-icon>
+            </v-btn>
         </v-flex>
-        <v-flex xs4 class="text-xs-center">
+        <v-flex xs2 class="text-xs-center">
             <img src="images/white-icon.svg" class="main-icon">
         </v-flex>
-        <v-flex xs4 class="text-xs-right">
+        <v-flex xs5 class="text-xs-right">
             <v-menu left :nudge-bottom="40">
                 <v-btn slot="activator" dark icon>
                     <v-icon>account_circle</v-icon>
@@ -63,6 +71,11 @@
     import eventBus from '../../../eventBus';
 
     export default Vue.extend({
+        data() {
+            return {
+                isElectron: localStorage.getItem('isElectron')
+            };
+        },
         computed: {
             ...mapState('user', {
                 userInfo: 'info'
