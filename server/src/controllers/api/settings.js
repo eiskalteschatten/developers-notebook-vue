@@ -4,6 +4,21 @@ const Settings = require('../../models/Settings');
 
 
 module.exports = router => {
+    router.get('/', async (req, res) => {
+        const userId = req.user.id;
+
+        try {
+            const settings = await Settings.findOne({ where: { userId }});
+            res.status(200).json({
+                theme: settings.theme
+            });
+        }
+        catch(error) {
+            console.error(new Error(error));
+            res.status(500).send('');
+        }
+    });
+
     router.put('/', async (req, res) => {
         const userId = req.user.id;
         const body = req.body;
