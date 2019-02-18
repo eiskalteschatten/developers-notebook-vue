@@ -27,7 +27,7 @@ async function createWindow() {
         }
 
         try {
-            const windowSettings = typeof data === 'string' ? JSON.parse(data) : defaultSettings;
+            const windowSettings = data && typeof data === 'string' ? JSON.parse(data) : defaultSettings;
 
             const browserWindow = {
                 webPreferences: {
