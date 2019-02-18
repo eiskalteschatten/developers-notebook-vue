@@ -5,13 +5,23 @@ const Settings = require('../../models/Settings');
 
 module.exports = router => {
     router.put('/', async (req, res) => {
+        const userId = req.user.id;
         const body = req.body;
         const values = {
             theme: body.theme
         };
 
         try {
-            await Settings.update(values, { where: { id: req.user.id }});
+            let settings = await Settings.findOne({ where: { userId }});
+
+            if (settings) {
+                await Settings.update(values, { where: { userId }});
+            }
+            else {
+                settings = await Settings.create(values);
+                await settings.setUser(req.user);
+            }
+
             res.status(201).send('');
         }
         catch(error) {

@@ -6,12 +6,22 @@ const {db} = require('../lib/db');
 const User = require('./User');
 
 const Settings = db.define('settings', {
-    theme: Sequelize.STRING
+    theme: {
+        type: Sequelize.ENUM('LIGHT', 'DARK'),
+        defaultValue: 'LIGHT',
+        get() {
+            const theme = this.getDataValue('theme');
+            return theme.toLowerCase();
+        },
+        set(value) {
+            this.setDataValue('theme', value.toUpperCase());
+        }
+    }
 });
 
-User.hasMany(Settings);
+User.hasOne(Settings);
 Settings.belongsTo(User);
 
 Settings.sync();
 
-module.exports = User;
+module.exports = Settings;
