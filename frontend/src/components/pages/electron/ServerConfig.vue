@@ -104,8 +104,6 @@
                     canConnectToServer = false;
                 }
 
-                this.loading = false;
-
                 if (canConnectToServer) {
                     localStorage.setItem('serverConfigHost', this.host);
                     setRoot(this.host);
@@ -115,6 +113,8 @@
                     this.error = true;
                     this.errorMessage = 'couldNotConnectToServer';
                 }
+
+                this.loading = false;
             }
         }
     });
