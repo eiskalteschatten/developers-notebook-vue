@@ -16,10 +16,10 @@
     export default Vue.extend({
         computed: {
             backDisabled() {
-                return false;
+                return true;
             },
             forwardDisabled() {
-                return false;
+                return true;
             }
         },
         methods: {

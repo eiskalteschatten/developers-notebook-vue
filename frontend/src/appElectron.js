@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueI18n from 'vue-i18n';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 
 import Vuetify from 'vuetify';
 import en from 'vuetify/es5/locale/en';
@@ -56,6 +56,7 @@ new Vue({
             const lang = to.params.lang;
             this.$i18n.locale = lang;
             cookies.set('preferedLanguage', lang);
+            this.pushToHistory(to.fullPath);
         }
     },
     created() {
@@ -74,6 +75,10 @@ new Vue({
     methods: {
         ...mapActions('user', [
             'fetchJwt'
+        ]),
+        ...mapMutations('nav', [
+            'pushToHistory',
+            'setHistoryPosition'
         ]),
         async determineAuthentication() {
             const jwt = localStorage.getItem('jwt');
