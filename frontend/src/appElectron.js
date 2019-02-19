@@ -60,10 +60,8 @@ new Vue({
             this.$i18n.locale = lang;
             cookies.set('preferedLanguage', lang);
 
-            if (this.historyIndex <= history.length) {
-                const historyIndex = this.historyIndex + 1;
-                this.setHistoryIndex(historyIndex);
-            }
+            const historyIndex = this.historyIndex + 1;
+            this.setHistoryIndex(historyIndex);
         }
     },
     created() {
