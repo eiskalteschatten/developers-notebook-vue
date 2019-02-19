@@ -17,15 +17,13 @@
     export default Vue.extend({
         computed: {
             ...mapState('nav', [
-                'backUrls',
-                'forwardUrls',
                 'historyIndex'
             ]),
             backDisabled() {
-                return this.historyIndex <= 1; //this.backUrls.length <= 0;
+                return this.historyIndex <= 1;
             },
             forwardDisabled() {
-                return false;//this.forwardUrls.length <= 0;
+                return this.historyIndex >= history.length;
             }
         },
         methods: {
@@ -39,8 +37,6 @@
             },
             goForward() {
                 this.$router.forward();
-                const historyIndex = this.historyIndex + 1;
-                this.setHistoryIndex(historyIndex);
             }
         }
     });
