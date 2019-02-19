@@ -1,13 +1,15 @@
 import VueRouter from 'vue-router';
 import cookies from 'browser-cookies';
 
+import PageWrapper from './components/PageWrapper.vue';
 import MainLayout from './components/MainLayout.vue';
 import LoggedOutLayout from './components/LoggedOutLayout.vue';
 
 import Home from './components/pages/Home.vue';
 import AccountSettings from './components/pages/AccountSettings.vue';
-
 import Settings from './components/pages/Settings.vue';
+
+import Categories from './components/pages/Categories.vue';
 
 import Login from './components/pages/Login.vue';
 import ServerConfig from './components/pages/electron/ServerConfig.vue';
@@ -21,6 +23,7 @@ export const routeTitles = {
     primaryTitle: 'Developer\'s Notebook',
     en: {
         home: 'Dashboard',
+        categories: 'Categories',
         login: 'Login',
         accountSettings: 'Account Settings',
         settings: 'Settings',
@@ -29,6 +32,7 @@ export const routeTitles = {
     },
     de: {
         home: 'Dashboard',
+        categories: 'Kategorien',
         login: 'Login',
         accountSettings: 'Kontoeinstellungen',
         settings: 'Einstellungen',
@@ -59,6 +63,15 @@ export default new VueRouter({
             path: 'settings',
             name: 'settings',
             component: Settings
+        },
+        {
+            path: 'categories',
+            component: PageWrapper,
+            children: [{
+                path: '',
+                name: 'categories',
+                component: Categories
+            }]
         }]
     },
     {   // Login should not be a child of MainLayout
