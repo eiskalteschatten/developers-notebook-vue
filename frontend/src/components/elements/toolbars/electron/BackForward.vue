@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div class="back-forward">
         <v-btn dark icon @click="goBack" :disabled="backDisabled">
             <v-icon>arrow_back</v-icon>
         </v-btn>
 
-        <v-btn dark icon @click="goForward" :disabled="forwardDisabled">
+        <v-btn dark icon @click="goForward" v-if="$vuetify.breakpoint.smAndUp" :disabled="forwardDisabled">
             <v-icon>arrow_forward</v-icon>
         </v-btn>
     </div>
@@ -43,4 +43,7 @@
 </script>
 
 <style lang="scss" scoped>
+    .back-forward {
+        display: inline;
+    }
 </style>
