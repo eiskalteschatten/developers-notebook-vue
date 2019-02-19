@@ -55,13 +55,14 @@ new Vue({
         ])
     },
     watch: {
-        '$route'(to) {
+        '$route'(to, from) {
             const lang = to.params.lang;
             this.$i18n.locale = lang;
             cookies.set('preferedLanguage', lang);
 
             const historyIndex = this.historyIndex + 1;
             this.setHistoryIndex(historyIndex);
+            this.setPreviousRouteName(from.name);
         }
     },
     created() {
@@ -82,7 +83,8 @@ new Vue({
             'fetchJwt'
         ]),
         ...mapMutations('nav', [
-            'setHistoryIndex'
+            'setHistoryIndex',
+            'setPreviousRouteName'
         ]),
         async determineAuthentication() {
             const jwt = localStorage.getItem('jwt');

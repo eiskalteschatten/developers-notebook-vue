@@ -17,10 +17,12 @@
     export default Vue.extend({
         computed: {
             ...mapState('nav', [
-                'historyIndex'
+                'historyIndex',
+                'previousRouteName',
+                'routeNamesBackDisabled'
             ]),
             backDisabled() {
-                return this.historyIndex <= 1;
+                return this.historyIndex <= 1 || this.routeNamesBackDisabled.indexOf(this.previousRouteName) >= 0;
             },
             forwardDisabled() {
                 return this.historyIndex >= history.length;
