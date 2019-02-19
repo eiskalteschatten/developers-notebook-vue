@@ -12,27 +12,35 @@
 
 <script>
     import Vue from 'vue';
-    import { mapState } from 'vuex';
+    import { mapState, mapMutations } from 'vuex';
 
     export default Vue.extend({
         computed: {
             ...mapState('nav', [
                 'backUrls',
-                'forwardUrls'
+                'forwardUrls',
+                'historyIndex'
             ]),
             backDisabled() {
-                return this.backUrls.length <= 0;
+                return this.historyIndex <= 1; //this.backUrls.length <= 0;
             },
             forwardDisabled() {
-                return this.forwardUrls.length <= 0;
+                return false;//this.forwardUrls.length <= 0;
             }
         },
         methods: {
+            ...mapMutations('nav', [
+                'setHistoryIndex'
+            ]),
             goBack() {
                 this.$router.back();
+                const historyIndex = this.historyIndex - 2;
+                this.setHistoryIndex(historyIndex);
             },
             goForward() {
                 this.$router.forward();
+                const historyIndex = this.historyIndex + 1;
+                this.setHistoryIndex(historyIndex);
             }
         }
     });

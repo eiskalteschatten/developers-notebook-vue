@@ -49,6 +49,9 @@ new Vue({
     computed: {
         ...mapState('user', [
             'currentJwt'
+        ]),
+        ...mapState('nav', [
+            'historyIndex'
         ])
     },
     watch: {
@@ -56,7 +59,11 @@ new Vue({
             const lang = to.params.lang;
             this.$i18n.locale = lang;
             cookies.set('preferedLanguage', lang);
-            this.pushToBackUrls(to.fullPath);
+
+            if (this.historyIndex <= history.length) {
+                const historyIndex = this.historyIndex + 1;
+                this.setHistoryIndex(historyIndex);
+            }
         }
     },
     created() {
@@ -77,7 +84,7 @@ new Vue({
             'fetchJwt'
         ]),
         ...mapMutations('nav', [
-            'pushToBackUrls'
+            'setHistoryIndex'
         ]),
         async determineAuthentication() {
             const jwt = localStorage.getItem('jwt');
