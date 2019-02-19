@@ -89,7 +89,7 @@
             ]),
             async logout() {
                 await this.removeJwt();
-                this.$router.push({ name: 'login' });
+                this.$router.replace({ name: 'login' });
             },
             toggleSidebar() {
                 eventBus.$emit('toggleSidebar');

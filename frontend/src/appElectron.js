@@ -90,12 +90,12 @@ new Vue({
             const jwt = localStorage.getItem('jwt');
 
             if (!jwt && !this.currentJwt && this.$route.name !== 'login') {
-                this.$router.push({ name: 'login' });
+                this.$router.replace({ name: 'login' });
             }
             else if (jwt && !this.currentJwt) {
                 const isLoggedIn = await this.fetchJwt();
                 if (!isLoggedIn) {
-                    this.$router.push({ name: 'login' });
+                    this.$router.replace({ name: 'login' });
                 }
             }
         },

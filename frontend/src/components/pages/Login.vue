@@ -96,7 +96,7 @@
         },
         created() {
             if (this.currentJwt) {
-                this.$router.push({ name: 'home' });
+                this.$router.replace({ name: 'home' });
             }
         },
         methods: {
