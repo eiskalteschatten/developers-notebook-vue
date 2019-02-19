@@ -37,6 +37,7 @@
                     v-for="item in items"
                     :key="item.title"
                     @click="$router.push({ name: item.routeName })"
+                    :class="{ 'active-nav-item': $route.name === item.routeName }"
                 >
                     <v-list-tile-action>
                         <v-icon>{{ item.icon }}</v-icon>
@@ -62,7 +63,10 @@
 
                 <v-divider />
 
-                <v-list-tile @click="$router.push({ name: 'settings' })">
+                <v-list-tile
+                    @click="$router.push({ name: 'settings' })"
+                    :class="{ 'active-nav-item': $route.name === 'settings' }"
+                >
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
                     </v-list-tile-action>
@@ -121,7 +125,11 @@
     });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+    .active-nav-item {
+        background: blue;
+    }
+
     .electron {
         &.darwin {
             .v-navigation-drawer--is-mobile {
