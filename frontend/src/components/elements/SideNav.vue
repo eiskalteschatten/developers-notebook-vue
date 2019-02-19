@@ -37,7 +37,8 @@
                     v-for="item in items"
                     :key="item.title"
                     @click="$router.push({ name: item.routeName })"
-                    :class="{ 'active-nav-item': $route.name === item.routeName }"
+                    class="nav-item"
+                    :class="{ 'active': $route.name === item.routeName }"
                 >
                     <v-list-tile-action>
                         <v-icon>{{ item.icon }}</v-icon>
@@ -65,7 +66,8 @@
 
                 <v-list-tile
                     @click="$router.push({ name: 'settings' })"
-                    :class="{ 'active-nav-item': $route.name === 'settings' }"
+                    class="nav-item"
+                    :class="{ 'active': $route.name === 'settings' }"
                 >
                     <v-list-tile-action>
                         <v-icon>settings</v-icon>
@@ -126,8 +128,11 @@
 </script>
 
 <style lang="scss" scoped>
-    .active-nav-item {
-        background: blue;
+    .nav-item {
+        &.active {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-left: 3px solid #ffffff;
+        }
     }
 
     .electron {
