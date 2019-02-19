@@ -23,7 +23,6 @@
     <v-navigation-drawer
         clipped
         fixed
-        disable-route-watcher
         :permanent="false"
         :mini-variant="mini"
         v-model="drawer"
