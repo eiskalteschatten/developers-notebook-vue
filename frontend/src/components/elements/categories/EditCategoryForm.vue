@@ -42,7 +42,13 @@
 
         <v-textarea v-model="editCategory.description" :label="$t('description')" />
 
-        <v-text-field v-model="editCategory.parentId" :label="$t('parentCategory')" />
+        <v-combobox
+            v-model="editCategory.parentId"
+            :items="parentCategories"
+            :label="$t('parentCategory')"
+            single-line
+            :return-object="false"
+        />
 
         <v-subheader>{{ $t('color') }}</v-subheader>
 
@@ -56,6 +62,7 @@
 
 <script>
     import Vue from 'vue';
+    import { mapState } from 'vuex';
 
     import Swatches from 'vue-swatches';
     import 'vue-swatches/dist/vue-swatches.min.css';
@@ -75,6 +82,19 @@
                     value => !!value || this.$t('required')
                 ]
             };
+        },
+        computed: {
+            ...mapState('categories', [
+                'categories'
+            ]),
+            parentCategories() {
+                return this.categories.map(category => {
+                    return {
+                        value: category.id,
+                        text: category.name
+                    };
+                });
+            }
         },
         watch: {
             editCategory() {
