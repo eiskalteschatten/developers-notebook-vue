@@ -48,7 +48,7 @@
 
         <v-textarea v-model="editCategory.description" :label="$t('description')" />
 
-        <v-text-field v-model="editCategory.parentCategory" :label="$t('parentCategory')" />
+        <v-text-field v-model="editCategory.parentId" :label="$t('parentCategory')" />
 
         <v-subheader>{{ $t('color') }}</v-subheader>
 
