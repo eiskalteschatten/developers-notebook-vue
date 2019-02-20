@@ -57,7 +57,7 @@
 <script>
     import Vue from 'vue';
 
-    import EditCategoryForm from './categories/EditCategoryForm.vue';
+    import EditCategoryForm from '../elements/categories/EditCategoryForm.vue';
 
     export default Vue.extend({
         components: {
