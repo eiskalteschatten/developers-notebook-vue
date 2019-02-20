@@ -4,6 +4,7 @@
         "categories": "Categories",
         "newCategory": "New Category",
         "create": "Create",
+        "save": "Save",
         "cancel": "Cancel",
         "name": "Name",
         "description": "Description",
@@ -13,6 +14,7 @@
         "categories": "Kategorien",
         "newCategory": "Neue Kategorie",
         "create": "Erstellen",
+        "save": "Speichern",
         "cancel": "Abbrechen",
         "name": "Name",
         "description": "Beschreibung",
@@ -54,14 +56,51 @@
                     item-key="id"
                 >
                     <template slot="items" slot-scope="props">
-                        <tr @click="props.expanded = !props.expanded">
+                        <tr>
                             <td>{{ props.item.name }}</td>
                             <td>{{ props.item.description }}</td>
+                            <td class="text-xs-right">
+                                <v-icon small class="mr-2" @click="props.expanded = true">
+                                    edit
+                                </v-icon>
+                                <v-icon small @click="deleteCategory(props.item.id)">
+                                    delete
+                                </v-icon>
+                            </td>
                         </tr>
                     </template>
                     <template slot="expand" slot-scope="props">
-                        <v-card flat dark>
-                            <v-card-text>{{ props.item.name }}</v-card-text>
+                        <v-card flat dark color="secondary">
+                            <v-form ref="form" lazy-validation @submit="submitEditCategory($event, props.item.id)">
+                                <v-card-text>
+                                    <edit-category-form
+                                        :errors="editCategory.errors"
+                                        :error-message="editCategory.error"
+                                        :edit-category="props.item"
+                                        @input="(values) => {editCategory.values = values}"
+                                    />
+                                </v-card-text>
+
+                                <v-card-actions>
+                                    <v-spacer />
+
+                                    <v-btn flat @click="props.expanded = false" small>
+                                        {{ $t('cancel') }}
+                                    </v-btn>
+
+                                    <v-btn
+                                        primary
+                                        flat
+                                        small
+                                        color="primary"
+                                        type="submit"
+                                        :loading="editCategory.loading"
+                                        :disabled="editCategory.loading"
+                                    >
+                                        {{ $t('save') }}
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-form>
                         </v-card>
                     </template>
                 </v-data-table>
@@ -87,7 +126,7 @@
                     <v-card-actions>
                         <v-spacer />
 
-                        <v-btn flat="flat" @click="newCategory.dialog = false">
+                        <v-btn flat @click="newCategory.dialog = false">
                             {{ $t('cancel') }}
                         </v-btn>
 
@@ -128,6 +167,12 @@
                     values: {
                         archived: false
                     }
+                },
+                editCategory: {
+                    loading: false,
+                    errors: {},
+                    error: false,
+                    values: {}
                 }
             };
         },
@@ -138,7 +183,8 @@
             headers() {
                 return [
                     { text: this.$t('name'), value: 'name' },
-                    { text: this.$t('description'), value: 'description' }
+                    { text: this.$t('description'), value: 'description' },
+                    { value: 'id', sortable: false }
                 ];
             }
         },
@@ -172,6 +218,14 @@
 
                 this.newCategory.loading = false;
                 await this.getCategories();
+            },
+            async submitEditCategory(event, id) {
+                event.preventDefault();
+
+                console.log('save category', id);
+            },
+            async deleteCategory(id) {
+                console.log('delete category', id);
             }
         }
     });
