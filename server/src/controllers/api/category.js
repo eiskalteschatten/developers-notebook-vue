@@ -75,10 +75,10 @@ module.exports = router => {
         const values = getValues(body);
 
         try {
-            const settings = await Settings.findOne({ where: { id: body.id, userId }});
+            const category = await Category.findOne({ where: { id: body.id, userId }});
 
-            if (settings) {
-                await settings.update(values);
+            if (category) {
+                await category.update(values);
             }
             else {
                 throw new Error(`No category with the id ${body.id} exists`);
