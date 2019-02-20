@@ -7,9 +7,14 @@
         "archive": "Archive",
         "save": "Save",
         "cancel": "Cancel",
+        "ok": "OK",
+        "close": "Close",
         "name": "Name",
         "description": "Description",
-        "search": "Search"
+        "search": "Search",
+        "confirmDelete": "Are you sure you want to delete this category? This cannot be undone.",
+        "categoryDeleted": "The category was successfully deleted.",
+        "anErrorOccurred": "An error occurred. Please try again."
     },
     "de": {
         "categories": "Kategorien",
@@ -18,9 +23,14 @@
         "archive": "Archivieren",
         "save": "Speichern",
         "cancel": "Abbrechen",
+        "ok": "OK",
+        "close": "Schließen",
         "name": "Name",
         "description": "Beschreibung",
-        "search": "Suche"
+        "search": "Suche",
+        "confirmDelete": "Sind Sie sicher, dass Sie diese Kategorie löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+        "categoryDeleted": "Die Kategorie wurde erfolgreich gelöscht.",
+        "anErrorOccurred": "Ein Fehler ist aufgetreten. Bitte versuchen Sie noch einmal."
     }
 }
 </i18n>
@@ -167,6 +177,25 @@
                 </v-form>
             </v-card>
         </v-dialog>
+
+        <v-dialog v-model="confirmDialog" persistent max-width="350">
+            <v-card>
+                <v-card-text>{{ $t(confirmQuestion) }}</v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn flat @click="confirmDialog = false">{{ $t('cancel') }}</v-btn>
+                    <v-btn color="primary" @click="confirmDeleteCategory">{{ $t('ok') }}</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-snackbar v-model="snackbar" bottom left>
+            {{ $t(snackbarMessage) }}
+
+            <v-btn color="primary" flat @click="snackbar = false">
+                {{ $t('close') }}
+            </v-btn>
+        </v-snackbar>
     </div>
 </template>
 
@@ -197,7 +226,12 @@
                     errors: {},
                     error: false,
                     values: {}
-                }
+                },
+                confirmDialog: false,
+                confirmQuestion: '',
+                deleteCategoryId: -1,
+                snackbar: false,
+                snackbarMessage: ''
             };
         },
         computed: {
@@ -270,8 +304,25 @@
 
                 this.editCategory.loading = false;
             },
-            async deleteCategory(id) {
-                console.log('delete category', id);
+            deleteCategory(id) {
+                this.confirmQuestion = 'confirmDelete';
+                this.confirmDialog = true;
+                this.deleteCategoryId = id;
+            },
+            async confirmDeleteCategory() {
+                this.confirmDialog = false;
+
+                const res = await this.$http.delete(`api/category/${this.deleteCategoryId}`);
+
+                if (res.status === 201) {
+                    await this.getCategories();
+                    this.snackbarMessage = 'categoryDeleted';
+                }
+                else {
+                    this.snackbarMessage = 'anErrorOccurred';
+                }
+
+                this.snackbar = true;
             },
             async archiveCategory(id) {
                 console.log('archive category', id);

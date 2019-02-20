@@ -93,4 +93,15 @@ module.exports = router => {
             res.status(500).send('');
         }
     });
+
+    router.delete('/:id', async (req, res) => {
+        try {
+            await Category.destroy({ where: { userId: req.user.id, id: req.params.id } });
+            res.status(201).send('');
+        }
+        catch(error) {
+            console.error(new Error(error));
+            res.status(500).send('');
+        }
+    });
 };

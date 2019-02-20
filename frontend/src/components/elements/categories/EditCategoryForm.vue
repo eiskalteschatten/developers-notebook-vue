@@ -7,7 +7,7 @@
         "color": "Color",
         "parentCategory": "Parent Category",
         "required": "Required",
-        "anErrorOccurred": "An error occurred while trying to save the category. Please try again"
+        "anErrorOccurred": "An error occurred while trying to save the category. Please try again."
     },
     "de": {
         "newCategory": "Neue Kategorie",
