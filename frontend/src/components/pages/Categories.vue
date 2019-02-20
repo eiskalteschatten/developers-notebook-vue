@@ -86,7 +86,7 @@
                     </template>
                     <template slot="expand" slot-scope="props">
                         <v-card flat dark color="secondary">
-                            <v-form lazy-validation @submit="submitEditCategory($event, props.item.id)">
+                            <v-form lazy-validation @submit="submitEditCategory($event, props)">
                                 <v-card-text>
                                     <edit-category-form
                                         :errors="editCategory.errors"
@@ -244,9 +244,9 @@
                 this.newCategory.loading = false;
                 await this.getCategories();
             },
-            async submitEditCategory(event, id) {
+            async submitEditCategory(event, props) {
                 event.preventDefault();
-                const values = this.editCategory.values[id];
+                const values = this.editCategory.values[props.item.id];
 
                 if (Object.keys(values).length <= 0) {
                     return;
@@ -265,7 +265,7 @@
                         this.editCategory.error = true;
                     }
                     else {
-                        // close panel
+                        props.expanded = false;
                     }
                 }
 
