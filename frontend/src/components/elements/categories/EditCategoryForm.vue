@@ -43,11 +43,10 @@
         <v-textarea v-model="editCategory.description" :label="$t('description')" />
 
         <v-combobox
-            v-model="editCategory.parentId"
+            v-model="selectedParentCategory"
             :items="parentCategories"
             :label="$t('parentCategory')"
             single-line
-            :return-object="false"
         />
 
         <v-subheader>{{ $t('color') }}</v-subheader>
@@ -94,6 +93,27 @@
                         text: category.name
                     };
                 });
+            },
+            selectedParentCategory: {
+                get() {
+                    const parentId = this.editCategory.parentId;
+
+                    if (!parentId) {
+                        return '';
+                    }
+
+                    const category = this.$store.getters['categories/getCategory'](parentId);
+
+                    return category
+                        ? {
+                            value: parentId,
+                            text: category.name
+                        }
+                        : '';
+                },
+                set(parentCategoryObj) {
+                    this.editCategory.parentId = parentCategoryObj.value;
+                }
             }
         },
         watch: {

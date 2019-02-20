@@ -8,12 +8,13 @@ export default {
 
     getters: {
         categories: state => state.categories,
-        category(state, id) {
+        getCategory: state => id => {
             for (const stateCat of state.categories) {
                 if (stateCat.id && stateCat.id === id) {
                     return stateCat;
                 }
             }
+            return '';
         }
     },
 
