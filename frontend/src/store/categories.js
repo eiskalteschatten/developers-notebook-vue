@@ -22,7 +22,7 @@ export default {
         setCategories(state, categories) {
             state.categories = categories;
         },
-        setCategory(state, id, category) {
+        setCategory(state, { id, category }) {
             for (const i in state.categories) {
                 const stateCat = state.categories[i];
 
@@ -35,14 +35,14 @@ export default {
     },
 
     actions: {
-        async saveCategory({ commit }, category) {
+        async saveCategory({ dispatch }, category) {
             try {
                 const res = category.id
                     ? await http.put('api/category', category)
                     : await http.post('api/category', category);
 
                 if (res.body && res.status < 300) {
-                    commit('setCategory', res.body.id, res.body);
+                    dispatch('getCategories');
                     return {
                         code: res.status,
                         message: res.bodyText

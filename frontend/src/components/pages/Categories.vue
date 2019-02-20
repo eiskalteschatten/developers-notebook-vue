@@ -242,7 +242,6 @@
                 }
 
                 this.newCategory.loading = false;
-                await this.getCategories();
             },
             async submitEditCategory(event, props) {
                 event.preventDefault();
@@ -270,7 +269,6 @@
                 }
 
                 this.editCategory.loading = false;
-                await this.getCategories();
             },
             async deleteCategory(id) {
                 console.log('delete category', id);
