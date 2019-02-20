@@ -52,6 +52,12 @@
             <v-card>
                 <v-card-title class="headline">
                     {{ $t('newCategory') }}
+
+                    <v-spacer />
+
+                    <v-btn flat @click="newCategory.dialog = false" small icon>
+                        <v-icon>close</v-icon>
+                    </v-btn>
                 </v-card-title>
 
                 <v-form lazy-validation @submit="createNewCategory">
