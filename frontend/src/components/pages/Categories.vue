@@ -14,7 +14,8 @@
         "search": "Search",
         "confirmDelete": "Are you sure you want to delete this category? This cannot be undone.",
         "categoryDeleted": "The category was successfully deleted.",
-        "anErrorOccurred": "An error occurred. Please try again."
+        "anErrorOccurred": "An error occurred. Please try again.",
+        "archivedSuccessfully": "The category was successfully archived."
     },
     "de": {
         "categories": "Kategorien",
@@ -30,7 +31,8 @@
         "search": "Suche",
         "confirmDelete": "Sind Sie sicher, dass Sie diese Kategorie löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
         "categoryDeleted": "Die Kategorie wurde erfolgreich gelöscht.",
-        "anErrorOccurred": "Ein Fehler ist aufgetreten. Bitte versuchen Sie noch einmal."
+        "anErrorOccurred": "Ein Fehler ist aufgetreten. Bitte versuchen Sie noch einmal.",
+        "archivedSuccessfully": "Die Kategorie wurde erfolgreich archiviert."
     }
 }
 </i18n>
@@ -325,7 +327,18 @@
                 this.snackbar = true;
             },
             async archiveCategory(id) {
-                console.log('archive category', id);
+                const category = { ...this.$store.getters['categories/getCategory'](id) };
+                category.archived = true;
+
+                const editedCategory = await this.saveCategory(category);
+                if (editedCategory.code === 500) {
+                    this.snackbarMessage = 'anErrorOccurred';
+                }
+                else {
+                    this.snackbarMessage = 'archivedSuccessfully';
+                }
+
+                this.snackbar = true;
             }
         }
     });
