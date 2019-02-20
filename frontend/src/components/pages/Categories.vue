@@ -4,13 +4,17 @@
         "categories": "Categories",
         "newCategory": "New Category",
         "create": "Create",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "name": "Name",
+        "description": "Description"
     },
     "de": {
         "categories": "Kategorien",
         "newCategory": "Neue Kategorie",
         "create": "Erstellen",
-        "cancel": "Abbrechen"
+        "cancel": "Abbrechen",
+        "name": "Name",
+        "description": "Beschreibung"
     }
 }
 </i18n>
@@ -96,23 +100,27 @@
         },
         data() {
             return {
-                headers: [
-                    { text: 'Name', value: 'name' },
-                    { text: 'Description', value: 'description' }
-                ],
                 newCategory: {
                     dialog: false,
                     loading: false,
                     errors: {},
                     error: false,
-                    values: {}
+                    values: {
+                        archived: false
+                    }
                 }
             };
         },
         computed: {
             ...mapState('categories', [
                 'categories'
-            ])
+            ]),
+            headers() {
+                return [
+                    { text: this.$t('name'), value: 'name' },
+                    { text: this.$t('description'), value: 'description' }
+                ];
+            }
         },
         async mounted() {
             await this.getCategories();
