@@ -86,6 +86,7 @@
                             :loading="serverLoading"
                             :disabled="serverLoading"
                         >
+                            <v-icon left>save</v-icon>
                             {{ $t('save') }}
                         </v-btn>
                     </v-flex>

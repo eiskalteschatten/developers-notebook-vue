@@ -93,6 +93,7 @@
                             :loading="loading"
                             :disabled="loading"
                         >
+                            <v-icon left>save</v-icon>
                             {{ $t('save') }}
                         </v-btn>
                     </v-flex>
@@ -148,6 +149,7 @@
                             :loading="loadingPassword"
                             :disabled="loadingPassword"
                         >
+                            <v-icon left>save</v-icon>
                             {{ $t('save') }}
                         </v-btn>
                     </v-flex>
