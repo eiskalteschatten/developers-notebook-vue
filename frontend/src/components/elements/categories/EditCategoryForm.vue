@@ -3,8 +3,6 @@
     "en": {
         "newCategory": "New Category",
         "name": "Name",
-        "slug": "Slug",
-        "automaticallyGenerated": "automatically generated if left empty",
         "description": "Description",
         "color": "Color",
         "parentCategory": "Parent Category",
@@ -14,8 +12,6 @@
     "de": {
         "newCategory": "Neue Kategorie",
         "name": "Name",
-        "slug": "Slug",
-        "automaticallyGenerated": "wird automatisch generiert, wenn leer gelassen",
         "description": "Beschreibung",
         "color": "Farbe",
         "parentCategory": "Oberkategorie",
@@ -43,8 +39,6 @@
             :rules="rules"
             :error="errors.name"
         />
-
-        <v-text-field v-model="editCategory.slug" :label="$t('slug')" />
 
         <v-textarea v-model="editCategory.description" :label="$t('description')" />
 

@@ -9,6 +9,7 @@ function getValues(category) {
     const slugStr = category.slug ? category.slug.toLowerCase() : category.name.toLowerCase();
 
     return {
+        id: category.id ? category.id : '',
         name: category.name,
         slug: slug(slugStr),
         description: category.description,

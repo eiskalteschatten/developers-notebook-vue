@@ -26,7 +26,24 @@
                 </v-btn>
             </v-flex>
             <v-flex xs12 md10>
-                test
+                <v-data-table
+                    :headers="headers"
+                    :items="categories"
+                    expand
+                    item-key="id"
+                >
+                    <template slot="items" slot-scope="props">
+                        <tr @click="props.expanded = !props.expanded">
+                            <td>{{ props.item.name }}</td>
+                            <td>{{ props.item.description }}</td>
+                        </tr>
+                    </template>
+                    <template slot="expand" slot-scope="props">
+                        <v-card flat dark>
+                            <v-card-text>{{ props.item.name }}</v-card-text>
+                        </v-card>
+                    </template>
+                </v-data-table>
             </v-flex>
         </v-layout>
 
@@ -69,7 +86,7 @@
 
 <script>
     import Vue from 'vue';
-    import { mapActions } from 'vuex';
+    import { mapActions, mapState } from 'vuex';
 
     import EditCategoryForm from '../elements/categories/EditCategoryForm.vue';
 
@@ -79,6 +96,10 @@
         },
         data() {
             return {
+                headers: [
+                    { text: 'Name', value: 'name' },
+                    { text: 'Description', value: 'description' }
+                ],
                 newCategory: {
                     dialog: false,
                     loading: false,
@@ -88,9 +109,18 @@
                 }
             };
         },
+        computed: {
+            ...mapState('categories', [
+                'categories'
+            ])
+        },
+        async mounted() {
+            await this.getCategories();
+        },
         methods: {
             ...mapActions('categories', [
-                'saveCategory'
+                'saveCategory',
+                'getCategories'
             ]),
             async createNewCategory(event) {
                 event.preventDefault();
