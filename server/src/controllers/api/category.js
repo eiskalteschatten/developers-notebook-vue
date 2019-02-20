@@ -14,7 +14,8 @@ function getValues(category) {
         slug: slug(slugStr),
         description: category.description,
         color: category.color,
-        parentId: category.parentId
+        parentId: category.parentId,
+        archived: category.archived
     };
 }
 

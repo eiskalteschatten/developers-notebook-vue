@@ -12,7 +12,8 @@ const Category = db.define('category', {
     slug: Sequelize.STRING,
     description: Sequelize.STRING,
     color: Sequelize.STRING,
-    parentId: Sequelize.INTEGER
+    parentId: Sequelize.INTEGER,
+    archived: Sequelize.BOOLEAN
 });
 
 User.hasMany(Category);
