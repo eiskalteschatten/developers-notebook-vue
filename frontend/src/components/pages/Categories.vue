@@ -64,6 +64,7 @@
 
 <script>
     import Vue from 'vue';
+    import { mapActions } from 'vuex';
 
     import EditCategoryForm from '../elements/categories/EditCategoryForm.vue';
 
@@ -82,8 +83,16 @@
             };
         },
         methods: {
+            ...mapActions('categories', [
+                'saveCategory'
+            ]),
             createNewCategory() {
-                this.newCategoryDialog = false;
+                this.newCategory.loading = true;
+
+
+
+                this.newCategory.loading = false;
+                this.newCategory.dialog = false;
             }
         }
     });

@@ -54,7 +54,10 @@ export default {
                     commit('setInfo', user);
                     commit('setJwt', jwt);
                     localStorage.setItem('jwt', jwt);
+
                     await dispatch('settings/setSettings', {}, { root: true });
+                    dispatch('categories/getCategories', {}, { root: true });
+
                     return true;
                 }
 

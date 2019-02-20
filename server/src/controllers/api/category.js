@@ -14,6 +14,26 @@ function getValues(category) {
 }
 
 module.exports = router => {
+    router.get('/all', async (req, res) => {
+        const userId = req.user.id;
+
+        try {
+            const categories = await Category.findAll({ where: { userId }});
+            const allValues = [];
+
+            for (const category of categories) {
+                const values = getValues(category.get());
+                allValues.push(values);
+            }
+
+            res.json(allValues);
+        }
+        catch(error) {
+            console.error(new Error(error));
+            res.status(500).send('');
+        }
+    });
+
     router.get('/:id', async (req, res) => {
         const userId = req.user.id;
         const id = req.params.id;
