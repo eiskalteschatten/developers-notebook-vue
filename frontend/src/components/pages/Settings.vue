@@ -41,13 +41,13 @@
 
                     <div class="preferences-theme mt-3 mr-5" @click="setTheme('light')">
                         <div class="theme-image light" :class="{ 'selected': theme === 'light' }">
-                            <div class="gradient"></div>
+                            <div class="gradient" />
                         </div>
                         {{ $t('light') }}
                     </div>
                     <div class="preferences-theme" @click="setTheme('dark')">
                         <div class="theme-image dark" :class="{ 'selected': theme === 'dark' }">
-                            <div class="gradient"></div>
+                            <div class="gradient" />
                         </div>
                         {{ $t('dark') }}
                     </div>

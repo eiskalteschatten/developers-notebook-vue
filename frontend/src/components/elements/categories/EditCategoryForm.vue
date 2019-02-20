@@ -35,7 +35,7 @@
             {{ $t('anErrorOccurred') }}
         </v-alert>
 
-        <input type="hidden" v-model="editCategory.id" />
+        <input type="hidden" v-model="editCategory.id">
 
         <v-text-field
             v-model="editCategory.name"
