@@ -66,10 +66,19 @@
                                 <v-icon small class="mr-2" @click="props.expanded = true">
                                     edit
                                 </v-icon>
-                                <v-icon small class="mr-2" @click="deleteCategory(props.item.id)">
+                                <v-icon
+                                    small
+                                    class="mr-2"
+                                    @click="deleteCategory(props.item.id)"
+                                    v-if="$vuetify.breakpoint.smAndUp"
+                                >
                                     delete
                                 </v-icon>
-                                <v-icon small @click="archiveCategory(props.item.id)">
+                                <v-icon
+                                    small
+                                    @click="archiveCategory(props.item.id)"
+                                    v-if="$vuetify.breakpoint.smAndUp"
+                                >
                                     archive
                                 </v-icon>
                             </td>
@@ -88,9 +97,13 @@
                                 </v-card-text>
 
                                 <v-card-actions>
+                                    <v-btn flat @click="deleteCategory(props.item.id)" color="red" small icon>
+                                        <v-icon>delete</v-icon>
+                                    </v-btn>
+
                                     <v-btn flat @click="archiveCategory(props.item.id)" small>
                                         <v-icon class="mr-2">archive</v-icon>
-                                        {{ $t('archive') }}
+                                        <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('archive') }}</span>
                                     </v-btn>
 
                                     <v-spacer />
