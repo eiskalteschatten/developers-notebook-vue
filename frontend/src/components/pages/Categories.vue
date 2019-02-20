@@ -6,7 +6,8 @@
         "create": "Create",
         "cancel": "Cancel",
         "name": "Name",
-        "description": "Description"
+        "description": "Description",
+        "search": "Search"
     },
     "de": {
         "categories": "Kategorien",
@@ -14,7 +15,8 @@
         "create": "Erstellen",
         "cancel": "Abbrechen",
         "name": "Name",
-        "description": "Beschreibung"
+        "description": "Beschreibung",
+        "search": "Suche"
     }
 }
 </i18n>
@@ -30,9 +32,24 @@
                 </v-btn>
             </v-flex>
             <v-flex xs12 md10>
+                <v-layout>
+                    <v-spacer />
+                    <v-flex xs12 md4 mb-4>
+                        <v-text-field
+                            v-model="search"
+                            append-icon="search"
+                            :label="$t('search')"
+                            single-line
+                            hide-details
+                            class="searchField"
+                        />
+                    </v-flex>
+                </v-layout>
+
                 <v-data-table
                     :headers="headers"
                     :items="categories"
+                    :search="search"
                     expand
                     item-key="id"
                 >
@@ -53,7 +70,9 @@
 
         <v-dialog v-model="newCategory.dialog" max-width="600">
             <v-card>
-                <v-card-title class="headline">{{ $t('newCategory') }}</v-card-title>
+                <v-card-title class="headline">
+                    {{ $t('newCategory') }}
+                </v-card-title>
 
                 <v-form ref="form" lazy-validation @submit="createNewCategory">
                     <v-card-text>
@@ -100,6 +119,7 @@
         },
         data() {
             return {
+                search: '',
                 newCategory: {
                     dialog: false,
                     loading: false,
