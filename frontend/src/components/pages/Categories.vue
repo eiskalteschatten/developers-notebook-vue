@@ -86,7 +86,7 @@
                     </template>
                     <template slot="expand" slot-scope="props">
                         <v-card flat dark color="secondary">
-                            <v-form ref="form" lazy-validation @submit="submitEditCategory($event, props.item.id)">
+                            <v-form lazy-validation @submit="submitEditCategory($event, props.item.id)">
                                 <v-card-text>
                                     <edit-category-form
                                         :errors="editCategory.errors"
@@ -137,7 +137,7 @@
                     {{ $t('newCategory') }}
                 </v-card-title>
 
-                <v-form ref="form" lazy-validation @submit="createNewCategory">
+                <v-form lazy-validation @submit="createNewCategory">
                     <v-card-text>
                         <edit-category-form
                             :errors="newCategory.errors"
@@ -246,8 +246,33 @@
             },
             async submitEditCategory(event, id) {
                 event.preventDefault();
+                const values = this.editCategory.values;
 
-                console.log('save category', id);
+                if (Object.keys(values).length <= 0) {
+                    return;
+                }
+
+                console.log(id);
+
+                this.editCategory.loading = true;
+
+                if (!values.name) {
+                    this.editCategory.errors.name = true;
+                    this.editCategory.error = true;
+                }
+                else {
+                    const editCategory = await this.saveCategory(values);
+
+                    if (editCategory.code === 500) {
+                        this.editCategory.error = true;
+                    }
+                    else {
+                        // close panel
+                    }
+                }
+
+                this.editCategory.loading = false;
+                await this.getCategories();
             },
             async deleteCategory(id) {
                 console.log('delete category', id);
