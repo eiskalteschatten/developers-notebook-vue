@@ -21,7 +21,7 @@
 
         <v-layout wrap>
             <v-flex xs12 md2>
-                <v-btn @click="newCategoryDialog = true">
+                <v-btn @click="newCategory.dialog = true">
                     {{ $t('newCategory') }}
                 </v-btn>
             </v-flex>
@@ -30,19 +30,19 @@
             </v-flex>
         </v-layout>
 
-        <v-dialog v-model="newCategoryDialog" max-width="600">
+        <v-dialog v-model="newCategory.dialog" max-width="600">
             <v-card>
                 <v-card-title class="headline">{{ $t('newCategory') }}</v-card-title>
 
                 <v-form ref="form" lazy-validation @submit="createNewCategory">
                     <v-card-text>
-                        <edit-category-form :errors="newCategoryErrors" />
+                        <edit-category-form :errors="newCategory.errors" :errorMessage="newCategory.error" />
                     </v-card-text>
 
                     <v-card-actions>
                         <v-spacer />
 
-                        <v-btn flat="flat" @click="newCategoryDialog = false">
+                        <v-btn flat="flat" @click="newCategory.dialog = false">
                             {{ $t('cancel') }}
                         </v-btn>
 
@@ -50,8 +50,8 @@
                             primary
                             color="primary"
                             type="submit"
-                            :loading="newCategoryLoading"
-                            :disabled="newCategoryLoading"
+                            :loading="newCategory.loading"
+                            :disabled="newCategory.loading"
                         >
                             {{ $t('create') }}
                         </v-btn>
@@ -73,9 +73,12 @@
         },
         data() {
             return {
-                newCategoryDialog: false,
-                newCategoryLoading: false,
-                newCategoryErrors: {}
+                newCategory: {
+                    dialog: false,
+                    loading: false,
+                    errors: {},
+                    error: false
+                }
             };
         },
         methods: {

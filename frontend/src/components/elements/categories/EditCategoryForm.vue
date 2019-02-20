@@ -7,7 +7,9 @@
         "automaticallyGenerated": "automatically generated if left empty",
         "description": "Description",
         "color": "Color",
-        "parentCategory": "Parent Category"
+        "parentCategory": "Parent Category",
+        "required": "Required",
+        "errorMessage": "An error occurred while trying to save the category. Please try again"
     },
     "de": {
         "newCategory": "Neue Kategorie",
@@ -16,13 +18,23 @@
         "automaticallyGenerated": "wird automatisch generiert, wenn leer gelassen",
         "description": "Beschreibung",
         "color": "Farbe",
-        "parentCategory": "Oberkategorie"
+        "parentCategory": "Oberkategorie",
+        "required": "Erforderlich",
+        "anErrorOccurred": "Ein Fehler ist beim Speichern der Kategorie aufgetreten. Bitte versuchen Sie noch einmal."
     }
 }
 </i18n>
 
 <template>
     <v-container grid-list-md>
+        <v-alert
+            :value="errorMessage"
+            type="error"
+            class="mb-4"
+        >
+            {{ $t('errorMessage') }}
+        </v-alert>
+
         <v-text-field
             v-model="editCategory.name"
             :label="$t('name')"
@@ -57,7 +69,8 @@
             Swatches
         },
         props: {
-            errors: Object
+            errors: Object,
+            errorMessage: Boolean
         },
         data() {
             return {
