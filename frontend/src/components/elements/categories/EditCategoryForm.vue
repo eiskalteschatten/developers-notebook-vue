@@ -31,16 +31,16 @@
             {{ $t('anErrorOccurred') }}
         </v-alert>
 
-        <input type="hidden" v-model="editCategory.id">
+        <input type="hidden" v-model="category.id">
 
         <v-text-field
-            v-model="editCategory.name"
+            v-model="category.name"
             :label="$t('name')"
             :rules="rules"
             :error="errors.name"
         />
 
-        <v-textarea v-model="editCategory.description" :label="$t('description')" />
+        <v-textarea v-model="category.description" :label="$t('description')" />
 
         <v-combobox
             v-model="selectedParentCategory"
@@ -52,7 +52,7 @@
         <v-subheader>{{ $t('color') }}</v-subheader>
 
         <swatches
-            v-model="editCategory.color"
+            v-model="category.color"
             inline
             colors="material-basic"
         />
@@ -79,7 +79,8 @@
             return {
                 rules: [
                     value => !!value || this.$t('required')
-                ]
+                ],
+                category: this.editCategory
             };
         },
         computed: {
@@ -96,7 +97,7 @@
             },
             selectedParentCategory: {
                 get() {
-                    const parentId = this.editCategory.parentId;
+                    const parentId = this.category.parentId;
 
                     if (!parentId) {
                         return '';
@@ -112,13 +113,16 @@
                         : '';
                 },
                 set(parentCategoryObj) {
-                    this.editCategory.parentId = parentCategoryObj.value;
+                    this.category.parentId = parentCategoryObj.value;
                 }
             }
         },
         watch: {
-            editCategory() {
-                this.$emit('input', this.editCategory);
+            category: {
+                handler() {
+                    this.$emit('input', this.category);
+                },
+                deep: true
             }
         }
     });

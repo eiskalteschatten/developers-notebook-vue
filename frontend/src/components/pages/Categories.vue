@@ -91,8 +91,8 @@
                                     <edit-category-form
                                         :errors="editCategory.errors"
                                         :error-message="editCategory.error"
-                                        :edit-category="props.item"
-                                        @input="(values) => {editCategory.values = values}"
+                                        :edit-category="{ ...props.item }"
+                                        @input="values => { editCategory.values[props.item.id] = values }"
                                     />
                                 </v-card-text>
 
@@ -143,7 +143,7 @@
                             :errors="newCategory.errors"
                             :error-message="newCategory.error"
                             :edit-category="newCategory.values"
-                            @input="(values) => {newCategory.values = values}"
+                            @input="values => { newCategory.values = values }"
                         />
                     </v-card-text>
 
@@ -246,13 +246,11 @@
             },
             async submitEditCategory(event, id) {
                 event.preventDefault();
-                const values = this.editCategory.values;
+                const values = this.editCategory.values[id];
 
                 if (Object.keys(values).length <= 0) {
                     return;
                 }
-
-                console.log(id);
 
                 this.editCategory.loading = true;
 
