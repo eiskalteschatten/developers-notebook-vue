@@ -21,7 +21,7 @@ module.exports = router => {
         try {
             const category = await Category.findOne({ where: { id, userId }});
             const values = getValues(category.get());
-            res.status(200).json(values);
+            res.json(values);
         }
         catch(error) {
             console.error(new Error(error));
@@ -36,7 +36,8 @@ module.exports = router => {
         try {
             const category = await Category.create(values);
             await category.setUser(req.user);
-            res.status(201).send('');
+            const returnValues = getValues(category.get());
+            res.json(returnValues);
         }
         catch(error) {
             console.error(new Error(error));
@@ -58,8 +59,8 @@ module.exports = router => {
             else {
                 throw new Error(`No category with the id ${body.id} exists`);
             }
-
-            res.status(201).send('');
+            const returnValues = getValues(category.get());
+            res.json(returnValues);
         }
         catch(error) {
             console.error(new Error(error));

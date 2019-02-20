@@ -9,7 +9,7 @@ module.exports = router => {
 
         try {
             const settings = await Settings.findOne({ where: { userId }});
-            res.status(200).json({
+            res.json({
                 theme: settings.theme
             });
         }
