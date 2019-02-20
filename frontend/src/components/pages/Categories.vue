@@ -151,6 +151,7 @@
                 }
 
                 this.newCategory.loading = false;
+                await this.getCategories();
             }
         }
     });
