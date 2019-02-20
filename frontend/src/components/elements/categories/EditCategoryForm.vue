@@ -88,7 +88,11 @@
                 'categories'
             ]),
             parentCategories() {
-                return this.categories.map(category => {
+                const notArchivedCategories = this.categories.filter(category => {
+                    if (!category.archived) return category;
+                });
+
+                return notArchivedCategories.map(category => {
                     return {
                         value: category.id,
                         text: category.name
