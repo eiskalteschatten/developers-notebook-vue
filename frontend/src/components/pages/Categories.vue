@@ -4,6 +4,7 @@
         "categories": "Categories",
         "newCategory": "New Category",
         "create": "Create",
+        "archive": "Archive",
         "save": "Save",
         "cancel": "Cancel",
         "name": "Name",
@@ -14,6 +15,7 @@
         "categories": "Kategorien",
         "newCategory": "Neue Kategorie",
         "create": "Erstellen",
+        "archive": "Archivieren",
         "save": "Speichern",
         "cancel": "Abbrechen",
         "name": "Name",
@@ -63,8 +65,11 @@
                                 <v-icon small class="mr-2" @click="props.expanded = true">
                                     edit
                                 </v-icon>
-                                <v-icon small @click="deleteCategory(props.item.id)">
+                                <v-icon small class="mr-2" @click="deleteCategory(props.item.id)">
                                     delete
+                                </v-icon>
+                                <v-icon small @click="archiveCategory(props.item.id)">
+                                    archive
                                 </v-icon>
                             </td>
                         </tr>
@@ -82,6 +87,11 @@
                                 </v-card-text>
 
                                 <v-card-actions>
+                                    <v-btn flat @click="archiveCategory(props.item.id)" small>
+                                        <v-icon class="mr-2">archive</v-icon>
+                                        {{ $t('archive') }}
+                                    </v-btn>
+
                                     <v-spacer />
 
                                     <v-btn flat @click="props.expanded = false" small>
@@ -226,6 +236,9 @@
             },
             async deleteCategory(id) {
                 console.log('delete category', id);
+            },
+            async archiveCategory(id) {
+                console.log('archive category', id);
             }
         }
     });
