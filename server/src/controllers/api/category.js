@@ -6,9 +6,11 @@ const Category = require('../../models/Category');
 
 
 function getValues(category) {
+    const slugStr = category.slug ? category.slug.toLowerCase() : category.name.toLowerCase();
+
     return {
         name: category.name,
-        slug: category.slug ? slug(category.slug) : slug(category.name),
+        slug: slug(slugStr),
         description: category.description,
         color: category.color,
         parentId: category.parentId

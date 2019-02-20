@@ -10,7 +10,7 @@ export default {
         categories: state => state.categories,
         category(state) {
             for (const stateCat of state.categories) {
-                if (stateCat.id === id) {
+                if (stateCat.id && stateCat.id === id) {
                     return stateCat;
                 }
             }
@@ -25,7 +25,7 @@ export default {
             for (const i in state.categories) {
                 const stateCat = state.categories[i];
 
-                if (stateCat.id === id) {
+                if (stateCat.id && stateCat.id === id) {
                     state.categories[i] = category;
                     break;
                 }
