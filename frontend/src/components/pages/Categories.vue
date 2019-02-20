@@ -34,21 +34,29 @@
             <v-card>
                 <v-card-title class="headline">{{ $t('newCategory') }}</v-card-title>
 
-                <v-card-text>
-                    <edit-category-form />
-                </v-card-text>
+                <v-form ref="form" lazy-validation @submit="createNewCategory">
+                    <v-card-text>
+                        <edit-category-form :errors="newCategoryErrors" />
+                    </v-card-text>
 
-                <v-card-actions>
-                    <v-spacer />
+                    <v-card-actions>
+                        <v-spacer />
 
-                    <v-btn flat="flat" @click="newCategoryDialog = false">
-                        {{ $t('cancel') }}
-                    </v-btn>
+                        <v-btn flat="flat" @click="newCategoryDialog = false">
+                            {{ $t('cancel') }}
+                        </v-btn>
 
-                    <v-btn color="primary" @click="createNewCategory">
-                        {{ $t('create') }}
-                    </v-btn>
-                </v-card-actions>
+                        <v-btn
+                            primary
+                            color="primary"
+                            type="submit"
+                            :loading="newCategoryLoading"
+                            :disabled="newCategoryLoading"
+                        >
+                            {{ $t('create') }}
+                        </v-btn>
+                    </v-card-actions>
+                </v-form>
             </v-card>
         </v-dialog>
     </div>
@@ -65,7 +73,9 @@
         },
         data() {
             return {
-                newCategoryDialog: false
+                newCategoryDialog: false,
+                newCategoryLoading: false,
+                newCategoryErrors: {}
             };
         },
         methods: {

@@ -23,10 +23,19 @@
 
 <template>
     <v-container grid-list-md>
-        <v-text-field v-model="editCategory.name" :label="$t('name')" />
-        <v-text-field v-model="editCategory.slug" :label="$t('slug')" :hint="$t('automaticallyGenerated')" persistent-hint />
+        <v-text-field
+            v-model="editCategory.name"
+            :label="$t('name')"
+            :rules="rules"
+            :error="errors.name"
+        />
+
+        <v-text-field v-model="editCategory.slug" :label="$t('slug')" />
+
         <v-textarea v-model="editCategory.description" :label="$t('description')" />
+
         <v-text-field v-model="editCategory.parentCategory" :label="$t('parentCategory')" />
+
         <v-subheader>{{ $t('color') }}</v-subheader>
 
         <swatches
@@ -47,8 +56,14 @@
         components: {
             Swatches
         },
+        props: {
+            errors: Object
+        },
         data() {
             return {
+                rules: [
+                    value => !!value || this.$t('required')
+                ],
                 editCategory: {}
             };
         }
