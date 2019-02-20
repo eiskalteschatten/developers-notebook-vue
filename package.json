@@ -30,8 +30,5 @@
         "hooks": {
             "pre-commit": "npm run lint"
         }
-    },
-    "dependencies": {
-        "vue-swatches": "^1.0.3"
     }
 }

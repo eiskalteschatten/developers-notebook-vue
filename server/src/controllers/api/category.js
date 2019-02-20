@@ -1,12 +1,14 @@
 'use strict';
 
+const slug = require('slug');
+
 const Category = require('../../models/Category');
 
 
 function getValues(category) {
     return {
         name: category.name,
-        slug: category.slug,
+        slug: category.slug ? slug(category.slug) : slug(category.name),
         description: category.description,
         color: category.color,
         parentId: category.parentId

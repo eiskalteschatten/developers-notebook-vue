@@ -9,7 +9,7 @@
         "color": "Color",
         "parentCategory": "Parent Category",
         "required": "Required",
-        "errorMessage": "An error occurred while trying to save the category. Please try again"
+        "anErrorOccurred": "An error occurred while trying to save the category. Please try again"
     },
     "de": {
         "newCategory": "Neue Kategorie",
@@ -32,10 +32,10 @@
             type="error"
             class="mb-4"
         >
-            {{ $t('errorMessage') }}
+            {{ $t('anErrorOccurred') }}
         </v-alert>
 
-        <input type="hidden" v-model="editCategory.id" name="id" />
+        <input type="hidden" v-model="editCategory.id" />
 
         <v-text-field
             v-model="editCategory.name"
@@ -72,15 +72,20 @@
         },
         props: {
             errors: Object,
-            errorMessage: Boolean
+            errorMessage: Boolean,
+            editCategory: Object
         },
         data() {
             return {
                 rules: [
                     value => !!value || this.$t('required')
-                ],
-                editCategory: {}
+                ]
             };
+        },
+        watch: {
+            editCategory() {
+                this.$emit('input', this.editCategory);
+            }
         }
     });
 </script>

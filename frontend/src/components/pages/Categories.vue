@@ -36,7 +36,12 @@
 
                 <v-form ref="form" lazy-validation @submit="createNewCategory">
                     <v-card-text>
-                        <edit-category-form :errors="newCategory.errors" :errorMessage="newCategory.error" />
+                        <edit-category-form
+                            :errors="newCategory.errors"
+                            :errorMessage="newCategory.error"
+                            :edit-category="newCategory.values"
+                            @input="(values) => {newCategory.values = values}"
+                        />
                     </v-card-text>
 
                     <v-card-actions>
@@ -78,7 +83,8 @@
                     dialog: false,
                     loading: false,
                     errors: {},
-                    error: false
+                    error: false,
+                    values: {}
                 }
             };
         },
@@ -86,13 +92,27 @@
             ...mapActions('categories', [
                 'saveCategory'
             ]),
-            createNewCategory() {
+            async createNewCategory(event) {
+                event.preventDefault();
                 this.newCategory.loading = true;
+                const values = this.newCategory.values;
 
+                if (!values.name) {
+                    this.newCategory.errors.name = true;
+                    this.newCategory.error = true;
+                }
+                else {
+                    const newCategory = await this.saveCategory(values);
 
+                    if (newCategory.code === 500) {
+                        this.newCategory.error = true;
+                    }
+                    else {
+                        this.newCategory.dialog = false;
+                    }
+                }
 
                 this.newCategory.loading = false;
-                this.newCategory.dialog = false;
             }
         }
     });
