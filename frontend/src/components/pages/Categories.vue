@@ -59,6 +59,7 @@
                 >
                     <template slot="items" slot-scope="props">
                         <tr>
+                            <td :style="{ backgroundColor: props.item.color, padding: 0 }" />
                             <td>{{ props.item.name }}</td>
                             <td>{{ props.item.description }}</td>
                             <td class="text-xs-right">
@@ -192,6 +193,7 @@
             ]),
             headers() {
                 return [
+                    { value: 'color', sortable: false, class: 'category-color-stripe' },
                     { text: this.$t('name'), value: 'name' },
                     { text: this.$t('description'), value: 'description' },
                     { value: 'id', sortable: false }
@@ -244,5 +246,9 @@
     });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+    .category-color-stripe {
+        padding: 0 !important;
+        width: 5px;
+    }
 </style>
