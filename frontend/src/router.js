@@ -9,8 +9,11 @@ import Home from './components/pages/Home.vue';
 import AccountSettings from './components/pages/AccountSettings.vue';
 import Settings from './components/pages/Settings.vue';
 
-import Categories from './components/pages/Categories/Index.vue';
-import Category from './components/pages/Categories/Category.vue';
+import Categories from './components/pages/categories/Index.vue';
+import Category from './components/pages/categories/Category.vue';
+
+import Clients from './components/pages/clients/Index.vue';
+import Client from './components/pages/clients/Client.vue';
 
 import Login from './components/pages/Login.vue';
 import ServerConfig from './components/pages/electron/ServerConfig.vue';
@@ -25,6 +28,7 @@ export const routeTitles = {
     en: {
         home: 'Dashboard',
         categories: 'Categories',
+        clients: 'Clients',
         login: 'Login',
         accountSettings: 'Account Settings',
         settings: 'Settings',
@@ -34,6 +38,7 @@ export const routeTitles = {
     de: {
         home: 'Dashboard',
         categories: 'Kategorien',
+        clients: 'Kunden',
         login: 'Login',
         accountSettings: 'Kontoeinstellungen',
         settings: 'Einstellungen',
@@ -77,6 +82,21 @@ export default new VueRouter({
                 path: ':id',
                 name: 'category',
                 component: Category,
+                props: true
+            }]
+        },
+        {
+            path: 'clients',
+            component: PageWrapper,
+            children: [{
+                path: '',
+                name: 'clients',
+                component: Clients
+            },
+            {
+                path: ':id',
+                name: 'client',
+                component: Client,
                 props: true
             }]
         }]
