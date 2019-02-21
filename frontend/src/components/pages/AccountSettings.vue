@@ -49,7 +49,7 @@
                 <v-card-text>
                     <v-alert
                         :value="alert"
-                        :type="alertType"
+                        type="error"
                         class="mb-4"
                     >
                         {{ $t(alertMessage) }}
@@ -109,7 +109,7 @@
                 <v-card-text>
                     <v-alert
                         :value="passwordAlert"
-                        :type="passwordAlertType"
+                        type="error"
                         class="mb-4"
                     >
                         {{ $t(passwordAlertMessage) }}
@@ -162,6 +162,7 @@
 <script>
     import Vue from 'vue';
     import { mapState, mapActions } from 'vuex';
+    import eventBus from '../../eventBus';
 
     import CenteredColumn from '../elements/layout/CenteredColumn.vue';
 
@@ -185,10 +186,8 @@
                 loadingPassword: false,
                 alert: false,
                 alertMessage: '',
-                alertType: 'success',
                 passwordAlert: false,
-                passwordAlertMessage: '',
-                passwordAlertType: 'success'
+                passwordAlertMessage: ''
             };
         },
         computed: {
@@ -210,9 +209,9 @@
             ]),
             async submit(event) {
                 event.preventDefault();
+                this.alert = false;
 
                 if (!this.allFieldsValid(this.values)) {
-                    this.alertType = 'error';
                     this.alertMessage = 'allFieldsRequired';
                     this.alert = true;
                     return;
@@ -225,21 +224,18 @@
                 this.loading = false;
 
                 if (code >= 300) {
-                    this.alertType = 'error';
                     this.alertMessage = this.$te(message) ? message : 'anErrorOccurred';
+                    this.alert = true;
                 }
                 else {
-                    this.alertType = 'success';
-                    this.alertMessage = 'changesSaved';
+                    eventBus.$emit('show-alert', this.$t('changesSaved'));
                 }
-
-                this.alert = true;
             },
             async submitPassword(event) {
                 event.preventDefault();
+                this.passwordAlert = false;
 
                 if (!this.allFieldsValid(this.passwords)) {
-                    this.passwordAlertType = 'error';
                     this.passwordAlertMessage = 'allFieldsRequired';
                     this.passwordAlert = true;
                     return;
@@ -251,22 +247,20 @@
                     const res = await this.$http.put('api/user/change-password', this.passwords);
 
                     if (res.status >= 300) {
-                        this.passwordAlertType = 'error';
                         this.passwordAlertMessage = this.$te(res.bodyText) ? res.bodyText : 'anErrorOccurred';
+                        this.passwordAlert = true;
                     }
                     else {
-                        this.passwordAlertType = 'success';
-                        this.passwordAlertMessage = 'changesSaved';
+                        eventBus.$emit('show-alert', this.$t('changesSaved'));
                     }
                 }
                 catch(error) {
                     console.error(error);
-                    this.passwordAlertType = 'error';
                     this.passwordAlertMessage = this.$te(error.bodyText) ? error.bodyText : 'anErrorOccurred';
+                    this.passwordAlert = true;
                 }
 
                 this.loading = false;
-                this.passwordAlert = true;
             },
             allFieldsValid(fields) {
                 if (!fields || Object.keys(fields).length < 1) {

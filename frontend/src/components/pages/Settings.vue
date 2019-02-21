@@ -63,7 +63,7 @@
                 <v-card-text>
                     <v-alert
                         :value="serverAlert"
-                        :type="serverAlertType"
+                        type="error"
                         class="mb-4"
                     >
                         {{ $t(serverAlertMessage) }}
@@ -100,6 +100,7 @@
     import Vue from 'vue';
     import { mapState, mapActions } from 'vuex';
     import { setRoot } from '../../http';
+    import eventBus from '../../eventBus';
 
     import CenteredColumn from '../elements/layout/CenteredColumn.vue';
 
@@ -117,8 +118,7 @@
                 serverHost: localStorage.getItem('serverConfigHost'),
                 serverLoading: false,
                 serverAlert: false,
-                serverAlertMessage: '',
-                serverAlertType: 'success'
+                serverAlertMessage: ''
             };
         },
         computed: {
@@ -132,9 +132,9 @@
             ]),
             async submitServer(event) {
                 event.preventDefault();
+                this.serverAlert = false;
 
                 if (!this.serverHost) {
-                    this.serverAlertType = 'error';
                     this.serverAlertMessage = 'allFieldsRequired';
                     this.serverAlert = true;
                     this.errors.serverHost = true;
@@ -158,17 +158,14 @@
                 if (canConnectToServer) {
                     localStorage.setItem('serverConfigHost', this.serverHost);
                     setRoot(this.serverHost);
-                    this.serverAlertType = 'success';
-                    this.serverAlertMessage = 'changesSaved';
+                    eventBus.$emit('show-alert', this.$t('changesSaved'));
                 }
                 else {
-                    this.serverAlertType = 'error';
                     this.serverAlertMessage = 'couldNotConnectToServer';
+                    this.serverAlert = true;
                 }
 
-                this.serverAlert = true;
                 this.loading = false;
-                this.serverAlert = true;
             }
         }
     });
