@@ -36,10 +36,10 @@
             <v-flex xs12 md10>
                 <v-tabs-items v-model="archiveTab">
                     <v-tab-item value="notArchived">
-                        <category-list :categories="notArchivedCategories" />
+                        <client-list :categories="notArchivedClients" />
                     </v-tab-item>
                     <v-tab-item value="archived">
-                        <category-list :categories="archivedCategories" />
+                        <client-list :categories="archivedClients" />
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -59,7 +59,7 @@
 
                 <v-form lazy-validation @submit="createNewClient">
                     <v-card-text>
-                        <edit-category-form
+                        <edit-form
                             :errors="newClient.errors"
                             :error-message="newClient.error"
                             :edit-category="newClient.values"
@@ -97,14 +97,14 @@
     import eventBus from '../../../eventBus';
 
     import SubSideNav from '../../elements/SubSideNav.vue';
-    import CategoryList from '../../elements/categories/CategoryList.vue';
-    import EditCategoryForm from '../../elements/categories/EditCategoryForm.vue';
+    import ClientList from '../../elements/clients/List.vue';
+    import EditForm from '../../elements/clients/EditForm.vue';
 
     export default Vue.extend({
         components: {
             SubSideNav,
-            CategoryList,
-            EditCategoryForm
+            ClientList,
+            EditForm
         },
         data() {
             return {
@@ -121,24 +121,24 @@
             };
         },
         computed: {
-            ...mapState('categories', [
-                'categories'
+            ...mapState('clients', [
+                'clients'
             ]),
-            notArchivedCategories() {
-                return this.categories.filter(category => {
-                    if (!category.archived) return category;
+            notArchivedClients() {
+                return this.clients.filter(client => {
+                    if (!client.archived) return client;
                 });
             },
-            archivedCategories() {
-                return this.categories.filter(category => {
-                    if (category.archived) return category;
+            archivedClients() {
+                return this.clients.filter(client => {
+                    if (client.archived) return client;
                 });
             },
             sidenavItems() {
                 return [
                     {
                         title: this.$t('activeClients'),
-                        icon: 'category',
+                        icon: 'people',
                         class: { active: this.archiveTab === 'notArchived' },
                         click: () => 'notArchived'
                     },
@@ -152,12 +152,12 @@
             }
         },
         async mounted() {
-            await this.getCategories();
+            await this.getClients();
         },
         methods: {
-            ...mapActions('categories', [
-                'saveCategory',
-                'getCategories'
+            ...mapActions('clients', [
+                'saveClient',
+                'getClients'
             ]),
             changeTab(getTab) {
                 this.archiveTab = getTab();
@@ -172,7 +172,7 @@
                     this.newClient.error = true;
                 }
                 else {
-                    const newClient = await this.saveCategory(values);
+                    const newClient = await this.saveClient(values);
 
                     if (newClient.code === 500) {
                         this.newClient.error = true;
