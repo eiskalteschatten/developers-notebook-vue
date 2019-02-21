@@ -1,8 +1,6 @@
 <i18n>
 {
     "en": {
-        "categories": "Categories",
-        "newCategory": "New Category",
         "archive": "Archive",
         "unarchive": "Restore",
         "save": "Save",
@@ -10,17 +8,18 @@
         "no": "No",
         "yes": "Yes",
         "name": "Name",
-        "description": "Description",
+        "companyName": "Company Name",
+        "website": "Website",
+        "email": "Email",
+        "telephone": "Phone Number",
         "search": "Search",
-        "confirmDelete": "Are you sure you want to delete this category? This cannot be undone.",
-        "categoryDeleted": "The category was successfully deleted.",
+        "confirmDelete": "Are you sure you want to delete this client? This cannot be undone.",
+        "clientDeleted": "The client was successfully deleted.",
         "anErrorOccurred": "An error occurred. Please try again.",
-        "archivedSuccessfully": "The category was successfully archived.",
-        "unarchivedSuccessfully": "The category was successfully restored."
+        "archivedSuccessfully": "The customer was successfully archived.",
+        "unarchivedSuccessfully": "The customer was successfully restored."
     },
     "de": {
-        "categories": "Kategorien",
-        "newCategory": "Neue Kategorie",
         "archive": "Archivieren",
         "unarchive": "Wiederherstellen",
         "save": "Speichern",
@@ -28,13 +27,16 @@
         "no": "Nein",
         "yes": "Ja",
         "name": "Name",
-        "description": "Beschreibung",
+        "companyName": "Firmenname",
+        "website": "Webseite",
+        "email": "Email",
+        "telephone": "Telefonnummer",
         "search": "Suche",
-        "confirmDelete": "Sind Sie sicher, dass Sie diese Kategorie löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
-        "categoryDeleted": "Die Kategorie wurde erfolgreich gelöscht.",
+        "confirmDelete": "Sind Sie sicher, dass Sie diesen Kunden löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+        "clientDeleted": "Der Kunde wurde erfolgreich gelöscht.",
         "anErrorOccurred": "Ein Fehler ist aufgetreten. Bitte versuchen Sie noch einmal.",
-        "archivedSuccessfully": "Die Kategorie wurde erfolgreich archiviert.",
-        "unarchivedSuccessfully": "Die Kategorie wurde erfolgreich wiederhergestellt."
+        "archivedSuccessfully": "Der Kunde wurde erfolgreich archiviert.",
+        "unarchivedSuccessfully": "Der Kunde wurde erfolgreich wiederhergestellt."
     }
 }
 </i18n>
@@ -63,8 +65,16 @@
             item-key="id"
         >
             <template slot="items" slot-scope="props">
-                <tr>
-                    <td :style="{ backgroundColor: props.item.color, padding: 0 }" />
+                <tr class="client-row">
+                    <td
+                        :style="{ backgroundColor: props.item.color, padding: 0 }"
+                        v-if="$vuetify.breakpoint.smAndUp"
+                    />
+                    <td>
+                        <v-avatar :color="props.item.color" :size="avatarSize">
+                            <v-icon dark>person</v-icon>
+                        </v-avatar>
+                    </td>
                     <td
                         @click="$router.push({ name: 'client', params: { id: props.item.id } })"
                         class="pointer"
@@ -74,8 +84,18 @@
                     <td
                         @click="$router.push({ name: 'client', params: { id: props.item.id } })"
                         class="pointer"
+                        v-if="$vuetify.breakpoint.smAndUp"
                     >
-                        {{ props.item.description }}
+                        {{ props.item.companyName }}
+                    </td>
+                    <td v-if="$vuetify.breakpoint.smAndUp">
+                        <a :href="props.item.website" target="_blank">{{ props.item.website }}</a>
+                    </td>
+                    <td v-if="$vuetify.breakpoint.smAndUp">
+                        <a :href="`mailto:${props.item.email}`">{{ props.item.email }}</a>
+                    </td>
+                    <td v-if="$vuetify.breakpoint.smAndUp">
+                        {{ props.item.telephone }}
                     </td>
                     <td class="text-xs-right">
                         <v-icon small class="mr-2" @click="props.expanded = true">
@@ -84,21 +104,21 @@
                         <v-icon
                             small
                             class="mr-2"
-                            @click="deleteCategory(props.item.id)"
+                            @click="deleteClient(props.item.id)"
                             v-if="$vuetify.breakpoint.smAndUp"
                         >
                             delete
                         </v-icon>
                         <v-icon
                             small
-                            @click="archiveCategory(props.item.id, true)"
+                            @click="archive(props.item.id, true)"
                             v-if="$vuetify.breakpoint.smAndUp && !props.item.archived"
                         >
                             archive
                         </v-icon>
                         <v-icon
                             small
-                            @click="archiveCategory(props.item.id, false)"
+                            @click="archive(props.item.id, false)"
                             v-else-if="$vuetify.breakpoint.smAndUp"
                         >
                             unarchive
@@ -108,26 +128,26 @@
             </template>
             <template slot="expand" slot-scope="props">
                 <v-card flat dark color="secondary">
-                    <v-form lazy-validation @submit="submitEditCategory($event, props)">
+                    <v-form lazy-validation @submit="submitEditClient($event, props)">
                         <v-card-text>
                             <edit-form
-                                :errors="editCategory.errors"
-                                :error-message="editCategory.error"
-                                :edit-category="{ ...props.item }"
-                                @input="values => { editCategory.values[props.item.id] = values }"
+                                :errors="editClient.errors"
+                                :error-message="editClient.error"
+                                :edit-client="{ ...props.item }"
+                                @input="values => { editClient.values[props.item.id] = values }"
                             />
                         </v-card-text>
 
                         <v-card-actions>
-                            <v-btn flat @click="deleteCategory(props.item.id)" color="red" small icon>
+                            <v-btn flat @click="deleteClient(props.item.id)" color="red" small icon>
                                 <v-icon>delete</v-icon>
                             </v-btn>
 
-                            <v-btn v-if="!props.item.archived" flat @click="archiveCategory(props.item.id, true)" small>
+                            <v-btn v-if="!props.item.archived" flat @click="archive(props.item.id, true)" small>
                                 <v-icon class="mr-2">archive</v-icon>
                                 <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('archive') }}</span>
                             </v-btn>
-                            <v-btn v-else flat @click="archiveCategory(props.item.id, false)" small>
+                            <v-btn v-else flat @click="archive(props.item.id, false)" small>
                                 <v-icon class="mr-2">unarchive</v-icon>
                                 <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('unarchive') }}</span>
                             </v-btn>
@@ -144,8 +164,8 @@
                                 small
                                 color="primary"
                                 type="submit"
-                                :loading="editCategory.loading"
-                                :disabled="editCategory.loading"
+                                :loading="editClient.loading"
+                                :disabled="editClient.loading"
                             >
                                 <v-icon left v-if="$vuetify.breakpoint.smAndUp">save</v-icon>
                                 {{ $t('save') }}
@@ -162,7 +182,7 @@
                 <v-card-actions>
                     <v-spacer />
                     <v-btn flat @click="confirmDialog = false">{{ $t('no') }}</v-btn>
-                    <v-btn color="primary" @click="confirmDeleteCategory">{{ $t('yes') }}</v-btn>
+                    <v-btn color="primary" @click="confirmDeleteClient">{{ $t('yes') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -186,7 +206,7 @@
         data() {
             return {
                 search: '',
-                editCategory: {
+                editClient: {
                     loading: false,
                     errors: {},
                     error: false,
@@ -194,17 +214,32 @@
                 },
                 confirmDialog: false,
                 confirmQuestion: '',
-                deleteCategoryId: -1
+                deleteClientId: -1
             };
         },
         computed: {
             headers() {
+                if (this.$vuetify.breakpoint.smAndUp) {
+                    return [
+                        { value: 'color', sortable: false, class: 'client-color-stripe' },
+                        { value: 'avatar', sortable: false, width: '48px' },
+                        { text: this.$t('name'), value: 'name' },
+                        { text: this.$t('companyName'), value: 'companyName' },
+                        { text: this.$t('website'), value: 'website' },
+                        { text: this.$t('email'), value: 'email' },
+                        { text: this.$t('telephone'), value: 'telephone' },
+                        { value: 'id', sortable: false }
+                    ];
+                }
+
                 return [
-                    { value: 'color', sortable: false, class: 'category-color-stripe' },
+                    { value: 'avatar', sortable: false, width: '32px' },
                     { text: this.$t('name'), value: 'name' },
-                    { text: this.$t('description'), value: 'description' },
                     { value: 'id', sortable: false }
                 ];
+            },
+            avatarSize() {
+                return this.$vuetify.breakpoint.smAndUp ? '48px' : '32px';
             }
         },
         methods: {
@@ -212,47 +247,47 @@
                 'saveCategory',
                 'getCategories'
             ]),
-            async submitEditCategory(event, props) {
+            async submitEditClient(event, props) {
                 event.preventDefault();
-                const values = this.editCategory.values[props.item.id];
+                const values = this.editClient.values[props.item.id];
 
                 if (Object.keys(values).length <= 0) {
                     return;
                 }
 
-                this.editCategory.loading = true;
+                this.editClient.loading = true;
 
                 if (!values.name) {
-                    this.editCategory.errors.name = true;
-                    this.editCategory.error = true;
+                    this.editClient.errors.name = true;
+                    this.editClient.error = true;
                 }
                 else {
-                    const editCategory = await this.saveCategory(values);
+                    const editClient = await this.saveCategory(values);
 
-                    if (editCategory.code === 500) {
-                        this.editCategory.error = true;
+                    if (editClient.code === 500) {
+                        this.editClient.error = true;
                     }
                     else {
                         props.expanded = false;
                     }
                 }
 
-                this.editCategory.loading = false;
+                this.editClient.loading = false;
             },
-            deleteCategory(id) {
+            deleteClient(id) {
                 this.confirmQuestion = 'confirmDelete';
                 this.confirmDialog = true;
-                this.deleteCategoryId = id;
+                this.deleteClientId = id;
             },
-            async confirmDeleteCategory() {
+            async confirmDeleteClient() {
                 this.confirmDialog = false;
                 eventBus.$emit('show-loader');
 
-                const res = await this.$http.delete(`api/category/${this.deleteCategoryId}`);
+                const res = await this.$http.delete(`api/client/${this.deleteClientId}`);
 
                 if (res.status === 201) {
                     await this.getCategories();
-                    eventBus.$emit('show-alert', this.$t('categoryDeleted'));
+                    eventBus.$emit('show-alert', this.$t('clientDeleted'));
                 }
                 else {
                     eventBus.$emit('show-alert', this.$t('anErrorOccurred'), true);
@@ -260,7 +295,7 @@
 
                 eventBus.$emit('close-loader');
             },
-            async archiveCategory(id, archived) {
+            async archive(id, archived) {
                 const category = { ...this.$store.getters['categories/getCategory'](id) };
                 category.archived = archived;
 
@@ -278,9 +313,13 @@
 </script>
 
 <style lang="scss">
-    .category-color-stripe {
+    .client-color-stripe {
         padding: 0 !important;
         width: 5px;
+    }
+
+    .client-row {
+        height: 65px;
     }
 
     .pointer {

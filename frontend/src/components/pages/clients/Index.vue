@@ -172,12 +172,15 @@
                 this.newClient.loading = true;
                 const values = this.newClient.values;
 
-                if (!values.name && !values.companyName) {
+                if (!values.name) {
                     this.newClient.errors.name = true;
-                    this.newClient.errors.companyName = true;
                     this.newClient.error = true;
                 }
                 else {
+                    if (values.website && !values.website.includes('://')) {
+                        values.website = `http://${values.website}`;
+                    }
+
                     const newClient = await this.saveClient(values);
 
                     if (newClient.code === 500) {

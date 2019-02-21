@@ -19,6 +19,7 @@
         "tags": "Tags",
         "tagsResultsEnter": "enter",
         "tagResults": "Press {enter} to create the tag \"{result}\".",
+        "required": "Required",
         "anErrorOccurred": "An error occurred while trying to save the category. Please try again."
     },
     "de": {
@@ -40,6 +41,7 @@
         "tags": "Tags",
         "tagsResultsEnter": "Eingabetaste",
         "tagResults": "Drücken Sie die {enter}, um den Tag \"{result}\" zu erstellen.",
+        "required": "Erforderlich",
         "anErrorOccurred": "Ein Fehler ist beim Speichern der Kategorie aufgetreten. Bitte versuchen Sie noch einmal."
     }
 }
@@ -62,6 +64,7 @@
                 <v-text-field
                     v-model="client.name"
                     :label="$t('name')"
+                    :rules="rules"
                     :error="errors.name"
                 />
 
@@ -139,6 +142,9 @@
         },
         data() {
             return {
+                rules: [
+                    value => !!value || this.$t('required')
+                ],
                 client: this.editClient || {},
                 tagSearch: null,
                 initialTags: this.editClient ? this.editClient.tags : []

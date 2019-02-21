@@ -1,8 +1,6 @@
 <i18n>
 {
     "en": {
-        "categories": "Categories",
-        "newCategory": "New Category",
         "archive": "Archive",
         "unarchive": "Restore",
         "save": "Save",
@@ -19,8 +17,6 @@
         "unarchivedSuccessfully": "The category was successfully restored."
     },
     "de": {
-        "categories": "Kategorien",
-        "newCategory": "Neue Kategorie",
         "archive": "Archivieren",
         "unarchive": "Wiederherstellen",
         "save": "Speichern",
