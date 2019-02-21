@@ -2,6 +2,7 @@
     <v-app :dark="theme === 'dark'">
         <router-view />
         <about />
+        <alert />
     </v-app>
 </template>
 
@@ -9,10 +10,12 @@
     import Vue from 'vue';
     import { mapState } from 'vuex';
 
+    import Alert from './elements/Alert.vue';
     import About from './elements/About.vue';
 
     export default Vue.extend({
         components: {
+            Alert,
             About
         },
         computed: {

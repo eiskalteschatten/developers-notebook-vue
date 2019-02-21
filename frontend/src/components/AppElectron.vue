@@ -3,6 +3,7 @@
         <div class="main-structure">
             <router-view />
             <about />
+            <alert />
         </div>
     </v-app>
 </template>
@@ -12,10 +13,12 @@
     import { mapState, mapMutations } from 'vuex';
     import { remote } from 'electron';
 
+    import Alert from './elements/Alert.vue';
     import About from './elements/About.vue';
 
     export default Vue.extend({
         components: {
+            Alert,
             About
         },
         data() {

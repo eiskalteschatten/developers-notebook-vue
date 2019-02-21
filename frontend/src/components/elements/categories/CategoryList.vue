@@ -7,7 +7,6 @@
         "save": "Save",
         "cancel": "Cancel",
         "ok": "OK",
-        "close": "Close",
         "name": "Name",
         "description": "Description",
         "search": "Search",
@@ -23,7 +22,6 @@
         "save": "Speichern",
         "cancel": "Abbrechen",
         "ok": "OK",
-        "close": "Schließen",
         "name": "Name",
         "description": "Beschreibung",
         "search": "Suche",
@@ -141,20 +139,13 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
-        <v-snackbar v-model="snackbar" bottom left>
-            {{ $t(snackbarMessage) }}
-
-            <v-btn color="primary" flat @click="snackbar = false">
-                {{ $t('close') }}
-            </v-btn>
-        </v-snackbar>
     </div>
 </template>
 
 <script>
     import Vue from 'vue';
     import { mapActions } from 'vuex';
+    import eventBus from '../../../eventBus';
 
     import EditCategoryForm from './EditCategoryForm.vue';
 
@@ -176,9 +167,7 @@
                 },
                 confirmDialog: false,
                 confirmQuestion: '',
-                deleteCategoryId: -1,
-                snackbar: false,
-                snackbarMessage: ''
+                deleteCategoryId: -1
             };
         },
         computed: {
@@ -235,13 +224,11 @@
 
                 if (res.status === 201) {
                     await this.getCategories();
-                    this.snackbarMessage = 'categoryDeleted';
+                    eventBus.$emit('show-alert', this.$t('categoryDeleted'));
                 }
                 else {
-                    this.snackbarMessage = 'anErrorOccurred';
+                    eventBus.$emit('show-alert', this.$t('anErrorOccurred'), true);
                 }
-
-                this.snackbar = true;
             },
             async archiveCategory(id) {
                 const category = { ...this.$store.getters['categories/getCategory'](id) };
@@ -249,13 +236,11 @@
 
                 const editedCategory = await this.saveCategory(category);
                 if (editedCategory.code === 500) {
-                    this.snackbarMessage = 'anErrorOccurred';
+                    eventBus.$emit('show-alert', this.$t('anErrorOccurred'), true);
                 }
                 else {
-                    this.snackbarMessage = 'archivedSuccessfully';
+                    eventBus.$emit('show-alert', this.$t('archivedSuccessfully'));
                 }
-
-                this.snackbar = true;
             }
         }
     });

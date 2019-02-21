@@ -3,6 +3,7 @@
     "en": {
         "categories": "Categories",
         "newCategory": "New Category",
+        "categoryCreated": "The category was successfully created.",
         "create": "Create",
         "cancel": "Cancel",
         "activeCategories": "Active Categories",
@@ -11,6 +12,7 @@
     "de": {
         "categories": "Kategorien",
         "newCategory": "Neue Kategorie",
+        "categoryCreated": "Die Kategorie wurde erfolgreich erstellt.",
         "create": "Erstellen",
         "cancel": "Abbrechen",
         "activeCategories": "Aktive Kategorien",
@@ -97,6 +99,7 @@
 <script>
     import Vue from 'vue';
     import { mapActions, mapState } from 'vuex';
+    import eventBus from '../../eventBus';
 
     import CategoryList from '../elements/categories/CategoryList.vue';
     import EditCategoryForm from '../elements/categories/EditCategoryForm.vue';
@@ -164,6 +167,7 @@
                 }
 
                 this.newCategory.loading = false;
+                eventBus.$emit('show-alert', this.$t('categoryCreated'));
             }
         }
     });
