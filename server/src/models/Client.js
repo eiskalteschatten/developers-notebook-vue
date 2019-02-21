@@ -21,7 +21,8 @@ const Client = db.define('client', {
     telephone: Sequelize.STRING,
     fax: Sequelize.STRING,
     address: Sequelize.STRING,
-    notes: Sequelize.STRING
+    notes: Sequelize.STRING,
+    tags: Sequelize.ARRAY(Sequelize.STRING)
 });
 
 User.hasMany(Client);

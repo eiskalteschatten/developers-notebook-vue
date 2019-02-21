@@ -45,7 +45,7 @@
             </v-flex>
         </v-layout>
 
-        <v-dialog v-model="newClient.dialog" max-width="600">
+        <v-dialog v-model="newClient.dialog" max-width="1200">
             <v-card>
                 <v-card-title class="headline">
                     {{ $t('newClient') }}
@@ -62,7 +62,6 @@
                         <edit-form
                             :errors="newClient.errors"
                             :error-message="newClient.error"
-                            :edit-category="newClient.values"
                             @input="values => { newClient.values = values }"
                         />
                     </v-card-text>
@@ -151,6 +150,11 @@
                 ];
             }
         },
+        watch: {
+            '$route.query.new'(value) {
+                this.newClient.dialog = value;
+            }
+        },
         async mounted() {
             await this.getClients();
         },
@@ -184,11 +188,6 @@
 
                 this.newClient.loading = false;
                 eventBus.$emit('show-alert', this.$t('clientCreated'));
-            }
-        },
-        watch: {
-            '$route.query.new'(value) {
-                this.newClient.dialog = value;
             }
         }
     });

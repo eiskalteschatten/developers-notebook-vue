@@ -47,10 +47,10 @@
             :items="parentCategories"
             :label="$t('parentCategory')"
             single-line
+            class="mb-3"
         />
 
-        <v-subheader>{{ $t('color') }}</v-subheader>
-
+        <h4>{{ $t('color') }}</h4>
         <swatches
             v-model="category.color"
             inline
