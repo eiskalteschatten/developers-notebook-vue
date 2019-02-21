@@ -6,5 +6,6 @@ export default {
     tertiary: '#dfdfdf',
     error: colors.red,
     info: '#dfdfdf',
-    success: colors.green
+    success: colors.green,
+    selected: colors.grey
 };

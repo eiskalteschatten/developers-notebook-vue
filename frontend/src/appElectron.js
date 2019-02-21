@@ -33,6 +33,9 @@ Vue.use(Vuetify, {
     lang: {
         locales: { en, de },
         current: locale
+    },
+    options: {
+        customProperties: true
     }
 });
 

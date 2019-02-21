@@ -26,27 +26,39 @@
         <h1 class="mb-4">{{ $t('categories') }}</h1>
 
         <v-layout wrap>
-            <v-flex xs12 md2>
+            <v-flex xs12 md2 :class="{ 'pr-3': $vuetify.breakpoint.mdAndUp }">
                 <v-btn @click="newCategory.dialog = true" class="mb-4">
                     <v-icon left>create</v-icon>
                     {{ $t('newCategory') }}
                 </v-btn>
+                <v-list class="mt-1" dense>
+                    <v-list-tile @click="archiveTab = 'notArchived'" :class="{ active: archiveTab === 'notArchived' }">
+                        <v-list-tile-action>
+                            <v-icon>category</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ $t('activeCategories') }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                    <v-list-tile @click="archiveTab = 'archived'" :class="{ active: archiveTab === 'archived' }">
+                        <v-list-tile-action>
+                            <v-icon>archive</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ $t('archive') }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list>
             </v-flex>
             <v-flex xs12 md10>
-                <v-tabs v-model="archiveTab">
-                    <v-tab href="#notArchived">
-                        {{ $t('activeCategories') }}
-                    </v-tab>
-                    <v-tab href="#archived">
-                        {{ $t('archive') }}
-                    </v-tab>
+                <v-tabs-items v-model="archiveTab">
                     <v-tab-item value="notArchived">
                         <category-list :categories="notArchivedCategories" />
                     </v-tab-item>
                     <v-tab-item value="archived">
                         <category-list :categories="archivedCategories" />
                     </v-tab-item>
-                </v-tabs>
+                </v-tabs-items>
             </v-flex>
         </v-layout>
 
@@ -178,5 +190,16 @@
     });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+    .theme--dark {
+        .active {
+            background-color: var(--v-selected-darken2);
+        }
+    }
+
+    .theme--light {
+        .active {
+            background-color: var(--v-selected-lighten2);
+        }
+    }
 </style>
