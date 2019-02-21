@@ -80,7 +80,7 @@
                 rules: [
                     value => !!value || this.$t('required')
                 ],
-                category: this.editCategory
+                category: this.editCategory || {}
             };
         },
         computed: {

@@ -62,7 +62,6 @@
                         <edit-form
                             :errors="newCategory.errors"
                             :error-message="newCategory.error"
-                            :edit-category="newCategory.values"
                             @input="values => { newCategory.values = values }"
                         />
                     </v-card-text>
@@ -151,6 +150,11 @@
                 ];
             }
         },
+        watch: {
+            '$route.query.new'(value) {
+                this.newCategory.dialog = value;
+            }
+        },
         async mounted() {
             await this.getCategories();
         },
@@ -184,11 +188,6 @@
 
                 this.newCategory.loading = false;
                 eventBus.$emit('show-alert', this.$t('categoryCreated'));
-            }
-        },
-        watch: {
-            '$route.query.new'(value) {
-                this.newCategory.dialog = value;
             }
         }
     });

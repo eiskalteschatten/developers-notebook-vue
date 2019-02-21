@@ -87,7 +87,8 @@ module.exports = {
     "overrides": [{
         "files": ["*.vue"],
         "rules": {
-            "indent": "off"
+            "indent": "off",
+            "no-irregular-whitespace": "off"
         }
     }]
 };
