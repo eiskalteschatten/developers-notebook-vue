@@ -6,7 +6,8 @@ const Client = require('../../models/Client');
 
 
 function getValues(client) {
-    const slugStr = client.slug ? client.slug.toLowerCase() : client.name.toLowerCase();
+    const slugName = client.name ? client.name : client.companyName;
+    const slugStr = client.slug ? client.slug.toLowerCase() : slugName.toLowerCase();
 
     return {
         id: client.id ? client.id : '',
@@ -23,7 +24,8 @@ function getValues(client) {
         telephone: client.telephone,
         fax: client.fax,
         address: client.address,
-        notes: client.notes
+        notes: client.notes,
+        tags: client.tags
     };
 }
 

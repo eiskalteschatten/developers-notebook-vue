@@ -62,6 +62,7 @@
                         <edit-form
                             :errors="newCategory.errors"
                             :error-message="newCategory.error"
+                            :edit-category="newCategory.values"
                             @input="values => { newCategory.values = values }"
                         />
                     </v-card-text>

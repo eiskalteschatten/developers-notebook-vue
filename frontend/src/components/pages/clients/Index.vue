@@ -62,6 +62,7 @@
                         <edit-form
                             :errors="newClient.errors"
                             :error-message="newClient.error"
+                            :edit-client="newClient.values"
                             @input="values => { newClient.values = values }"
                         />
                     </v-card-text>
@@ -171,8 +172,9 @@
                 this.newClient.loading = true;
                 const values = this.newClient.values;
 
-                if (!values.name) {
+                if (!values.name && !values.companyName) {
                     this.newClient.errors.name = true;
+                    this.newClient.errors.companyName = true;
                     this.newClient.error = true;
                 }
                 else {
