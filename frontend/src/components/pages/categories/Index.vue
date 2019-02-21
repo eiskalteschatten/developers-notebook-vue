@@ -31,24 +31,7 @@
                     <v-icon left>create</v-icon>
                     {{ $t('newCategory') }}
                 </v-btn>
-                <v-list class="mt-1" dense>
-                    <v-list-tile @click="archiveTab = 'notArchived'" :class="{ active: archiveTab === 'notArchived' }">
-                        <v-list-tile-action>
-                            <v-icon>category</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ $t('activeCategories') }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    <v-list-tile @click="archiveTab = 'archived'" :class="{ active: archiveTab === 'archived' }">
-                        <v-list-tile-action>
-                            <v-icon>archive</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ $t('archive') }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
+                <sub-side-nav class="mt-1" :items="sidenavItems" @clicked="changeTab" />
             </v-flex>
             <v-flex xs12 md10>
                 <v-tabs-items v-model="archiveTab">
@@ -113,11 +96,13 @@
     import { mapActions, mapState } from 'vuex';
     import eventBus from '../../../eventBus';
 
+    import SubSideNav from '../../elements/SubSideNav.vue';
     import CategoryList from '../../elements/categories/CategoryList.vue';
     import EditCategoryForm from '../../elements/categories/EditCategoryForm.vue';
 
     export default Vue.extend({
         components: {
+            SubSideNav,
             CategoryList,
             EditCategoryForm
         },
@@ -148,6 +133,22 @@
                 return this.categories.filter(category => {
                     if (category.archived) return category;
                 });
+            },
+            sidenavItems() {
+                return [
+                    {
+                        title: this.$t('activeCategories'),
+                        icon: 'category',
+                        class: { active: this.archiveTab === 'notArchived' },
+                        click: () => 'notArchived'
+                    },
+                    {
+                        title: this.$t('archive'),
+                        icon: 'archive',
+                        class: { active: this.archiveTab === 'archived' },
+                        click: () => 'archived'
+                    }
+                ];
             }
         },
         async mounted() {
@@ -158,6 +159,9 @@
                 'saveCategory',
                 'getCategories'
             ]),
+            changeTab(getTab) {
+                this.archiveTab = getTab();
+            },
             async createNewCategory(event) {
                 event.preventDefault();
                 this.newCategory.loading = true;
@@ -191,15 +195,4 @@
 </script>
 
 <style lang="scss" scoped>
-    .theme--dark {
-        .active {
-            background-color: var(--v-selected-darken2);
-        }
-    }
-
-    .theme--light {
-        .active {
-            background-color: var(--v-selected-lighten2);
-        }
-    }
 </style>
