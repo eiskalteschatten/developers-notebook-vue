@@ -8,7 +8,7 @@ import categories from './categories';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
     modules: {
         nav,
         user,
@@ -16,3 +16,11 @@ export default new Vuex.Store({
         categories
     }
 });
+
+export async function fillStore() {
+    const dispatch = store.dispatch;
+    await dispatch('settings/setSettings', {}, { root: true });
+    dispatch('categories/getCategories', {}, { root: true });
+}
+
+export default store;
