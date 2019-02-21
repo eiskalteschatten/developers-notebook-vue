@@ -7,7 +7,8 @@
         "unarchive": "Restore",
         "save": "Save",
         "cancel": "Cancel",
-        "ok": "OK",
+        "no": "No",
+        "yes": "Yes",
         "name": "Name",
         "description": "Description",
         "search": "Search",
@@ -24,7 +25,8 @@
         "unarchive": "Wiederherstellen",
         "save": "Speichern",
         "cancel": "Abbrechen",
-        "ok": "OK",
+        "no": "Nein",
+        "yes": "Ja",
         "name": "Name",
         "description": "Beschreibung",
         "search": "Suche",
@@ -159,8 +161,8 @@
                 <v-card-text>{{ $t(confirmQuestion) }}</v-card-text>
                 <v-card-actions>
                     <v-spacer />
-                    <v-btn flat @click="confirmDialog = false">{{ $t('cancel') }}</v-btn>
-                    <v-btn color="primary" @click="confirmDeleteCategory">{{ $t('ok') }}</v-btn>
+                    <v-btn flat @click="confirmDialog = false">{{ $t('no') }}</v-btn>
+                    <v-btn color="primary" @click="confirmDeleteCategory">{{ $t('yes') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
