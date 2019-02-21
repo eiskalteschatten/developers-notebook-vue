@@ -10,7 +10,7 @@
 </i18n>
 
 <template>
-    <v-snackbar v-model="snackbar" bottom left>
+    <v-snackbar v-model="snackbar" bottom left timeout="100000000">
         <v-layout>
             <v-flex xs2>
                 <v-progress-circular indeterminate size="16" width="2" />
