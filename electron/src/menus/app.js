@@ -14,7 +14,7 @@ const template = [
                     {
                         label: 'Client',
                         click: (item, focusedWindow) => {
-                            focusedWindow.webContents.send('client-event', 'new');
+                            focusedWindow.webContents.send('open-route-name', 'clients', { query: { new: true } });
                         }
                     },
                     {
