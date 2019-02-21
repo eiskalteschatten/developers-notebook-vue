@@ -63,8 +63,18 @@
             <template slot="items" slot-scope="props">
                 <tr>
                     <td :style="{ backgroundColor: props.item.color, padding: 0 }" />
-                    <td>{{ props.item.name }}</td>
-                    <td>{{ props.item.description }}</td>
+                    <td
+                        @click="$router.push({ name: 'category', params: { id: props.item.id } })"
+                        class="pointer"
+                    >
+                        {{ props.item.name }}
+                    </td>
+                    <td
+                        @click="$router.push({ name: 'category', params: { id: props.item.id } })"
+                        class="pointer"
+                    >
+                        {{ props.item.description }}
+                    </td>
                     <td class="text-xs-right">
                         <v-icon small class="mr-2" @click="props.expanded = true">
                             edit
@@ -269,5 +279,9 @@
     .category-color-stripe {
         padding: 0 !important;
         width: 5px;
+    }
+
+    .pointer {
+        cursor: pointer;
     }
 </style>

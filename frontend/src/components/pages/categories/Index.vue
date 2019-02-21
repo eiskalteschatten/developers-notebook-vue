@@ -99,10 +99,10 @@
 <script>
     import Vue from 'vue';
     import { mapActions, mapState } from 'vuex';
-    import eventBus from '../../eventBus';
+    import eventBus from '../../../eventBus';
 
-    import CategoryList from '../elements/categories/CategoryList.vue';
-    import EditCategoryForm from '../elements/categories/EditCategoryForm.vue';
+    import CategoryList from '../../elements/categories/CategoryList.vue';
+    import EditCategoryForm from '../../elements/categories/EditCategoryForm.vue';
 
     export default Vue.extend({
         components: {

@@ -9,7 +9,8 @@ import Home from './components/pages/Home.vue';
 import AccountSettings from './components/pages/AccountSettings.vue';
 import Settings from './components/pages/Settings.vue';
 
-import Categories from './components/pages/Categories.vue';
+import Categories from './components/pages/Categories/Index.vue';
+import Category from './components/pages/Categories/Category.vue';
 
 import Login from './components/pages/Login.vue';
 import ServerConfig from './components/pages/electron/ServerConfig.vue';
@@ -71,6 +72,12 @@ export default new VueRouter({
                 path: '',
                 name: 'categories',
                 component: Categories
+            },
+            {
+                path: ':id',
+                name: 'category',
+                component: Category,
+                props: true
             }]
         }]
     },
