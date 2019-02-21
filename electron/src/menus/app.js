@@ -20,7 +20,7 @@ const template = [
                     {
                         label: 'Category',
                         click: (item, focusedWindow) => {
-                            focusedWindow.webContents.send('category-event', 'new');
+                            focusedWindow.webContents.send('open-route-name', 'categories', { query: { new: true } });
                         }
                     },
                     // {

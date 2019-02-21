@@ -113,7 +113,7 @@
             return {
                 archiveTab: null,
                 newCategory: {
-                    dialog: false,
+                    dialog: this.$route.query.new || false,
                     loading: false,
                     errors: {},
                     error: false,
@@ -168,6 +168,11 @@
 
                 this.newCategory.loading = false;
                 eventBus.$emit('show-alert', this.$t('categoryCreated'));
+            }
+        },
+        watch: {
+            '$route.query.new'(value) {
+                this.newCategory.dialog = value;
             }
         }
     });

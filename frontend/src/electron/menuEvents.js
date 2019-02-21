@@ -5,8 +5,8 @@ import router from '../router';
 
 
 export default () => {
-    ipcRenderer.on('open-route-name', (event, name) => {
-        router.push({ name });
+    ipcRenderer.on('open-route-name', (event, name, { query, params }) => {
+        router.push({ name, query, params });
     });
 
     ipcRenderer.on('open-modal', (event, modal) => {
