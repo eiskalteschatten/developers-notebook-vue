@@ -17,6 +17,8 @@
         "notes": "Notes",
         "category": "Category",
         "tags": "Tags",
+        "tagsResultsEnter": "enter",
+        "tagResults": "Press {enter} to create the tag \"{result}\".",
         "required": "Required",
         "anErrorOccurred": "An error occurred while trying to save the category. Please try again."
     },
@@ -37,6 +39,8 @@
         "notes": "Notizen",
         "category": "Kategorie",
         "tags": "Tags",
+        "tagsResultsEnter": "Eingabetaste",
+        "tagResults": "Drücken Sie die {enter}, um den Tag \"{result}\" zu erstellen.",
         "required": "Erforderlich",
         "anErrorOccurred": "Ein Fehler ist beim Speichern der Kategorie aufgetreten. Bitte versuchen Sie noch einmal."
     }
@@ -72,7 +76,28 @@
                     :label="$t('category')"
                     single-line
                 />
-                <v-text-field v-model="client.tags" :label="$t('tags')" />
+                <v-combobox
+                    v-model="client.tags"
+                    :items="initialTags"
+                    :search-input.sync="tagSearch"
+                    hide-selected
+                    :label="$t('tags')"
+                    multiple
+                    small-chips
+                >
+                    <template slot="no-data">
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    <i18n path="tagResults">
+                                        <kbd place="enter">{{ $t('tagsResultsEnter') }}</kbd>
+                                        <span place="result">{{ tagSearch }}</span>
+                                    </i18n>
+                                </v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </template>
+                </v-combobox>
             </v-flex>
             <v-flex xs12 sm6>
                 <h4>{{ $t('contactInfo') }}</h4>
@@ -118,7 +143,9 @@
                 rules: [
                     value => !!value || this.$t('required')
                 ],
-                client: this.editClient || {}
+                client: this.editClient || {},
+                tagSearch: null,
+                initialTags: this.editClient ? this.editClient.tags : []
             };
         },
         computed: {
