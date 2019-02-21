@@ -117,7 +117,7 @@
                         : '';
                 },
                 set(parentCategoryObj) {
-                    this.category.parentId = parentCategoryObj.value;
+                    this.category.categoryId = parentCategoryObj ? parentCategoryObj.value : '';
                 }
             }
         },
