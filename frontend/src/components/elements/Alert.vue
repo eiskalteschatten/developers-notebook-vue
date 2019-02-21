@@ -26,7 +26,7 @@
         },
         created() {
             eventBus.$on('show-alert', this.showAlert);
-            eventBus.$on('close-alert', this.showAlert);
+            eventBus.$on('close-alert', this.closeAlert);
         },
         methods: {
             showAlert(message, isError = false) {
