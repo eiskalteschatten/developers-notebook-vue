@@ -54,15 +54,22 @@ const template = [
         label: 'View',
         submenu: [
             {
-                label: 'Clients',
+                label: 'Dashboard',
                 accelerator: 'CmdOrCtrl+1',
+                click: async (item, focusedWindow) => {
+                    focusedWindow.webContents.send('open-route-name', 'home');
+                }
+            },
+            {
+                label: 'Clients',
+                accelerator: 'CmdOrCtrl+2',
                 click: async (item, focusedWindow) => {
                     focusedWindow.webContents.send('open-route-name', 'clients');
                 }
             },
             {
                 label: 'Categories',
-                accelerator: 'CmdOrCtrl+2',
+                accelerator: 'CmdOrCtrl+3',
                 click: async (item, focusedWindow) => {
                     focusedWindow.webContents.send('open-route-name', 'categories');
                 }
