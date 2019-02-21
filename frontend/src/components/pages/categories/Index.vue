@@ -183,11 +183,11 @@
                     }
                     else {
                         this.newCategory.dialog = false;
+                        eventBus.$emit('show-alert', this.$t('categoryCreated'));
                     }
                 }
 
                 this.newCategory.loading = false;
-                eventBus.$emit('show-alert', this.$t('categoryCreated'));
             }
         }
     });

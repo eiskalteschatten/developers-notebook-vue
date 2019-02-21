@@ -183,11 +183,11 @@
                     }
                     else {
                         this.newClient.dialog = false;
+                        eventBus.$emit('show-alert', this.$t('clientCreated'));
                     }
                 }
 
                 this.newClient.loading = false;
-                eventBus.$emit('show-alert', this.$t('clientCreated'));
             }
         }
     });
