@@ -31,6 +31,17 @@ Client.belongsTo(User);
 Client.belongsToMany(Category, { through: ClientCategory });
 Category.belongsToMany(Client, { through: ClientCategory });
 
+
+Client.getAllWithCategories = async function(userId) {
+    return await this.findAll({
+        where: { userId },
+        include: [{
+            model: Category
+        }]
+    });
+};
+
+
 Client.sync();
 
 module.exports = Client;

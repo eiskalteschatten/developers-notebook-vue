@@ -34,8 +34,9 @@ module.exports = router => {
         const userId = req.user.id;
 
         try {
-            const clients = await Client.findAll({ where: { userId }});
+            const clients = await Client.getAllWithCategories(userId);
             const allValues = [];
+
 
             for (const client of clients) {
                 const values = getValues(client.get());
@@ -72,6 +73,11 @@ module.exports = router => {
         try {
             const client = await Client.create(values);
             await client.setUser(req.user);
+
+            if (body.categoryId) {
+                await client.setCategories([ body.categoryId ]);
+            }
+
             const returnValues = getValues(client.get());
             res.json(returnValues);
         }
@@ -91,10 +97,15 @@ module.exports = router => {
 
             if (client) {
                 await client.update(values);
+
+                if (body.categoryId) {
+                    await client.setCategories([ body.categoryId ]);
+                }
             }
             else {
                 throw new Error(`No client with the id ${body.id} exists`);
             }
+
             const returnValues = getValues(client.get());
             res.json(returnValues);
         }
