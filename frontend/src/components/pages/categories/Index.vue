@@ -59,7 +59,7 @@
 
                 <v-form lazy-validation @submit="createNewCategory">
                     <v-card-text>
-                        <edit-category-form
+                        <edit-form
                             :errors="newCategory.errors"
                             :error-message="newCategory.error"
                             :edit-category="newCategory.values"
@@ -97,14 +97,14 @@
     import eventBus from '../../../eventBus';
 
     import SubSideNav from '../../elements/SubSideNav.vue';
-    import CategoryList from '../../elements/categories/CategoryList.vue';
-    import EditCategoryForm from '../../elements/categories/EditCategoryForm.vue';
+    import CategoryList from '../../elements/categories/List.vue';
+    import EditForm from '../../elements/categories/EditForm.vue';
 
     export default Vue.extend({
         components: {
             SubSideNav,
             CategoryList,
-            EditCategoryForm
+            EditForm
         },
         data() {
             return {

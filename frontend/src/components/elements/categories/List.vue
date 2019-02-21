@@ -110,7 +110,7 @@
                 <v-card flat dark color="secondary">
                     <v-form lazy-validation @submit="submitEditCategory($event, props)">
                         <v-card-text>
-                            <edit-category-form
+                            <edit-form
                                 :errors="editCategory.errors"
                                 :error-message="editCategory.error"
                                 :edit-category="{ ...props.item }"
@@ -174,11 +174,11 @@
     import { mapActions } from 'vuex';
     import eventBus from '../../../eventBus';
 
-    import EditCategoryForm from './EditCategoryForm.vue';
+    import EditForm from './EditForm.vue';
 
     export default Vue.extend({
         components: {
-            EditCategoryForm
+            EditForm
         },
         props: {
             categories: Array
