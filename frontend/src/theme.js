@@ -1,8 +1,10 @@
+import colors from 'vuetify/es5/util/colors';
+
 export default {
-    primary: '#2261a1',
+    primary: colors.blue,
     secondary: '#000000',
     tertiary: '#dfdfdf',
-    error: '#a62e21',
+    error: colors.red,
     info: '#dfdfdf',
-    success: '#156b39'
+    success: colors.green
 };
