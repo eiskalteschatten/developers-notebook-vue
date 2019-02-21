@@ -4,15 +4,15 @@ import eventBus from '../eventBus';
 export default {
     namespaced: true,
     state: {
-        categories: [],
+        clients: [],
     },
 
     getters: {
-        categories: state => state.categories,
-        getCategory: state => id => {
-            for (const stateCat of state.categories) {
-                if (stateCat.id && stateCat.id === id) {
-                    return stateCat;
+        clients: state => state.clients,
+        getClient: state => id => {
+            for (const stateClient of state.clients) {
+                if (stateClient.id && stateClient.id === id) {
+                    return stateClient;
                 }
             }
             return '';
@@ -20,15 +20,15 @@ export default {
     },
 
     mutations: {
-        setCategories(state, categories) {
-            state.categories = categories;
+        setClients(state, clients) {
+            state.clients = clients;
         },
-        setCategory(state, { id, category }) {
-            for (const i in state.categories) {
-                const stateCat = state.categories[i];
+        setClient(state, { id, client }) {
+            for (const i in state.clients) {
+                const stateClient = state.clients[i];
 
-                if (stateCat.id && stateCat.id === id) {
-                    state.categories[i] = category;
+                if (stateClient.id && stateClient.id === id) {
+                    state.clients[i] = client;
                     break;
                 }
             }
@@ -36,16 +36,16 @@ export default {
     },
 
     actions: {
-        async saveCategory({ dispatch }, category) {
+        async saveClient({ dispatch }, client) {
             eventBus.$emit('show-loader');
 
             try {
-                const res = category.id
-                    ? await http.put('api/category', category)
-                    : await http.post('api/category', category);
+                const res = client.id
+                    ? await http.put('api/client', client)
+                    : await http.post('api/client', client);
 
                 if (res.body && res.status < 300) {
-                    dispatch('getCategories');
+                    dispatch('getClients');
                     eventBus.$emit('close-loader');
 
                     return {
@@ -66,13 +66,13 @@ export default {
                 };
             }
         },
-        async getCategories({ commit }) {
+        async getClients({ commit }) {
             eventBus.$emit('show-loader');
             try {
-                const res = await http.get('api/category/all');
+                const res = await http.get('api/client/all');
 
                 if (res.body && res.status < 300) {
-                    commit('setCategories', res.body);
+                    commit('setClients', res.body);
                     eventBus.$emit('close-loader');
 
                     return {

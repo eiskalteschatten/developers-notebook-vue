@@ -5,6 +5,7 @@ import nav from './nav';
 import user from './user';
 import settings from './settings';
 import categories from './categories';
+import clients from './clients';
 
 Vue.use(Vuex);
 
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
         nav,
         user,
         settings,
-        categories
+        categories,
+        clients
     }
 });
 
