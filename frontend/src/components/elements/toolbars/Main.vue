@@ -15,7 +15,6 @@
     <v-toolbar dark color="secondary" class="toolbar" app clipped-left>
         <v-flex xs5>
             <v-toolbar-side-icon v-if="$vuetify.breakpoint.smAndDown" @click="toggleSidebar" />
-
             <back-forward v-if="isElectron" />
         </v-flex>
         <v-flex xs2 class="text-xs-center">

@@ -3,6 +3,7 @@
         <router-view />
         <about />
         <alert />
+        <loader />
     </v-app>
 </template>
 
@@ -11,11 +12,13 @@
     import { mapState } from 'vuex';
 
     import Alert from './elements/Alert.vue';
+    import Loader from './elements/Loader.vue';
     import About from './elements/About.vue';
 
     export default Vue.extend({
         components: {
             Alert,
+            Loader,
             About
         },
         computed: {

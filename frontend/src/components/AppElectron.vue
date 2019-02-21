@@ -4,6 +4,7 @@
             <router-view />
             <about />
             <alert />
+            <loader />
         </div>
     </v-app>
 </template>
@@ -14,11 +15,13 @@
     import { remote } from 'electron';
 
     import Alert from './elements/Alert.vue';
+    import Loader from './elements/Loader.vue';
     import About from './elements/About.vue';
 
     export default Vue.extend({
         components: {
             Alert,
+            Loader,
             About
         },
         data() {
