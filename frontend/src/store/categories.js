@@ -1,4 +1,5 @@
 import http from '../http';
+import eventBus from '../eventBus';
 
 export default {
     namespaced: true,
@@ -36,6 +37,8 @@ export default {
 
     actions: {
         async saveCategory({ dispatch }, category) {
+            eventBus.$emit('show-loader');
+
             try {
                 const res = category.id
                     ? await http.put('api/category', category)
@@ -43,6 +46,7 @@ export default {
 
                 if (res.body && res.status < 300) {
                     dispatch('getCategories');
+                    eventBus.$emit('show-loader');
                     return {
                         code: res.status,
                         message: res.bodyText
@@ -53,6 +57,7 @@ export default {
                 }
             }
             catch(error) {
+                eventBus.$emit('close-loader');
                 console.error(error);
                 return {
                     code: 500,
@@ -61,11 +66,13 @@ export default {
             }
         },
         async getCategories({ commit }) {
+            eventBus.$emit('show-loader');
             try {
                 const res = await http.get('api/category/all');
 
                 if (res.body && res.status < 300) {
                     commit('setCategories', res.body);
+                    eventBus.$emit('close-loader');
 
                     return {
                         code: res.status,
@@ -77,6 +84,7 @@ export default {
                 }
             }
             catch(error) {
+                eventBus.$emit('close-loader');
                 console.error(error);
                 return {
                     code: 500,

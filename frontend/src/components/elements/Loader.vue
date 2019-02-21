@@ -29,7 +29,8 @@
     export default Vue.extend({
         data() {
             return {
-                snackbar: false
+                snackbar: false,
+                timeout: null
             };
         },
         created() {
@@ -37,11 +38,14 @@
             eventBus.$on('close-loader', this.closeLoader);
         },
         methods: {
-            showLoader(message, isError = false) {
-                this.snackbar = true;
-                this.isError = isError;
+            showLoader() {
+                clearTimeout(this.timeout);
+                this.timeout = setTimeout(() => {
+                    this.snackbar = true;
+                }, 500);
             },
             closeLoader() {
+                clearTimeout(this.timeout);
                 this.snackbar = false;
             }
         }

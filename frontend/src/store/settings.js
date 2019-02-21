@@ -1,4 +1,5 @@
 import http from '../http';
+import eventBus from '../eventBus';
 
 export default {
     namespaced: true,
@@ -53,12 +54,14 @@ export default {
             }
         },
         async setSettings({ commit }) {
+            eventBus.$emit('show-loader');
             try {
                 const res = await http.get('api/settings');
 
                 if (res.body && res.status < 300) {
                     commit('setTheme', res.body.theme);
                     commit('setSettingsFromAccount', true);
+                    eventBus.$emit('close-loader');
 
                     return {
                         code: res.status,
@@ -70,6 +73,7 @@ export default {
                 }
             }
             catch(error) {
+                eventBus.$emit('close-loader');
                 console.error(error);
                 return {
                     code: 500,

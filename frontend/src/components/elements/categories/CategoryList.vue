@@ -219,6 +219,7 @@
             },
             async confirmDeleteCategory() {
                 this.confirmDialog = false;
+                eventBus.$emit('show-loader');
 
                 const res = await this.$http.delete(`api/category/${this.deleteCategoryId}`);
 
@@ -229,6 +230,8 @@
                 else {
                     eventBus.$emit('show-alert', this.$t('anErrorOccurred'), true);
                 }
+
+                eventBus.$emit('close-loader');
             },
             async archiveCategory(id) {
                 const category = { ...this.$store.getters['categories/getCategory'](id) };
