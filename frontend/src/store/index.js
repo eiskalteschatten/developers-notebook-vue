@@ -20,7 +20,7 @@ const store = new Vuex.Store({
 export async function fillStore() {
     const dispatch = store.dispatch;
     await dispatch('settings/setSettings', {}, { root: true });
-    dispatch('categories/getCategories', {}, { root: true });
+    await dispatch('categories/getCategories', {}, { root: true });
 }
 
 export default store;
