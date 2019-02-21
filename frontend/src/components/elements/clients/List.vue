@@ -243,9 +243,9 @@
             }
         },
         methods: {
-            ...mapActions('categories', [
-                'saveCategory',
-                'getCategories'
+            ...mapActions('clients', [
+                'saveClient',
+                'getClients'
             ]),
             async submitEditClient(event, props) {
                 event.preventDefault();
@@ -262,7 +262,7 @@
                     this.editClient.error = true;
                 }
                 else {
-                    const editClient = await this.saveCategory(values);
+                    const editClient = await this.saveClient(values);
 
                     if (editClient.code === 500) {
                         this.editClient.error = true;
@@ -286,7 +286,7 @@
                 const res = await this.$http.delete(`api/client/${this.deleteClientId}`);
 
                 if (res.status === 201) {
-                    await this.getCategories();
+                    await this.getClients();
                     eventBus.$emit('show-alert', this.$t('clientDeleted'));
                 }
                 else {
@@ -296,11 +296,11 @@
                 eventBus.$emit('close-loader');
             },
             async archive(id, archived) {
-                const category = { ...this.$store.getters['categories/getCategory'](id) };
-                category.archived = archived;
+                const client = { ...this.$store.getters['clients/getClient'](id) };
+                client.archived = archived;
 
-                const editedCategory = await this.saveCategory(category);
-                if (editedCategory.code === 500) {
+                const editedClient = await this.saveClient(client);
+                if (editedClient.code === 500) {
                     eventBus.$emit('show-alert', this.$t('anErrorOccurred'), true);
                 }
                 else {
