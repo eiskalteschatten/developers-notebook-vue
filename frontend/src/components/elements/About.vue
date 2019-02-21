@@ -23,7 +23,12 @@
                         <v-layout wrap fill-height>
                             <v-flex mt-2>
                                 <h2>Developer's Notebook</h2>
-                                <div class="by mb-4">by <external-link :href="$t('alexseifertWebsite')" link-content="Alex Seifert" /></div>
+                                <div class="by mb-4">
+                                    by <external-link :href="$t('alexseifertWebsite')" link-content="Alex Seifert" />
+                                    <div>
+                                        0.2.0
+                                    </div>
+                                </div>
 
                                 <div class="legal">
                                     &copy; {{ copyrightYear }} Alex Seifert

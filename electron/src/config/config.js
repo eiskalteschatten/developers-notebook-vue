@@ -27,7 +27,7 @@ console.log('Application data is saved at:', storagePath);
 module.exports = {
     app: {
         name: 'Developer\'s Notebook',
-        version: '0.1.0',
+        version: '0.2.0',
         storagePath,
         windowSettingsFile: 'windowSettings.json',
         frontendPaths: {
