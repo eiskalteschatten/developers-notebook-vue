@@ -4,6 +4,7 @@
         "categories": "Categories",
         "newCategory": "New Category",
         "archive": "Archive",
+        "unarchive": "Restore",
         "save": "Save",
         "cancel": "Cancel",
         "ok": "OK",
@@ -13,12 +14,14 @@
         "confirmDelete": "Are you sure you want to delete this category? This cannot be undone.",
         "categoryDeleted": "The category was successfully deleted.",
         "anErrorOccurred": "An error occurred. Please try again.",
-        "archivedSuccessfully": "The category was successfully archived."
+        "archivedSuccessfully": "The category was successfully archived.",
+        "unarchivedSuccessfully": "The category was successfully restored."
     },
     "de": {
         "categories": "Kategorien",
         "newCategory": "Neue Kategorie",
         "archive": "Archivieren",
+        "unarchive": "Wiederherstellen",
         "save": "Speichern",
         "cancel": "Abbrechen",
         "ok": "OK",
@@ -28,7 +31,8 @@
         "confirmDelete": "Sind Sie sicher, dass Sie diese Kategorie löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
         "categoryDeleted": "Die Kategorie wurde erfolgreich gelöscht.",
         "anErrorOccurred": "Ein Fehler ist aufgetreten. Bitte versuchen Sie noch einmal.",
-        "archivedSuccessfully": "Die Kategorie wurde erfolgreich archiviert."
+        "archivedSuccessfully": "Die Kategorie wurde erfolgreich archiviert.",
+        "unarchivedSuccessfully": "Die Kategorie wurde erfolgreich wiederhergestellt."
     }
 }
 </i18n>
@@ -75,10 +79,17 @@
                         </v-icon>
                         <v-icon
                             small
-                            @click="archiveCategory(props.item.id)"
-                            v-if="$vuetify.breakpoint.smAndUp"
+                            @click="archiveCategory(props.item.id, true)"
+                            v-if="$vuetify.breakpoint.smAndUp && !props.item.archived"
                         >
                             archive
+                        </v-icon>
+                        <v-icon
+                            small
+                            @click="archiveCategory(props.item.id, false)"
+                            v-else-if="$vuetify.breakpoint.smAndUp"
+                        >
+                            unarchive
                         </v-icon>
                     </td>
                 </tr>
@@ -100,9 +111,13 @@
                                 <v-icon>delete</v-icon>
                             </v-btn>
 
-                            <v-btn flat @click="archiveCategory(props.item.id)" small>
+                            <v-btn v-if="!props.item.archived" flat @click="archiveCategory(props.item.id, true)" small>
                                 <v-icon class="mr-2">archive</v-icon>
                                 <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('archive') }}</span>
+                            </v-btn>
+                            <v-btn v-else flat @click="archiveCategory(props.item.id, false)" small>
+                                <v-icon class="mr-2">unarchive</v-icon>
+                                <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('unarchive') }}</span>
                             </v-btn>
 
                             <v-spacer />
@@ -233,16 +248,17 @@
 
                 eventBus.$emit('close-loader');
             },
-            async archiveCategory(id) {
+            async archiveCategory(id, archived) {
                 const category = { ...this.$store.getters['categories/getCategory'](id) };
-                category.archived = true;
+                category.archived = archived;
 
                 const editedCategory = await this.saveCategory(category);
                 if (editedCategory.code === 500) {
                     eventBus.$emit('show-alert', this.$t('anErrorOccurred'), true);
                 }
                 else {
-                    eventBus.$emit('show-alert', this.$t('archivedSuccessfully'));
+                    const message = archived ? this.$t('archivedSuccessfully') : this.$t('unarchivedSuccessfully');
+                    eventBus.$emit('show-alert', message);
                 }
             }
         }
