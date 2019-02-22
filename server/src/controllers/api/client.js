@@ -13,8 +13,11 @@ function getSlug(client) {
 
 function getValues(client) {
     const categoryIds = [];
-    for (const category of client.categories) {
-        categoryIds.push(category.id);
+
+    if (client.categories && client.categories.length > 0) {
+        for (const category of client.categories) {
+            categoryIds.push(category.id);
+        }
     }
 
     return {
@@ -82,7 +85,7 @@ module.exports = router => {
             const client = await Client.create(body);
             await client.setUser(req.user);
 
-            if (body.categoryId) {
+            if (body.categoryIds) {
                 await client.setCategories(body.categoryIds);
             }
 
@@ -106,7 +109,7 @@ module.exports = router => {
             if (client) {
                 await client.update(body);
 
-                if (body.categoryId) {
+                if (body.categoryIds) {
                     await client.setCategories(body.categoryIds);
                 }
             }

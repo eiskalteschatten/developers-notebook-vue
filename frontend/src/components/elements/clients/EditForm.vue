@@ -79,7 +79,8 @@
                     v-model="selectedCategory"
                     :items="dropdownCategories"
                     :label="$t('category')"
-                    single-line
+                    multiple
+                    chips
                 />
                 <v-combobox
                     v-model="client.tags"
@@ -168,23 +169,24 @@
             },
             selectedCategory: {
                 get() {
-                    const categoryId = this.client.categoryId;
+                    const categoryIds = this.client.categoryIds;
 
-                    if (!categoryId) {
+                    if (!categoryIds || categoryIds.length <= 0) {
                         return '';
                     }
 
-                    const category = this.$store.getters['categories/getCategory'](categoryId);
-
-                    return category
-                        ? {
-                            value: categoryId,
+                    return categoryIds.map(id => {
+                        const category = this.$store.getters['categories/getCategory'](id);
+                        return {
+                            value: id,
                             text: category.name
-                        }
-                        : '';
+                        };
+                    });
                 },
-                set(categoryObj) {
-                    this.client.categoryId = categoryObj ? categoryObj.value : '';
+                set(selectCategories) {
+                    this.client.categoryIds = selectCategories.map(category => {
+                        return category.value;
+                    });
                 }
             }
         },
