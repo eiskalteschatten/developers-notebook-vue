@@ -89,10 +89,10 @@
                         {{ props.item.companyName }}
                     </td>
                     <td v-if="$vuetify.breakpoint.smAndUp">
-                        <a :href="props.item.website" target="_blank">{{ props.item.website }}</a>
+                        <external-link :href="props.item.website" :link-content="props.item.website" />
                     </td>
                     <td v-if="$vuetify.breakpoint.smAndUp">
-                        <a :href="`mailto:${props.item.email}`">{{ props.item.email }}</a>
+                        <external-link :href="`mailto:${props.item.email}`" :link-content="props.item.email" />
                     </td>
                     <td v-if="$vuetify.breakpoint.smAndUp">
                         {{ props.item.telephone }}
@@ -195,10 +195,12 @@
     import eventBus from '../../../eventBus';
 
     import EditForm from './EditForm.vue';
+    import ExternalLink from '../ExternalLink.vue';
 
     export default Vue.extend({
         components: {
-            EditForm
+            EditForm,
+            ExternalLink
         },
         props: {
             categories: Array
