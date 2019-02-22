@@ -57,7 +57,7 @@
                                         <v-layout>
                                             <v-flex xs2>
                                                 <v-avatar :color="client.color" :size="avatarSize" class="mr-3">
-                                                    <v-icon dark>person</v-icon>
+                                                    <v-icon :dark="!!client.color">person</v-icon>
                                                 </v-avatar>
                                             </v-flex>
                                             <v-flex xs10>

@@ -72,7 +72,7 @@
                     />
                     <td>
                         <v-avatar :color="props.item.color" :size="avatarSize">
-                            <v-icon dark>person</v-icon>
+                            <v-icon :dark="!!props.item.color">person</v-icon>
                         </v-avatar>
                     </td>
                     <td
