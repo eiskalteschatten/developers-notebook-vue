@@ -2,11 +2,15 @@
 {
     "en": {
         "category": "Category",
+        "archived": "Archived",
+        "noItems": "No {0} were found.",
         "clients": "Clients",
         "goToClient": "Go to the Client"
     },
     "de": {
         "category": "Kategorie",
+        "archived": "Archiviert",
+        "noItems": "Keine {0} wurde gefunden.",
         "clients": "Kunden",
         "goToClient": "Zum Kunden"
     }
@@ -15,7 +19,20 @@
 
 <template>
     <div>
-        <h1 class="mb-4">{{ category.name }}</h1>
+        <v-card :style="{ borderLeft: `2px solid ${category.color}` }" class="mb-5">
+            <v-card-title>
+                <v-avatar :color="category.color" :size="avatarSize" class="mr-4">
+                    <v-icon dark>category</v-icon>
+                </v-avatar>
+                <h1 class="mr-3">{{ category.name }}</h1>
+                <i v-if="category.archived">
+                    {{ $t('archived') }}
+                </i>
+            </v-card-title>
+            <v-card-text v-if="category.description">
+                {{ category.description }}
+            </v-card-text>
+        </v-card>
 
         <v-layout wrap>
             <v-flex xs12 md2 :class="{ 'pr-3': $vuetify.breakpoint.mdAndUp }">
@@ -24,7 +41,7 @@
             <v-flex xs12 md10>
                 <v-tabs-items v-model="tab">
                     <v-tab-item value="clients">
-                        <v-layout wrap>
+                        <v-layout wrap v-if="related.clients && related.clients.length > 0">
                             <v-flex
                                 v-for="client in related.clients"
                                 :key="client.id"
@@ -60,6 +77,11 @@
                                 </v-card>
                             </v-flex>
                         </v-layout>
+                        <v-card v-else>
+                            <v-card-title>
+                                {{ $t('noItems', ['clients']) }}
+                            </v-card-title>
+                        </v-card>
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
