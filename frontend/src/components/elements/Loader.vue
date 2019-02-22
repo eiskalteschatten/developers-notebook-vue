@@ -42,7 +42,7 @@
                 clearTimeout(this.timeout);
                 this.timeout = setTimeout(() => {
                     this.snackbar = true;
-                }, 500);
+                }, 250);
             },
             closeLoader() {
                 clearTimeout(this.timeout);
