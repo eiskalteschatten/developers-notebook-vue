@@ -21,16 +21,22 @@
     <div>
         <v-card :style="{ borderLeft: `2px solid ${category.color}` }" class="mb-5">
             <v-card-title>
-                <v-avatar :color="category.color" :size="avatarSize" class="mr-4">
-                    <v-icon dark>category</v-icon>
-                </v-avatar>
-                <h1 class="mr-3">{{ category.name }}</h1>
-                <i v-if="category.archived">
-                    {{ $t('archived') }}
-                </i>
+                <div class="avatar-container mr-3">
+                    <v-avatar :color="category.color" :size="avatarSize" class="mr-4">
+                        <v-icon :dark="!!category.color">category</v-icon>
+                    </v-avatar>
+                </div>
+                <div>
+                    <h1>{{ category.name }}</h1>
+                </div>
             </v-card-title>
-            <v-card-text v-if="category.description">
-                {{ category.description }}
+            <v-card-text>
+                <div class="mb-3" v-if="category.archived">
+                    <i>{{ $t('archived') }}</i>
+                </div>
+                <div v-if="category.description">
+                    {{ category.description }}
+                </div>
             </v-card-text>
         </v-card>
 
@@ -148,4 +154,8 @@
 </script>
 
 <style lang="scss" scoped>
+    .avatar-container {
+        float: left;
+        width: 50px;
+    }
 </style>
