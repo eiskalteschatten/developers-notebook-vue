@@ -54,12 +54,10 @@ module.exports = router => {
                     filtered.push({
                         id: raw.id,
                         name: raw.name,
-                        description: raw.description,
                         color: raw.color,
                         avatar: raw.avatar,
                         companyName: raw.companyName,
-                        isCompany: raw.isCompany,
-                        website: raw.website
+                        isCompany: raw.isCompany
                     });
                 }
 
@@ -68,7 +66,7 @@ module.exports = router => {
 
             res.json({
                 ...values,
-                clients
+                related: { clients }
             });
         }
         catch(error) {
