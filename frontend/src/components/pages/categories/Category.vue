@@ -17,24 +17,27 @@
 
 <script>
     import Vue from 'vue';
-    import { mapState } from 'vuex';
+    import { mapActions } from 'vuex';
 
-    import { routeTitles } from '../../../router';
+    import { setDocumentTitle } from '../../../router';
 
     export default Vue.extend({
         props: {
             id: [String, Number]
         },
         computed: {
-            ...mapState('categories', [
-                'categories'
-            ]),
             category() {
                 return this.$store.getters['categories/getCategory'](this.id);
             }
         },
-        mounted() {
-            document.title = `${this.category.name} - ${this.$t('category')} - ${routeTitles.primaryTitle}`;
+        async mounted() {
+            await this.getCategories();
+            setDocumentTitle(`${this.category.name} - ${this.$t('category')}`);
+        },
+        methods: {
+            ...mapActions('categories', [
+                'getCategories'
+            ])
         }
     });
 </script>

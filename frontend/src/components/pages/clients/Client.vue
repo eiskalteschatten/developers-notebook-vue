@@ -1,40 +1,43 @@
 <i18n>
 {
     "en": {
-        "category": "Category"
+        "clients": "Clients"
     },
     "de": {
-        "category": "Kategorie"
+        "clients": "Kunden"
     }
 }
 </i18n>
 
 <template>
     <div>
-        <h1 class="mb-4">{{ category.name }}</h1>
+        <h1 class="mb-4">{{ client.name }}</h1>
     </div>
 </template>
 
 <script>
     import Vue from 'vue';
-    import { mapState } from 'vuex';
+    import { mapActions } from 'vuex';
 
-    import { routeTitles } from '../../../router';
+    import { setDocumentTitle } from '../../../router';
 
     export default Vue.extend({
         props: {
             id: [String, Number]
         },
         computed: {
-            ...mapState('categories', [
-                'categories'
-            ]),
-            category() {
-                return this.$store.getters['categories/getCategory'](this.id);
+            client() {
+                return this.$store.getters['clients/getClient'](this.id);
             }
         },
-        mounted() {
-            document.title = `${this.category.name} - ${this.$t('category')} - ${routeTitles.primaryTitle}`;
+        async mounted() {
+            await this.getClients();
+            setDocumentTitle(`${this.client.name} - ${this.$t('clients')}`);
+        },
+        methods: {
+            ...mapActions('clients', [
+                'getClients'
+            ])
         }
     });
 </script>

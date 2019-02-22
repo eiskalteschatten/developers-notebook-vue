@@ -47,7 +47,7 @@ export const routeTitles = {
     }
 };
 
-export default new VueRouter({
+const router = new VueRouter({
     routes: [{
         path: '/',
         redirect: { name: 'home', params: { lang: preferedLanguage } }
@@ -138,3 +138,9 @@ export default new VueRouter({
         }]
     }]
 });
+
+export function setDocumentTitle(title) {
+    document.title = `${title} - ${routeTitles.primaryTitle}`;
+}
+
+export default router;

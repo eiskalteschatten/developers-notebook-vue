@@ -10,6 +10,7 @@ export default {
     getters: {
         clients: state => state.clients,
         getClient: state => id => {
+            id = parseInt(id);
             for (const stateClient of state.clients) {
                 if (stateClient.id && stateClient.id === id) {
                     return stateClient;

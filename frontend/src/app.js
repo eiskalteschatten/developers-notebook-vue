@@ -13,7 +13,7 @@ import checkOnlineStatus from './lib/checkOnlineStatus';
 import theme from './theme';
 import store from './store';
 import http from './http';
-import router, {routeTitles} from './router';
+import router, { routeTitles, setDocumentTitle } from './router';
 
 import App from './components/App.vue';
 
@@ -55,8 +55,8 @@ new Vue({
         '$route'(to) {
             const lang = to.params.lang;
             this.$i18n.locale = lang;
-            document.title = this.buildDocumentTitle(routeTitles[lang][to.name]);
             cookies.set('preferedLanguage', lang);
+            setDocumentTitle(routeTitles[lang][to.name]);
         }
     },
     async created() {
@@ -65,15 +65,12 @@ new Vue({
     },
     mounted() {
         const title = routeTitles[this.$i18n.locale][this.$route.name];
-        document.title = this.buildDocumentTitle(title);
+        setDocumentTitle(title);
     },
     methods: {
         ...mapActions('user', [
             'fetchJwt'
         ]),
-        buildDocumentTitle(title) {
-            return `${title} - ${routeTitles.primaryTitle}`;
-        },
         async determineAuthentication() {
             const jwt = localStorage.getItem('jwt');
 
