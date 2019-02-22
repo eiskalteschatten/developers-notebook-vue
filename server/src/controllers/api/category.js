@@ -28,14 +28,48 @@ module.exports = router => {
 
         try {
             const categories = await Category.findAll({ where: { userId }});
-            const allValues = [];
+            const values = categories.map(category => {
+                return getValues(category.get());
+            });
+            res.json(values);
+        }
+        catch(error) {
+            console.error(new Error(error));
+            res.status(500).send('');
+        }
+    });
 
-            for (const category of categories) {
-                const values = getValues(category.get());
-                allValues.push(values);
-            }
+    router.get('/related/:id', async (req, res) => {
+        const userId = req.user.id;
+        const id = req.params.id;
 
-            res.json(allValues);
+        try {
+            const category = await Category.findOne({ where: { id, userId }});
+            const values = getValues(category.get());
+
+            const clientModels = await category.getClients();
+            const clients = clientModels.reduce((filtered, client) => {
+                if (!client.archived) {
+                    const raw = client.get();
+                    filtered.push({
+                        id: raw.id,
+                        name: raw.name,
+                        description: raw.description,
+                        color: raw.color,
+                        avatar: raw.avatar,
+                        companyName: raw.companyName,
+                        isCompany: raw.isCompany,
+                        website: raw.website
+                    });
+                }
+
+                return filtered;
+            }, []);
+
+            res.json({
+                ...values,
+                clients
+            });
         }
         catch(error) {
             console.error(new Error(error));

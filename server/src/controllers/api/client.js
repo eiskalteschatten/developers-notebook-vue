@@ -47,14 +47,10 @@ module.exports = router => {
 
         try {
             const clients = await Client.getAllWithCategories(userId);
-            const allValues = [];
-
-            for (const client of clients) {
-                const values = getValues(client.get());
-                allValues.push(values);
-            }
-
-            res.json(allValues);
+            const values = clients.map(client => {
+                return getValues(client.get());
+            });
+            res.json(values);
         }
         catch(error) {
             console.error(new Error(error));
