@@ -61,36 +61,20 @@
 
         <v-layout wrap>
             <v-flex xs12 sm6 :class="{ 'pr-5': $vuetify.breakpoint.smAndUp }">
-                <v-layout>
-                    <v-flex xs3 :class="{ 'pr-2': $vuetify.breakpoint.smAndUp }">
-                        <file-pond
-                            name="test"
-                            ref="pond"
-                            label-idle="Drop files here..."
-                            allow-multiple="true"
-                            accepted-file-types="image/jpeg, image/png"
-                            server="/api"
-                            v-bind:files="myFiles"
-                            v-on:init="handleFilePondInit"
-                        />
-                    </v-flex>
-                    <v-flex xs9>
-                        <v-text-field
-                            v-model="client.name"
-                            :label="$t('name')"
-                            :rules="rules"
-                            :error="errors.name"
-                        />
+                <v-text-field
+                    v-model="client.name"
+                    :label="$t('name')"
+                    :rules="rules"
+                    :error="errors.name"
+                />
 
-                        <v-text-field
-                            v-model="client.companyName"
-                            :label="$t('companyName')"
-                            :error="errors.companyName"
-                        />
+                <v-text-field
+                    v-model="client.companyName"
+                    :label="$t('companyName')"
+                    :error="errors.companyName"
+                />
 
-                        <v-checkbox v-model="client.isCompany" :label="$t('isCompany')" />
-                    </v-flex>
-                </v-layout>
+                <v-checkbox v-model="client.isCompany" :label="$t('isCompany')" />
                 <v-combobox
                     v-model="selectedCategory"
                     :items="dropdownCategories"
@@ -145,19 +129,12 @@
     import Vue from 'vue';
     import { mapState, mapActions } from 'vuex';
 
-    import vueFilePond from 'vue-filepond';
-    import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-    import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-    const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
-    import 'filepond/dist/filepond.min.css';
-
     import Swatches from 'vue-swatches';
     import 'vue-swatches/dist/vue-swatches.min.css';
 
     export default Vue.extend({
         components: {
-            Swatches,
-            FilePond
+            Swatches
         },
         props: {
             errors: Object,
@@ -227,17 +204,12 @@
         methods: {
             ...mapActions('categories', [
                 'getCategories'
-            ]),
-            handleFilePondInit: function() {
-                console.log('FilePond has initialized');
-
-                // FilePond instance methods are available on `this.$refs.pond`
-            }
+            ])
         }
     });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .vue-swatches__container {
         background-color: transparent !important;
     }
