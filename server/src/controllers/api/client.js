@@ -5,14 +5,22 @@ const slug = require('slug');
 const Client = require('../../models/Client');
 
 
-function getValues(client) {
+function getSlug(client) {
     const slugName = client.name ? client.name : client.companyName;
     const slugStr = client.slug ? client.slug.toLowerCase() : slugName.toLowerCase();
+    return slug(slugStr);
+}
+
+function getValues(client) {
+    const categoryIds = [];
+    for (const category of client.categories) {
+        categoryIds.push(category.id);
+    }
 
     return {
         id: client.id ? client.id : '',
         name: client.name,
-        slug: slug(slugStr),
+        slug: getSlug(client),
         description: client.description,
         color: client.color,
         archived: client.archived,
@@ -25,7 +33,8 @@ function getValues(client) {
         fax: client.fax,
         address: client.address,
         notes: client.notes,
-        tags: client.tags
+        tags: client.tags,
+        categoryIds
     };
 }
 
@@ -36,7 +45,6 @@ module.exports = router => {
         try {
             const clients = await Client.getAllWithCategories(userId);
             const allValues = [];
-
 
             for (const client of clients) {
                 const values = getValues(client.get());
@@ -68,14 +76,14 @@ module.exports = router => {
 
     router.post('/', async (req, res) => {
         const body = req.body;
-        const values = getValues(body);
+        body.slug = getSlug(body);
 
         try {
-            const client = await Client.create(values);
+            const client = await Client.create(body);
             await client.setUser(req.user);
 
             if (body.categoryId) {
-                await client.setCategories([ body.categoryId ]);
+                await client.setCategories(body.categoryIds);
             }
 
             const returnValues = getValues(client.get());
@@ -90,16 +98,16 @@ module.exports = router => {
     router.put('/', async (req, res) => {
         const userId = req.user.id;
         const body = req.body;
-        const values = getValues(body);
+        body.slug = getSlug(body);
 
         try {
             const client = await Client.findOne({ where: { id: body.id, userId }});
 
             if (client) {
-                await client.update(values);
+                await client.update(body);
 
                 if (body.categoryId) {
-                    await client.setCategories([ body.categoryId ]);
+                    await client.setCategories(body.categoryIds);
                 }
             }
             else {

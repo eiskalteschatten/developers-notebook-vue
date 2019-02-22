@@ -5,13 +5,16 @@ const slug = require('slug');
 const Category = require('../../models/Category');
 
 
-function getValues(category) {
+function getSlug(category) {
     const slugStr = category.slug ? category.slug.toLowerCase() : category.name.toLowerCase();
+    return slug(slugStr);
+}
 
+function getValues(category) {
     return {
         id: category.id ? category.id : '',
         name: category.name,
-        slug: slug(slugStr),
+        slug: getSlug(category),
         description: category.description,
         color: category.color,
         parentId: category.parentId,
@@ -57,10 +60,10 @@ module.exports = router => {
 
     router.post('/', async (req, res) => {
         const body = req.body;
-        const values = getValues(body);
+        body.slug = getSlug(body);
 
         try {
-            const category = await Category.create(values);
+            const category = await Category.create(body);
             await category.setUser(req.user);
             const returnValues = getValues(category.get());
             res.json(returnValues);
@@ -74,13 +77,13 @@ module.exports = router => {
     router.put('/', async (req, res) => {
         const userId = req.user.id;
         const body = req.body;
-        const values = getValues(body);
+        body.slug = getSlug(body);
 
         try {
             const category = await Category.findOne({ where: { id: body.id, userId }});
 
             if (category) {
-                await category.update(values);
+                await category.update(body);
             }
             else {
                 throw new Error(`No category with the id ${body.id} exists`);
