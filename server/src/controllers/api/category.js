@@ -4,6 +4,8 @@ const slug = require('slug');
 
 const Category = require('../../models/Category');
 
+const ApiControllerFactory = require('../../factories/ApiController');
+
 
 function getSlug(category) {
     const slugStr = category.slug ? category.slug.toLowerCase() : category.name.toLowerCase();
@@ -23,21 +25,9 @@ function getValues(category) {
 }
 
 module.exports = router => {
-    router.get('/all', async (req, res) => {
-        const userId = req.user.id;
+    const controllerFactory = new ApiControllerFactory(Category, getValues);
 
-        try {
-            const categories = await Category.findAll({ where: { userId }});
-            const values = categories.map(category => {
-                return getValues(category.get());
-            });
-            res.json(values);
-        }
-        catch(error) {
-            console.error(new Error(error));
-            res.status(500).send('');
-        }
-    });
+    router.get('/all', controllerFactory.getAll);
 
     router.get('/related/:id', async (req, res) => {
         const userId = req.user.id;
@@ -75,20 +65,7 @@ module.exports = router => {
         }
     });
 
-    router.get('/:id', async (req, res) => {
-        const userId = req.user.id;
-        const id = req.params.id;
-
-        try {
-            const category = await Category.findOne({ where: { id, userId }});
-            const values = getValues(category.get());
-            res.json(values);
-        }
-        catch(error) {
-            console.error(new Error(error));
-            res.status(500).send('');
-        }
-    });
+    router.get('/:id', controllerFactory.getSingle);
 
     router.post('/', async (req, res) => {
         const body = req.body;
@@ -129,14 +106,5 @@ module.exports = router => {
         }
     });
 
-    router.delete('/:id', async (req, res) => {
-        try {
-            await Category.destroy({ where: { userId: req.user.id, id: req.params.id } });
-            res.status(201).send('');
-        }
-        catch(error) {
-            console.error(new Error(error));
-            res.status(500).send('');
-        }
-    });
+    router.delete('/:id', controllerFactory.delete);
 };
