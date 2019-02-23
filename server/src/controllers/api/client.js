@@ -4,6 +4,8 @@ const slug = require('slug');
 
 const Client = require('../../models/Client');
 
+const ApiControllerFactory = require('../../factories/ApiController');
+
 
 function getSlug(client) {
     const slugName = client.name ? client.name : client.companyName;
@@ -42,36 +44,13 @@ function getValues(client) {
 }
 
 module.exports = router => {
-    router.get('/all', async (req, res) => {
-        const userId = req.user.id;
-
-        try {
-            const clients = await Client.getAllWithCategories(userId);
-            const values = clients.map(client => {
-                return getValues(client.get());
-            });
-            res.json(values);
-        }
-        catch(error) {
-            console.error(new Error(error));
-            res.status(500).send('');
-        }
+    router.use((req, res, next) => {
+        req.controllerFactory = new ApiControllerFactory(Client, getValues);
+        next();
     });
 
-    router.get('/:id', async (req, res) => {
-        const userId = req.user.id;
-        const id = req.params.id;
-
-        try {
-            const client = await Client.findOne({ where: { id, userId }});
-            const values = getValues(client.get());
-            res.json(values);
-        }
-        catch(error) {
-            console.error(new Error(error));
-            res.status(500).send('');
-        }
-    });
+    router.get('/all', (req, res) => req.controllerFactory.getAll(req, res));
+    router.get('/:id', (req, res) => req.controllerFactory.getSingle(req, res));
 
     router.post('/', async (req, res) => {
         const body = req.body;
@@ -122,14 +101,5 @@ module.exports = router => {
         }
     });
 
-    router.delete('/:id', async (req, res) => {
-        try {
-            await Client.destroy({ where: { userId: req.user.id, id: req.params.id } });
-            res.status(201).send('');
-        }
-        catch(error) {
-            console.error(new Error(error));
-            res.status(500).send('');
-        }
-    });
+    router.delete('/:id', (req, res) => req.controllerFactory.delete(req, res));
 };
