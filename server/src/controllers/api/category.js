@@ -25,9 +25,12 @@ function getValues(category) {
 }
 
 module.exports = router => {
-    const controllerFactory = new ApiControllerFactory(Category, getValues);
+    router.use((req, res, next) => {
+        req.controllerFactory = new ApiControllerFactory(Category, getValues);
+        next();
+    });
 
-    router.get('/all', controllerFactory.getAll);
+    router.get('/all', (req, res) => req.controllerFactory.getAll(req, res));
 
     router.get('/related/:id', async (req, res) => {
         const userId = req.user.id;
@@ -65,7 +68,7 @@ module.exports = router => {
         }
     });
 
-    router.get('/:id', controllerFactory.getSingle);
+    router.get('/:id', (req, res) => req.controllerFactory.getSingle(req, res));
 
     router.post('/', async (req, res) => {
         const body = req.body;
@@ -106,5 +109,5 @@ module.exports = router => {
         }
     });
 
-    router.delete('/:id', controllerFactory.delete);
+    router.delete('/:id', (req, res) => req.controllerFactory.delete(req, res));
 };
