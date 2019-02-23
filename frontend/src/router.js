@@ -15,6 +15,9 @@ import Category from './components/pages/categories/Category.vue';
 import Clients from './components/pages/clients/Index.vue';
 import Client from './components/pages/clients/Client.vue';
 
+import Projects from './components/pages/projects/Index.vue';
+import Project from './components/pages/projects/Project.vue';
+
 import Login from './components/pages/Login.vue';
 import ServerConfig from './components/pages/electron/ServerConfig.vue';
 
@@ -29,6 +32,7 @@ export const routeTitles = {
         home: 'Dashboard',
         categories: 'Categories',
         clients: 'Clients',
+        projects: 'Projects',
         login: 'Login',
         accountSettings: 'Account Settings',
         settings: 'Settings',
@@ -39,6 +43,7 @@ export const routeTitles = {
         home: 'Dashboard',
         categories: 'Kategorien',
         clients: 'Kunden',
+        projects: 'Projekte',
         login: 'Login',
         accountSettings: 'Kontoeinstellungen',
         settings: 'Einstellungen',
@@ -97,6 +102,21 @@ const router = new VueRouter({
                 path: ':id',
                 name: 'client',
                 component: Client,
+                props: true
+            }]
+        },
+        {
+            path: 'projects',
+            component: PageWrapper,
+            children: [{
+                path: '',
+                name: 'projects',
+                component: Projects
+            },
+            {
+                path: ':id',
+                name: 'project',
+                component: Project,
                 props: true
             }]
         }]

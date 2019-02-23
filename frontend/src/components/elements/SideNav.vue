@@ -6,6 +6,7 @@
         "dashboard": "Dashboard",
         "clients": "Clients",
         "categories": "Categories",
+        "projects": "Projects",
         "settings": "Settings"
     },
     "de": {
@@ -14,6 +15,7 @@
         "dashboard": "Dashboard",
         "clients": "Kunden",
         "categories": "Kategorien",
+        "projects": "Projekte",
         "settings": "Einstellungen"
     }
 }
@@ -90,6 +92,7 @@
                 items: [
                     { title: 'dashboard', icon: 'dashboard', routeName: 'home' },
                     { title: 'clients', icon: 'people', routeName: 'clients' },
+                    { title: 'projects', icon: 'description', routeName: 'projects' },
                     { title: 'categories', icon: 'category', routeName: 'categories' }
                 ],
                 miniData: true
