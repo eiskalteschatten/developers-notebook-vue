@@ -14,7 +14,7 @@
         "fax": "Fax Number",
         "address": "Address",
         "notes": "Notes",
-        "category": "Category",
+        "categories": "Categories",
         "tags": "Tags",
         "tagsResultsEnter": "enter",
         "tagResults": "Press {enter} to create the tag \"{result}\".",
@@ -35,7 +35,7 @@
         "fax": "Faxnummer",
         "address": "Adresse",
         "notes": "Notizen",
-        "category": "Kategorie",
+        "categories": "Kategorien",
         "tags": "Tags",
         "tagsResultsEnter": "Eingabetaste",
         "tagResults": "Drücken Sie die {enter}, um den Tag \"{result}\" zu erstellen.",
@@ -76,7 +76,7 @@
                 <v-combobox
                     v-model="selectedCategory"
                     :items="dropdownCategories"
-                    :label="$t('category')"
+                    :label="$t('categories')"
                     multiple
                     chips
                 />

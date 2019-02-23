@@ -1,22 +1,20 @@
 <i18n>
 {
     "en": {
-        "newCategory": "New Category",
         "name": "Name",
         "description": "Description",
+        "categories": "Categories",
         "color": "Color",
-        "parentCategory": "Parent Category",
         "required": "Required",
-        "anErrorOccurred": "An error occurred while trying to save the category. Please try again."
+        "anErrorOccurred": "An error occurred while trying to save the project. Please try again."
     },
     "de": {
-        "newCategory": "Neue Kategorie",
         "name": "Name",
         "description": "Beschreibung",
+        "categories": "Kategorien",
         "color": "Farbe",
-        "parentCategory": "Oberkategorie",
         "required": "Erforderlich",
-        "anErrorOccurred": "Ein Fehler ist beim Speichern der Kategorie aufgetreten. Bitte versuchen Sie noch einmal."
+        "anErrorOccurred": "Ein Fehler ist beim Speichern des Projektes aufgetreten. Bitte versuchen Sie noch einmal."
     }
 }
 </i18n>
@@ -31,28 +29,29 @@
             {{ $t('anErrorOccurred') }}
         </v-alert>
 
-        <input type="hidden" v-model="category.id">
+        <input type="hidden" v-model="project.id">
 
         <v-text-field
-            v-model="category.name"
+            v-model="project.name"
             :label="$t('name')"
             :rules="rules"
             :error="errors.name"
         />
 
-        <v-textarea v-model="category.description" :label="$t('description')" />
+        <v-textarea v-model="project.description" :label="$t('description')" />
 
         <v-combobox
-            v-model="selectedParentCategory"
-            :items="parentCategories"
-            :label="$t('parentCategory')"
-            single-line
+            v-model="selectedCategory"
+            :items="dropdownCategories"
+            :label="$t('categories')"
+            multiple
+            chips
             class="mb-3"
         />
 
         <h4>{{ $t('color') }}</h4>
         <swatches
-            v-model="category.color"
+            v-model="project.color"
             inline
             colors="material-basic"
         />
@@ -61,7 +60,7 @@
 
 <script>
     import Vue from 'vue';
-    import { mapState } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
 
     import Swatches from 'vue-swatches';
     import 'vue-swatches/dist/vue-swatches.min.css';
@@ -73,21 +72,21 @@
         props: {
             errors: Object,
             errorMessage: Boolean,
-            editCategory: Object
+            editProject: Object
         },
         data() {
             return {
                 rules: [
                     value => !!value || this.$t('required')
                 ],
-                category: this.editCategory || {}
+                project: this.editProject || {}
             };
         },
         computed: {
             ...mapState('categories', [
                 'categories'
             ]),
-            parentCategories() {
+            dropdownCategories() {
                 const notArchivedCategories = this.categories.filter(category => {
                     if (!category.archived) return category;
                 });
@@ -99,35 +98,44 @@
                     };
                 });
             },
-            selectedParentCategory: {
+            selectedCategory: {
                 get() {
-                    const parentId = this.category.parentId;
+                    const categoryIds = this.project.categoryIds;
 
-                    if (!parentId) {
+                    if (!categoryIds || categoryIds.length <= 0) {
                         return '';
                     }
 
-                    const category = this.$store.getters['categories/getCategory'](parentId);
-
-                    return category
-                        ? {
-                            value: parentId,
+                    return categoryIds.map(id => {
+                        const category = this.$store.getters['categories/getCategory'](id);
+                        return {
+                            value: id,
                             text: category.name
-                        }
-                        : '';
+                        };
+                    });
                 },
-                set(parentCategoryObj) {
-                    this.category.categoryId = parentCategoryObj ? parentCategoryObj.value : '';
+                set(selectCategories) {
+                    this.project.categoryIds = selectCategories.map(category => {
+                        return category.value;
+                    });
                 }
             }
         },
         watch: {
-            category: {
+            project: {
                 handler() {
-                    this.$emit('input', this.category);
+                    this.$emit('input', this.project);
                 },
                 deep: true
             }
+        },
+        async mounted() {
+            await this.getCategories();
+        },
+        methods: {
+            ...mapActions('categories', [
+                'getCategories'
+            ])
         }
     });
 </script>

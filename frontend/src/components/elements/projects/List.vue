@@ -10,11 +10,11 @@
         "name": "Name",
         "description": "Description",
         "search": "Search",
-        "confirmDelete": "Are you sure you want to delete this category? This cannot be undone.",
-        "categoryDeleted": "The category was successfully deleted.",
+        "confirmDelete": "Are you sure you want to delete this project? This cannot be undone.",
+        "projectDeleted": "The project was successfully deleted.",
         "anErrorOccurred": "An error occurred. Please try again.",
-        "archivedSuccessfully": "The category was successfully archived.",
-        "unarchivedSuccessfully": "The category was successfully restored."
+        "archivedSuccessfully": "The project was successfully archived.",
+        "unarchivedSuccessfully": "The project was successfully restored."
     },
     "de": {
         "archive": "Archivieren",
@@ -26,11 +26,11 @@
         "name": "Name",
         "description": "Beschreibung",
         "search": "Suche",
-        "confirmDelete": "Sind Sie sicher, dass Sie diese Kategorie löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
-        "categoryDeleted": "Die Kategorie wurde erfolgreich gelöscht.",
+        "confirmDelete": "Sind Sie sicher, dass Sie dieses Projekt löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+        "projectDeleted": "Das Projekt wurde erfolgreich gelöscht.",
         "anErrorOccurred": "Ein Fehler ist aufgetreten. Bitte versuchen Sie noch einmal.",
-        "archivedSuccessfully": "Die Kategorie wurde erfolgreich archiviert.",
-        "unarchivedSuccessfully": "Die Kategorie wurde erfolgreich wiederhergestellt."
+        "archivedSuccessfully": "Das Projekt wurde erfolgreich archiviert.",
+        "unarchivedSuccessfully": "Das Projekt wurde erfolgreich wiederhergestellt."
     }
 }
 </i18n>
@@ -53,7 +53,7 @@
 
         <v-data-table
             :headers="headers"
-            :items="categories"
+            :items="projects"
             :search="search"
             expand
             item-key="id"
@@ -62,13 +62,13 @@
                 <tr>
                     <td :style="{ backgroundColor: props.item.color, padding: 0 }" />
                     <td
-                        @click="$router.push({ name: 'category', params: { id: props.item.id } })"
+                        @click="$router.push({ name: 'project', params: { id: props.item.id } })"
                         class="pointer"
                     >
                         {{ props.item.name }}
                     </td>
                     <td
-                        @click="$router.push({ name: 'category', params: { id: props.item.id } })"
+                        @click="$router.push({ name: 'project', params: { id: props.item.id } })"
                         class="pointer"
                     >
                         {{ props.item.description }}
@@ -80,21 +80,21 @@
                         <v-icon
                             small
                             class="mr-2"
-                            @click="deleteCategory(props.item.id)"
+                            @click="deleteProject(props.item.id)"
                             v-if="$vuetify.breakpoint.smAndUp"
                         >
                             delete
                         </v-icon>
                         <v-icon
                             small
-                            @click="archiveCategory(props.item.id, true)"
+                            @click="archiveProject(props.item.id, true)"
                             v-if="$vuetify.breakpoint.smAndUp && !props.item.archived"
                         >
                             archive
                         </v-icon>
                         <v-icon
                             small
-                            @click="archiveCategory(props.item.id, false)"
+                            @click="archiveProject(props.item.id, false)"
                             v-else-if="$vuetify.breakpoint.smAndUp"
                         >
                             unarchive
@@ -104,26 +104,26 @@
             </template>
             <template slot="expand" slot-scope="props">
                 <v-card flat dark color="secondary">
-                    <v-form lazy-validation @submit="submitEditCategory($event, props)">
+                    <v-form lazy-validation @submit="submitEditProject($event, props)">
                         <v-card-text>
                             <edit-form
-                                :errors="editCategory.errors"
-                                :error-message="editCategory.error"
-                                :edit-category="{ ...props.item }"
-                                @input="values => { editCategory.values[props.item.id] = values }"
+                                :errors="editProject.errors"
+                                :error-message="editProject.error"
+                                :edit-project="{ ...props.item }"
+                                @input="values => { editProject.values[props.item.id] = values }"
                             />
                         </v-card-text>
 
                         <v-card-actions>
-                            <v-btn flat @click="deleteCategory(props.item.id)" color="red" small icon>
+                            <v-btn flat @click="deleteProject(props.item.id)" color="red" small icon>
                                 <v-icon>delete</v-icon>
                             </v-btn>
 
-                            <v-btn v-if="!props.item.archived" flat @click="archiveCategory(props.item.id, true)" small>
+                            <v-btn v-if="!props.item.archived" flat @click="archiveProject(props.item.id, true)" small>
                                 <v-icon class="mr-2">archive</v-icon>
                                 <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('archive') }}</span>
                             </v-btn>
-                            <v-btn v-else flat @click="archiveCategory(props.item.id, false)" small>
+                            <v-btn v-else flat @click="archiveProject(props.item.id, false)" small>
                                 <v-icon class="mr-2">unarchive</v-icon>
                                 <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('unarchive') }}</span>
                             </v-btn>
@@ -140,8 +140,8 @@
                                 small
                                 color="primary"
                                 type="submit"
-                                :loading="editCategory.loading"
-                                :disabled="editCategory.loading"
+                                :loading="editProject.loading"
+                                :disabled="editProject.loading"
                             >
                                 <v-icon left v-if="$vuetify.breakpoint.smAndUp">save</v-icon>
                                 {{ $t('save') }}
@@ -158,7 +158,7 @@
                 <v-card-actions>
                     <v-spacer />
                     <v-btn flat @click="confirmDialog = false">{{ $t('no') }}</v-btn>
-                    <v-btn color="primary" @click="confirmDeleteCategory">{{ $t('yes') }}</v-btn>
+                    <v-btn color="primary" @click="confirmDeleteProject">{{ $t('yes') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -177,12 +177,12 @@
             EditForm
         },
         props: {
-            categories: Array
+            projects: Array
         },
         data() {
             return {
                 search: '',
-                editCategory: {
+                editProject: {
                     loading: false,
                     errors: {},
                     error: false,
@@ -190,13 +190,13 @@
                 },
                 confirmDialog: false,
                 confirmQuestion: '',
-                deleteCategoryId: -1
+                deleteProjectId: -1
             };
         },
         computed: {
             headers() {
                 return [
-                    { value: 'color', sortable: false, class: 'category-color-stripe' },
+                    { value: 'color', sortable: false, class: 'project-color-stripe' },
                     { text: this.$t('name'), value: 'name' },
                     { text: this.$t('description'), value: 'description' },
                     { value: 'id', sortable: false }
@@ -204,51 +204,51 @@
             }
         },
         methods: {
-            ...mapActions('categories', [
-                'saveCategory',
-                'getCategories'
+            ...mapActions('projects', [
+                'saveProject',
+                'getProjects'
             ]),
-            async submitEditCategory(event, props) {
+            async submitEditProject(event, props) {
                 event.preventDefault();
-                const values = this.editCategory.values[props.item.id];
+                const values = this.editProject.values[props.item.id];
 
                 if (Object.keys(values).length <= 0) {
                     return;
                 }
 
-                this.editCategory.loading = true;
+                this.editProject.loading = true;
 
                 if (!values.name) {
-                    this.editCategory.errors.name = true;
-                    this.editCategory.error = true;
+                    this.editProject.errors.name = true;
+                    this.editProject.error = true;
                 }
                 else {
-                    const editCategory = await this.saveCategory(values);
+                    const editProject = await this.saveProject(values);
 
-                    if (editCategory.code === 500) {
-                        this.editCategory.error = true;
+                    if (editProject.code === 500) {
+                        this.editProject.error = true;
                     }
                     else {
                         props.expanded = false;
                     }
                 }
 
-                this.editCategory.loading = false;
+                this.editProject.loading = false;
             },
-            deleteCategory(id) {
+            deleteProject(id) {
                 this.confirmQuestion = 'confirmDelete';
                 this.confirmDialog = true;
-                this.deleteCategoryId = id;
+                this.deleteProjectId = id;
             },
-            async confirmDeleteCategory() {
+            async confirmDeleteProject() {
                 this.confirmDialog = false;
                 eventBus.$emit('show-loader');
 
-                const res = await this.$http.delete(`api/category/${this.deleteCategoryId}`);
+                const res = await this.$http.delete(`api/project/${this.deleteProjectId}`);
 
                 if (res.status === 201) {
-                    await this.getCategories();
-                    eventBus.$emit('show-alert', this.$t('categoryDeleted'));
+                    await this.getProjects();
+                    eventBus.$emit('show-alert', this.$t('projectDeleted'));
                 }
                 else {
                     eventBus.$emit('show-alert', this.$t('anErrorOccurred'), true);
@@ -256,12 +256,12 @@
 
                 eventBus.$emit('close-loader');
             },
-            async archiveCategory(id, archived) {
-                const category = { ...this.$store.getters['categories/getCategory'](id) };
-                category.archived = archived;
+            async archiveProject(id, archived) {
+                const project = { ...this.$store.getters['projects/getProject'](id) };
+                project.archived = archived;
 
-                const editedCategory = await this.saveCategory(category);
-                if (editedCategory.code === 500) {
+                const editedProject = await this.saveProject(project);
+                if (editedProject.code === 500) {
                     eventBus.$emit('show-alert', this.$t('anErrorOccurred'), true);
                 }
                 else {
@@ -274,7 +274,7 @@
 </script>
 
 <style lang="scss">
-    .category-color-stripe {
+    .project-color-stripe {
         padding: 0 !important;
         width: 5px;
     }

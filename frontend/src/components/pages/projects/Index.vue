@@ -36,10 +36,10 @@
             <v-flex xs12 md10>
                 <v-tabs-items v-model="archiveTab">
                     <v-tab-item value="notArchived">
-                        <category-list :categories="notArchivedCategories" />
+                        <project-list :projects="notArchivedProjects" />
                     </v-tab-item>
                     <v-tab-item value="archived">
-                        <category-list :categories="archivedCategories" />
+                        <project-list :projects="archivedProjects" />
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -62,7 +62,7 @@
                         <edit-form
                             :errors="newProject.errors"
                             :error-message="newProject.error"
-                            :edit-category="newProject.values"
+                            :edit-project="newProject.values"
                             @input="values => { newProject.values = values }"
                         />
                     </v-card-text>
@@ -97,13 +97,13 @@
     import eventBus from '../../../eventBus';
 
     import SubSideNav from '../../elements/SubSideNav.vue';
-    import CategoryList from '../../elements/projects/List.vue';
+    import ProjectList from '../../elements/projects/List.vue';
     import EditForm from '../../elements/projects/EditForm.vue';
 
     export default Vue.extend({
         components: {
             SubSideNav,
-            CategoryList,
+            ProjectList,
             EditForm
         },
         data() {
@@ -121,24 +121,24 @@
             };
         },
         computed: {
-            ...mapState('categories', [
-                'categories'
+            ...mapState('projects', [
+                'projects'
             ]),
-            notArchivedCategories() {
-                return this.categories.filter(category => {
-                    if (!category.archived) return category;
+            notArchivedProjects() {
+                return this.projects.filter(project => {
+                    if (!project.archived) return project;
                 });
             },
-            archivedCategories() {
-                return this.categories.filter(category => {
-                    if (category.archived) return category;
+            archivedProjects() {
+                return this.projects.filter(project => {
+                    if (project.archived) return project;
                 });
             },
             sidenavItems() {
                 return [
                     {
                         title: this.$t('activeProjects'),
-                        icon: 'category',
+                        icon: 'description',
                         class: { active: this.archiveTab === 'notArchived' },
                         click: () => 'notArchived'
                     },
@@ -157,12 +157,12 @@
             }
         },
         async mounted() {
-            await this.getCategories();
+            await this.getProjects();
         },
         methods: {
-            ...mapActions('categories', [
-                'saveCategory',
-                'getCategories'
+            ...mapActions('projects', [
+                'saveProject',
+                'getProjects'
             ]),
             changeTab(getTab) {
                 this.archiveTab = getTab();
@@ -177,7 +177,7 @@
                     this.newProject.error = true;
                 }
                 else {
-                    const newProject = await this.saveCategory(values);
+                    const newProject = await this.saveProject(values);
 
                     if (newProject.code === 500) {
                         this.newProject.error = true;
