@@ -73,7 +73,7 @@
                     >
                         {{ props.item.description }}
                     </td>
-                    <td class="text-xs-right">
+                    <td class="text-xs-right text-no-wrap">
                         <v-icon small class="mr-2" @click="props.expanded = true">
                             edit
                         </v-icon>
