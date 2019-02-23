@@ -3,6 +3,7 @@
     "en": {
         "name": "Name",
         "description": "Description",
+        "client": "Client",
         "categories": "Categories",
         "color": "Color",
         "required": "Required",
@@ -11,6 +12,7 @@
     "de": {
         "name": "Name",
         "description": "Beschreibung",
+        "client": "Kunden",
         "categories": "Kategorien",
         "color": "Farbe",
         "required": "Erforderlich",
@@ -41,8 +43,16 @@
         <v-textarea v-model="project.description" :label="$t('description')" />
 
         <v-combobox
+            v-model="selectedClient"
+            :items="getComboBoxClients()"
+            :label="$t('client')"
+            single-line
+            class="mb-3"
+        />
+
+        <v-combobox
             v-model="selectedCategory"
-            :items="dropdownCategories"
+            :items="getComboBoxCategories()"
             :label="$t('categories')"
             multiple
             chips
@@ -60,7 +70,7 @@
 
 <script>
     import Vue from 'vue';
-    import { mapState, mapActions } from 'vuex';
+    import { mapState, mapActions, mapGetters } from 'vuex';
 
     import Swatches from 'vue-swatches';
     import 'vue-swatches/dist/vue-swatches.min.css';
@@ -86,17 +96,29 @@
             ...mapState('categories', [
                 'categories'
             ]),
-            dropdownCategories() {
-                const notArchivedCategories = this.categories.filter(category => {
-                    if (!category.archived) return category;
-                });
+            ...mapState('clients', [
+                'clients'
+            ]),
+            selectedClient: {
+                get() {
+                    const clientId = this.project.clientId;
 
-                return notArchivedCategories.map(category => {
-                    return {
-                        value: category.id,
-                        text: category.name
-                    };
-                });
+                    if (!clientId) {
+                        return '';
+                    }
+
+                    const client = this.$store.getters['clients/getClient'](clientId);
+
+                    return client
+                        ? {
+                            value: clientId,
+                            text: client.name
+                        }
+                        : '';
+                },
+                set(selectClient) {
+                    this.project.clientId = selectClient ? selectClient.value : '';
+                }
             },
             selectedCategory: {
                 get() {
@@ -131,10 +153,20 @@
         },
         async mounted() {
             await this.getCategories();
+            await this.getClients();
         },
         methods: {
             ...mapActions('categories', [
                 'getCategories'
+            ]),
+            ...mapGetters('categories', [
+                'getComboBoxCategories'
+            ]),
+            ...mapActions('clients', [
+                'getClients'
+            ]),
+            ...mapGetters('clients', [
+                'getComboBoxClients'
             ])
         }
     });

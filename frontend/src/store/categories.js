@@ -19,7 +19,19 @@ export default {
             }
             return '';
         },
-        related: state => state.related
+        related: state => state.related,
+        getComboBoxCategories: state => {
+            const notArchivedCategories = state.categories.filter(category => {
+                if (!category.archived) return category;
+            });
+
+            return notArchivedCategories.map(category => {
+                return {
+                    value: category.id,
+                    text: category.name
+                };
+            });
+        }
     },
 
     mutations: {

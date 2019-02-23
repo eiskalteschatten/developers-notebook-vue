@@ -75,7 +75,7 @@
                 <v-checkbox v-model="client.isCompany" :label="$t('isCompany')" />
                 <v-combobox
                     v-model="selectedCategory"
-                    :items="dropdownCategories"
+                    :items="getComboBoxCategories()"
                     :label="$t('categories')"
                     multiple
                     chips
@@ -125,7 +125,7 @@
 
 <script>
     import Vue from 'vue';
-    import { mapState, mapActions } from 'vuex';
+    import { mapState, mapActions, mapGetters } from 'vuex';
 
     import Swatches from 'vue-swatches';
     import 'vue-swatches/dist/vue-swatches.min.css';
@@ -153,18 +153,6 @@
             ...mapState('categories', [
                 'categories'
             ]),
-            dropdownCategories() {
-                const notArchivedCategories = this.categories.filter(category => {
-                    if (!category.archived) return category;
-                });
-
-                return notArchivedCategories.map(category => {
-                    return {
-                        value: category.id,
-                        text: category.name
-                    };
-                });
-            },
             selectedCategory: {
                 get() {
                     const categoryIds = this.client.categoryIds;
@@ -202,6 +190,9 @@
         methods: {
             ...mapActions('categories', [
                 'getCategories'
+            ]),
+            ...mapGetters('categories', [
+                'getComboBoxCategories'
             ])
         }
     });

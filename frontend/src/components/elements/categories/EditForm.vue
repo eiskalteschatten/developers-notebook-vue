@@ -42,7 +42,7 @@
 
         <v-combobox
             v-model="selectedParentCategory"
-            :items="parentCategories"
+            :items="getComboBoxCategories()"
             :label="$t('parentCategory')"
             single-line
             class="mb-3"
@@ -59,7 +59,7 @@
 
 <script>
     import Vue from 'vue';
-    import { mapState } from 'vuex';
+    import { mapState, mapGetters } from 'vuex';
 
     import Swatches from 'vue-swatches';
     import 'vue-swatches/dist/vue-swatches.min.css';
@@ -85,18 +85,6 @@
             ...mapState('categories', [
                 'categories'
             ]),
-            parentCategories() {
-                const notArchivedCategories = this.categories.filter(category => {
-                    if (!category.archived) return category;
-                });
-
-                return notArchivedCategories.map(category => {
-                    return {
-                        value: category.id,
-                        text: category.name
-                    };
-                });
-            },
             selectedParentCategory: {
                 get() {
                     const parentId = this.category.parentId;
@@ -126,6 +114,11 @@
                 },
                 deep: true
             }
+        },
+        methods: {
+            ...mapGetters('categories', [
+                'getComboBoxCategories'
+            ])
         }
     });
 </script>

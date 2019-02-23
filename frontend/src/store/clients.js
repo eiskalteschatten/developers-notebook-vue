@@ -17,6 +17,18 @@ export default {
                 }
             }
             return '';
+        },
+        getComboBoxClients: state => {
+            const notArchivedClients = state.clients.filter(client => {
+                if (!client.archived) return client;
+            });
+
+            return notArchivedClients.map(client => {
+                return {
+                    value: client.id,
+                    text: client.name
+                };
+            });
         }
     },
 
