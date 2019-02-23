@@ -8,7 +8,10 @@ class ApiControllerFactory {
 
     async getAll(req, res) {
         try {
-            const results = await this.Model.findAll({ where: { userId: req.user.id } });
+            const results = this.Model.getAllWithRelated
+                ? await this.Model.getAllWithRelated(req.user.id)
+                : await this.Model.findAll({ where: { userId: req.user.id } });
+
             const values = results.map(result => {
                 return this.getFrontendValues(result.get());
             });
