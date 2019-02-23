@@ -49,7 +49,7 @@ module.exports = router => {
         next();
     });
 
-    router.get('/all', (req, res) => req.controllerFactory.getAll(req, res));
+    router.get('/', (req, res) => req.controllerFactory.getAll(req, res));
     router.get('/:id', (req, res) => req.controllerFactory.getSingle(req, res));
 
     router.post('/', async (req, res) => {

@@ -70,7 +70,7 @@ export default {
         async getClients({ commit }) {
             eventBus.$emit('show-loader');
             try {
-                const res = await http.get('api/client/all');
+                const res = await http.get('api/client');
 
                 if (res.body && res.status < 300) {
                     commit('setClients', res.body);

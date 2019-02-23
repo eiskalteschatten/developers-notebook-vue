@@ -30,7 +30,7 @@ module.exports = router => {
         next();
     });
 
-    router.get('/all', (req, res) => req.controllerFactory.getAll(req, res));
+    router.get('/', (req, res) => req.controllerFactory.getAll(req, res));
 
     router.get('/related/:id', async (req, res) => {
         const userId = req.user.id;

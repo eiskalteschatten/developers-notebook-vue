@@ -75,7 +75,7 @@ export default {
         async getCategories({ commit }) {
             eventBus.$emit('show-loader');
             try {
-                const res = await http.get('api/category/all');
+                const res = await http.get('api/category');
 
                 if (res.body && res.status < 300) {
                     commit('setCategories', res.body);
