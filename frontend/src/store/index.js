@@ -6,6 +6,7 @@ import user from './user';
 import settings from './settings';
 import categories from './categories';
 import clients from './clients';
+import projects from './projects';
 
 Vue.use(Vuex);
 
@@ -15,7 +16,8 @@ const store = new Vuex.Store({
         user,
         settings,
         categories,
-        clients
+        clients,
+        projects
     }
 });
 
