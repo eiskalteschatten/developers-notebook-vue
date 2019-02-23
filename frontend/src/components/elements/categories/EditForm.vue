@@ -1,7 +1,6 @@
 <i18n>
 {
     "en": {
-        "newCategory": "New Category",
         "name": "Name",
         "description": "Description",
         "color": "Color",
@@ -10,7 +9,6 @@
         "anErrorOccurred": "An error occurred while trying to save the category. Please try again."
     },
     "de": {
-        "newCategory": "Neue Kategorie",
         "name": "Name",
         "description": "Beschreibung",
         "color": "Farbe",
