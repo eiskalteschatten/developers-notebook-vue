@@ -25,7 +25,7 @@ function getValues(client) {
     return {
         id: client.id ? client.id : '',
         name: client.name,
-        slug: getSlug(client),
+        slug: client.slug,
         description: client.description,
         color: client.color,
         archived: client.archived,

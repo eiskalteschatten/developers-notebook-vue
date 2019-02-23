@@ -16,7 +16,7 @@ function getValues(category) {
     return {
         id: category.id ? category.id : '',
         name: category.name,
-        slug: getSlug(category),
+        slug: category.slug,
         description: category.description,
         color: category.color,
         parentId: category.parentId,
