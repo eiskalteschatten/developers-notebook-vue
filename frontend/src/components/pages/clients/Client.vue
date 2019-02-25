@@ -58,23 +58,23 @@
                     <v-flex xs12 sm6>
                         <h3 class="mb-3">{{ $t('contactInfo') }}</h3>
                         <div class="mb-2" v-if="client.email">
-                            <div class="contact-info-email">{{ $t('email') }}:</div>
+                            <div class="contact-info-label">{{ $t('email') }}:</div>
                             <external-link :href="`mailto:${client.email}`" :link-content="client.email" />
                         </div>
                         <div class="mb-2" v-if="client.website">
-                            <div class="contact-info-email">{{ $t('website') }}:</div>
+                            <div class="contact-info-label">{{ $t('website') }}:</div>
                             <external-link :href="client.website" :link-content="client.website" />
                         </div>
                         <div class="mb-2" v-if="client.telephone">
-                            <div class="contact-info-email">{{ $t('telephone') }}:</div>
+                            <div class="contact-info-label">{{ $t('telephone') }}:</div>
                             {{ client.telephone }}
                         </div>
                         <div class="mb-2" v-if="client.fax">
-                            <div class="contact-info-email">{{ $t('fax') }}:</div>
+                            <div class="contact-info-label">{{ $t('fax') }}:</div>
                             {{ client.fax }}
                         </div>
                         <div v-if="client.address">
-                            <div class="contact-info-email">{{ $t('address') }}:</div>
+                            <div class="contact-info-label">{{ $t('address') }}:</div>
                             {{ client.address }}
                         </div>
                     </v-flex>
@@ -122,7 +122,7 @@
         width: 50px;
     }
 
-    .contact-info-email {
+    .contact-info-label {
         display: inline-block;
         font-weight: bold;
         width: 125px;
