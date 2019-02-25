@@ -34,7 +34,7 @@
             </v-card-title>
             <v-card-text>
                 <div class="mb-3" v-if="category.archived">
-                    <i>{{ $t('archived') }}</i>
+                    <v-icon small class="mr-2">archive</v-icon>{{ $t('archived') }}
                 </div>
                 <div v-if="category.description">
                     {{ category.description }}

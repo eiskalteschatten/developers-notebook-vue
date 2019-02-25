@@ -45,7 +45,7 @@
                 <v-layout wrap>
                     <v-flex xs12 sm6 :class="{ 'mb-5': $vuetify.breakpoint.xs }">
                         <div class="mb-3" v-if="client.archived">
-                            <i>{{ $t('archived') }}</i>
+                            <v-icon small class="mr-2">archive</v-icon>{{ $t('archived') }}
                         </div>
                         <div class="mb-3" v-if="client.description">
                             {{ client.description }}
