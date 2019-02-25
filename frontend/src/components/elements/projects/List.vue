@@ -12,6 +12,8 @@
         "yes": "Yes",
         "name": "Name",
         "description": "Description",
+        "startDate": "Start Date",
+        "endDate": "End Date",
         "search": "Search",
         "confirmDelete": "Are you sure you want to delete this project? This cannot be undone.",
         "projectDeleted": "The project was successfully deleted.",
@@ -33,6 +35,8 @@
         "yes": "Ja",
         "name": "Name",
         "description": "Beschreibung",
+        "startDate": "Startdatum",
+        "endDate": "Endedatum",
         "search": "Suche",
         "confirmDelete": "Sind Sie sicher, dass Sie dieses Projekt löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
         "projectDeleted": "Das Projekt wurde erfolgreich gelöscht.",
@@ -82,6 +86,18 @@
                         class="pointer"
                     >
                         {{ props.item.description }}
+                    </td>
+                    <td
+                        @click="$router.push({ name: 'project', params: { id: props.item.id } })"
+                        class="pointer"
+                    >
+                        {{ formatDate(props.item.startDate) }}
+                    </td>
+                    <td
+                        @click="$router.push({ name: 'project', params: { id: props.item.id } })"
+                        class="pointer"
+                    >
+                        {{ formatDate(props.item.endDate) }}
                     </td>
                     <td class="text-xs-right text-no-wrap">
                         <v-icon small class="mr-2" @click="props.expanded = true">
@@ -265,6 +281,8 @@
                     { value: 'color', sortable: false, class: 'project-color-stripe' },
                     { text: this.$t('name'), value: 'name' },
                     { text: this.$t('description'), value: 'description' },
+                    { text: this.$t('startDate'), value: 'startDate' },
+                    { text: this.$t('endDate'), value: 'endDate' },
                     { value: 'id', sortable: false }
                 ];
             }
@@ -347,6 +365,9 @@
                     const message = finished ? this.$t('finishedSuccessfully') : this.$t('unfinishedSuccessfully');
                     eventBus.$emit('show-alert', message);
                 }
+            },
+            formatDate(date) {
+                return date ? new Date(date).toISOString().substr(0, 10) : '';
             }
         }
     });
