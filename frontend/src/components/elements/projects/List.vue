@@ -1,6 +1,9 @@
 <i18n>
 {
     "en": {
+        "delete": "Delete",
+        "finish": "Finish",
+        "reopen": "Reopen",
         "archive": "Archive",
         "unarchive": "Restore",
         "save": "Save",
@@ -13,10 +16,15 @@
         "confirmDelete": "Are you sure you want to delete this project? This cannot be undone.",
         "projectDeleted": "The project was successfully deleted.",
         "anErrorOccurred": "An error occurred. Please try again.",
+        "finishedSuccessfully": "The project is now marked as finished.",
+        "unfinishedSuccessfully": "The project is now marked as unfinished.",
         "archivedSuccessfully": "The project was successfully archived.",
         "unarchivedSuccessfully": "The project was successfully restored."
     },
     "de": {
+        "delete": "Löschen",
+        "finish": "Abschließen",
+        "reopen": "Wieder öffnen",
         "archive": "Archivieren",
         "unarchive": "Wiederherstellen",
         "save": "Speichern",
@@ -29,6 +37,8 @@
         "confirmDelete": "Sind Sie sicher, dass Sie dieses Projekt löschen wollen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
         "projectDeleted": "Das Projekt wurde erfolgreich gelöscht.",
         "anErrorOccurred": "Ein Fehler ist aufgetreten. Bitte versuchen Sie noch einmal.",
+        "finishedSuccessfully": "Das Projekt wurde als abgeschlossen gekennzeichnet.",
+        "unfinishedSuccessfully": "Das Projekt wurde als nicht abgeschlossen gekennzeichnet.",
         "archivedSuccessfully": "Das Projekt wurde erfolgreich archiviert.",
         "unarchivedSuccessfully": "Das Projekt wurde erfolgreich wiederhergestellt."
     }
@@ -87,6 +97,22 @@
                         </v-icon>
                         <v-icon
                             small
+                            class="mr-2"
+                            @click="finishProject(props.item.id, true)"
+                            v-if="$vuetify.breakpoint.smAndUp && !props.item.finished"
+                        >
+                            done
+                        </v-icon>
+                        <v-icon
+                            small
+                            class="mr-2"
+                            @click="finishProject(props.item.id, false)"
+                            v-else-if="$vuetify.breakpoint.smAndUp"
+                        >
+                            refresh
+                        </v-icon>
+                        <v-icon
+                            small
                             @click="archiveProject(props.item.id, true)"
                             v-if="$vuetify.breakpoint.smAndUp && !props.item.archived"
                         >
@@ -115,17 +141,57 @@
                         </v-card-text>
 
                         <v-card-actions>
-                            <v-btn flat @click="deleteProject(props.item.id)" color="red" small icon>
-                                <v-icon>delete</v-icon>
+                            <v-btn
+                                flat
+                                @click="deleteProject(props.item.id)"
+                                color="red"
+                                small
+                                :icon="!$vuetify.breakpoint.smAndUp"
+                            >
+                                <v-icon :class="{ 'mr-2': $vuetify.breakpoint.smAndUp }">delete</v-icon>
+                                <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('delete') }}</span>
                             </v-btn>
 
-                            <v-btn v-if="!props.item.archived" flat @click="archiveProject(props.item.id, true)" small>
-                                <v-icon class="mr-2">archive</v-icon>
+                            <v-btn
+                                v-if="!props.item.archived"
+                                flat
+                                @click="archiveProject(props.item.id, true)"
+                                small
+                                :icon="!$vuetify.breakpoint.smAndUp"
+                            >
+                                <v-icon :class="{ 'mr-2': $vuetify.breakpoint.smAndUp }">archive</v-icon>
                                 <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('archive') }}</span>
                             </v-btn>
-                            <v-btn v-else flat @click="archiveProject(props.item.id, false)" small>
-                                <v-icon class="mr-2">unarchive</v-icon>
+                            <v-btn
+                                v-else
+                                flat
+                                @click="archiveProject(props.item.id, false)"
+                                small
+                                :icon="!$vuetify.breakpoint.smAndUp"
+                            >
+                                <v-icon :class="{ 'mr-2': $vuetify.breakpoint.smAndUp }">unarchive</v-icon>
                                 <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('unarchive') }}</span>
+                            </v-btn>
+
+                            <v-btn
+                                v-if="!props.item.finished"
+                                flat
+                                @click="finishProject(props.item.id, true)"
+                                small
+                                :icon="!$vuetify.breakpoint.smAndUp"
+                            >
+                                <v-icon :class="{ 'mr-2': $vuetify.breakpoint.smAndUp }">done</v-icon>
+                                <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('finish') }}</span>
+                            </v-btn>
+                            <v-btn
+                                v-else
+                                flat
+                                @click="finishProject(props.item.id, false)"
+                                small
+                                :icon="!$vuetify.breakpoint.smAndUp"
+                            >
+                                <v-icon :class="{ 'mr-2': $vuetify.breakpoint.smAndUp }">refresh</v-icon>
+                                <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('reopen') }}</span>
                             </v-btn>
 
                             <v-spacer />
@@ -266,6 +332,19 @@
                 }
                 else {
                     const message = archived ? this.$t('archivedSuccessfully') : this.$t('unarchivedSuccessfully');
+                    eventBus.$emit('show-alert', message);
+                }
+            },
+            async finishProject(id, finished) {
+                const project = { ...this.$store.getters['projects/getProject'](id) };
+                project.finished = finished;
+
+                const editedProject = await this.saveProject(project);
+                if (editedProject.code === 500) {
+                    eventBus.$emit('show-alert', this.$t('anErrorOccurred'), true);
+                }
+                else {
+                    const message = finished ? this.$t('finishedSuccessfully') : this.$t('unfinishedSuccessfully');
                     eventBus.$emit('show-alert', message);
                 }
             }
