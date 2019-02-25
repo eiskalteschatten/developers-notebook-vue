@@ -367,7 +367,7 @@
                 }
             },
             formatDate(date) {
-                return date ? new Date(date).toISOString().substr(0, 10) : '';
+                return date ? this.$d(new Date(date)) : '';
             }
         }
     });

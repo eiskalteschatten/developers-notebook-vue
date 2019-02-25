@@ -68,7 +68,7 @@
                 >
                     <v-text-field
                         slot="activator"
-                        v-model="startDate"
+                        v-model="startDateDisplay"
                         :label="$t('startDate')"
                         prepend-icon="event"
                         readonly
@@ -94,7 +94,7 @@
                 >
                     <v-text-field
                         slot="activator"
-                        v-model="endDate"
+                        v-model="endDateDisplay"
                         :label="$t('endDate')"
                         prepend-icon="event"
                         readonly
@@ -190,9 +190,11 @@
                 tagSearch: null,
                 initialTags: this.editProject ? this.editProject.tags : [],
                 startDateMenu: false,
-                startDateDisplay: this.editProject.startDate ? new Date(this.editProject.startDate) : '',
+                startDateData:  this.editProject.startDate ? new Date(this.editProject.startDate) : '',
+                startDateDisplay: this.editProject.startDate ? this.$d(new Date(this.editProject.startDate)) : '',
                 endDateMenu: false,
-                endDateDisplay: this.editProject.endDate ? new Date(this.editProject.endDate) : ''
+                endDateData:  this.editProject.startDate ? new Date(this.editProject.startDate) : '',
+                endDateDisplay: this.editProject.endDate ? this.$d(new Date(this.editProject.endDate)) : ''
             };
         },
         computed: {
@@ -247,25 +249,27 @@
             },
             startDate: {
                 get() {
-                    return this.startDateDisplay instanceof Date
-                        ? this.startDateDisplay.toISOString().substr(0, 10)
-                        : this.startDateDisplay;
+                    return this.startDateData instanceof Date
+                        ? this.startDateData.toISOString().substr(0,10)
+                        : this.startDateData;
                 },
                 set(newDate) {
                     const date = new Date(newDate);
-                    this.startDateDisplay = date;
+                    this.startDateDisplay = this.$d(date);
+                    this.startDateData = date;
                     this.project.startDate = date;
                 }
             },
             endDate: {
                 get() {
-                    return this.endDateDisplay instanceof Date
-                        ? this.endDateDisplay.toISOString().substr(0, 10)
-                        : this.endDateDisplay;
+                    return this.endDateData instanceof Date
+                        ? this.endDateData.toISOString().substr(0,10)
+                        : this.endDateData;
                 },
                 set(newDate) {
                     const date = new Date(newDate);
-                    this.endDateDisplay = date;
+                    this.endDateDisplay = this.$d(date);
+                    this.endDateData = date;
                     this.project.endDate = date;
                 }
             }

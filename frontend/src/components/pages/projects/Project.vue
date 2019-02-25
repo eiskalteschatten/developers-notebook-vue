@@ -57,11 +57,11 @@
                     <v-flex xs12 sm6>
                         <div class="mb-3" v-if="project.startDate">
                             <div class="row-label">{{ $t('startDate') }}:</div>
-                            {{ startDate }}
+                            {{ formatDate(project.startDate) }}
                         </div>
                         <div class="mb-3" v-if="project.endDate">
                             <div class="row-label">{{ $t('endDate') }}:</div>
-                            {{ endDate }}
+                            {{ formatDate(project.endDate) }}
                         </div>
                         <div class="mb-3" v-if="project.client">
                             <div class="row-label">{{ $t('client') }}:</div>
@@ -107,16 +107,6 @@
             },
             avatarSize() {
                 return this.$vuetify.breakpoint.smAndUp ? '48px' : '32px';
-            },
-            startDate() {
-                return this.project.startDate
-                    ? new Date(this.project.startDate).toISOString().substr(0, 10)
-                    : this.project.startDate;
-            },
-            endDate() {
-                return this.project.endDate
-                    ? new Date(this.project.endDate).toISOString().substr(0, 10)
-                    : this.project.endDate;
             }
         },
         async mounted() {
@@ -126,7 +116,10 @@
         methods: {
             ...mapActions('projects', [
                 'getProjects'
-            ])
+            ]),
+            formatDate(date) {
+                return date ? this.$d(new Date(date)) : '';
+            }
         }
     });
 </script>
