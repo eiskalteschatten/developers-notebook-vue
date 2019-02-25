@@ -7,6 +7,7 @@
         "create": "Create",
         "cancel": "Cancel",
         "activeProjects": "Active Projects",
+        "finishedProjects": "Finished Projects",
         "archive": "Archive"
     },
     "de": {
@@ -16,6 +17,7 @@
         "create": "Erstellen",
         "cancel": "Abbrechen",
         "activeProjects": "Aktive Projekte",
+        "finishedProjects": "Abgeschlossene Projekte",
         "archive": "Archiv"
     }
 }
@@ -37,6 +39,9 @@
                 <v-tabs-items v-model="archiveTab">
                     <v-tab-item value="notArchived">
                         <project-list :projects="notArchivedProjects" />
+                    </v-tab-item>
+                    <v-tab-item value="finished">
+                        <project-list :projects="finishedProjects" />
                     </v-tab-item>
                     <v-tab-item value="archived">
                         <project-list :projects="archivedProjects" />
@@ -126,7 +131,12 @@
             ]),
             notArchivedProjects() {
                 return this.projects.filter(project => {
-                    if (!project.archived) return project;
+                    if (!project.finished && !project.archived) return project;
+                });
+            },
+            finishedProjects() {
+                return this.projects.filter(project => {
+                    if (project.finished && !project.archived) return project;
                 });
             },
             archivedProjects() {
@@ -141,6 +151,12 @@
                         icon: 'description',
                         class: { active: this.archiveTab === 'notArchived' },
                         click: () => 'notArchived'
+                    },
+                    {
+                        title: this.$t('finishedProjects'),
+                        icon: 'done',
+                        class: { active: this.archiveTab === 'finished' },
+                        click: () => 'finished'
                     },
                     {
                         title: this.$t('archive'),
