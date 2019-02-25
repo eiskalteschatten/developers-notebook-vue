@@ -190,9 +190,9 @@
                 tagSearch: null,
                 initialTags: this.editProject ? this.editProject.tags : [],
                 startDateMenu: false,
-                startDateDisplay: this.editProject.startDate ? new Date(this.editProject.startDate) : new Date(),
+                startDateDisplay: this.editProject.startDate ? new Date(this.editProject.startDate) : '',
                 endDateMenu: false,
-                endDateDisplay: this.editProject.endDate ? new Date(this.editProject.endDate) : new Date()
+                endDateDisplay: this.editProject.endDate ? new Date(this.editProject.endDate) : ''
             };
         },
         computed: {
@@ -247,7 +247,9 @@
             },
             startDate: {
                 get() {
-                    return this.startDateDisplay.toISOString().substr(0, 10);
+                    return this.startDateDisplay instanceof Date
+                        ? this.startDateDisplay.toISOString().substr(0, 10)
+                        : this.startDateDisplay;
                 },
                 set(newDate) {
                     const date = new Date(newDate);
@@ -257,7 +259,9 @@
             },
             endDate: {
                 get() {
-                    return this.endDateDisplay.toISOString().substr(0, 10);
+                    return this.endDateDisplay instanceof Date
+                        ? this.endDateDisplay.toISOString().substr(0, 10)
+                        : this.endDateDisplay;
                 },
                 set(newDate) {
                     const date = new Date(newDate);
