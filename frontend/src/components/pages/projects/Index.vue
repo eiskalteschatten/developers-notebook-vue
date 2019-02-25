@@ -45,7 +45,7 @@
             </v-flex>
         </v-layout>
 
-        <v-dialog v-model="newProject.dialog" max-width="600">
+        <v-dialog v-model="newProject.dialog" max-width="1200">
             <v-card>
                 <v-card-title class="headline">
                     {{ $t('newProject') }}

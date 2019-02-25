@@ -2,18 +2,32 @@
 {
     "en": {
         "name": "Name",
+        "startDate": "Start Date",
+        "endDate": "End Date",
         "description": "Description",
+        "notes": "Notes",
+        "website": "Website",
         "client": "Client",
         "categories": "Categories",
+        "tags": "Tags",
+        "tagsResultsEnter": "enter",
+        "tagResults": "Press {enter} to create the tag \"{result}\".",
         "color": "Color",
         "required": "Required",
         "anErrorOccurred": "An error occurred while trying to save the project. Please try again."
     },
     "de": {
         "name": "Name",
+        "startDate": "Startdatum",
+        "endDate": "Endedatum",
         "description": "Beschreibung",
+        "notes": "Notizen",
+        "website": "Webseite",
         "client": "Kunden",
         "categories": "Kategorien",
+        "tags": "Tags",
+        "tagsResultsEnter": "Eingabetaste",
+        "tagResults": "Drücken Sie die {enter}, um den Tag \"{result}\" zu erstellen.",
         "color": "Farbe",
         "required": "Erforderlich",
         "anErrorOccurred": "Ein Fehler ist beim Speichern des Projektes aufgetreten. Bitte versuchen Sie noch einmal."
@@ -33,38 +47,121 @@
 
         <input type="hidden" v-model="project.id">
 
-        <v-text-field
-            v-model="project.name"
-            :label="$t('name')"
-            :rules="rules"
-            :error="errors.name"
-        />
+        <v-layout wrap>
+            <v-flex xs12 sm6 :class="{ 'pr-5': $vuetify.breakpoint.smAndUp }">
+                <v-text-field
+                    v-model="project.name"
+                    :label="$t('name')"
+                    :rules="rules"
+                    :error="errors.name"
+                />
 
-        <v-textarea v-model="project.description" :label="$t('description')" />
+                <v-menu
+                    v-model="startDateMenu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                >
+                    <v-text-field
+                        slot="activator"
+                        v-model="startDate"
+                        :label="$t('startDate')"
+                        prepend-icon="event"
+                        readonly
+                    />
+                    <v-date-picker
+                        v-model="startDate"
+                        @input="startDateMenu = false"
+                        landscape
+                        color="primary"
+                        :locale="$i18n.locale"
+                    />
+                </v-menu>
 
-        <v-combobox
-            v-model="selectedClient"
-            :items="getComboBoxClients()"
-            :label="$t('client')"
-            single-line
-            class="mb-3"
-        />
+                <v-menu
+                    v-model="endDateMenu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                >
+                    <v-text-field
+                        slot="activator"
+                        v-model="endDate"
+                        :label="$t('endDate')"
+                        prepend-icon="event"
+                        readonly
+                    />
+                    <v-date-picker
+                        v-model="endDate"
+                        @input="endDateMenu = false"
+                        landscape
+                        color="primary"
+                        :locale="$i18n.locale"
+                    />
+                </v-menu>
 
-        <v-combobox
-            v-model="selectedCategory"
-            :items="getComboBoxCategories()"
-            :label="$t('categories')"
-            multiple
-            chips
-            class="mb-3"
-        />
+                <v-textarea v-model="project.description" :label="$t('description')" />
+                <v-textarea v-model="project.notes" :label="$t('notes')" />
+            </v-flex>
+            <v-flex xs12 sm6>
+                <v-combobox
+                    v-model="selectedClient"
+                    :items="getComboBoxClients()"
+                    :label="$t('client')"
+                    single-line
+                    class="mb-3"
+                />
 
-        <h4>{{ $t('color') }}</h4>
-        <swatches
-            v-model="project.color"
-            inline
-            colors="material-basic"
-        />
+                <v-combobox
+                    v-model="selectedCategory"
+                    :items="getComboBoxCategories()"
+                    :label="$t('categories')"
+                    multiple
+                    chips
+                    class="mb-3"
+                />
+
+                <v-combobox
+                    v-model="project.tags"
+                    :items="initialTags"
+                    :search-input.sync="tagSearch"
+                    hide-selected
+                    :label="$t('tags')"
+                    multiple
+                    small-chips
+                >
+                    <template slot="no-data">
+                        <v-list-tile>
+                            <v-list-tile-content>
+                                <v-list-tile-title>
+                                    <i18n path="tagResults">
+                                        <kbd place="enter">{{ $t('tagsResultsEnter') }}</kbd>
+                                        <span place="result">{{ tagSearch }}</span>
+                                    </i18n>
+                                </v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </template>
+                </v-combobox>
+
+                <v-text-field v-model="project.website" :label="$t('website')" />
+
+                <h4>{{ $t('color') }}</h4>
+                <swatches
+                    v-model="project.color"
+                    inline
+                    colors="material-basic"
+                />
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
@@ -89,7 +186,13 @@
                 rules: [
                     value => !!value || this.$t('required')
                 ],
-                project: this.editProject || {}
+                project: this.editProject || {},
+                tagSearch: null,
+                initialTags: this.editProject ? this.editProject.tags : [],
+                startDateMenu: false,
+                startDateDisplay: this.editProject.startDate ? new Date(this.editProject.startDate) : new Date(),
+                endDateMenu: false,
+                endDateDisplay: this.editProject.endDate ? new Date(this.editProject.endDate) : new Date()
             };
         },
         computed: {
@@ -140,6 +243,26 @@
                     this.project.categoryIds = selectCategories.map(category => {
                         return category.value;
                     });
+                }
+            },
+            startDate: {
+                get() {
+                    return this.startDateDisplay.toISOString().substr(0, 10);
+                },
+                set(newDate) {
+                    const date = new Date(newDate);
+                    this.startDateDisplay = date;
+                    this.project.startDate = date;
+                }
+            },
+            endDate: {
+                get() {
+                    return this.endDateDisplay.toISOString().substr(0, 10);
+                },
+                set(newDate) {
+                    const date = new Date(newDate);
+                    this.endDateDisplay = date;
+                    this.project.endDate = date;
                 }
             }
         },
