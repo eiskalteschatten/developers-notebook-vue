@@ -5,13 +5,15 @@
         "archived": "Archived",
         "noItems": "No {0} were found.",
         "clients": "Clients",
+        "clientsInSentence": "clients",
         "goToClient": "Go to the Client"
     },
     "de": {
         "category": "Kategorie",
         "archived": "Archiviert",
-        "noItems": "Keine {0} wurde gefunden.",
+        "noItems": "Keine {0} wurden gefunden.",
         "clients": "Kunden",
+        "clientsInSentence": "Kunden",
         "goToClient": "Zum Kunden"
     }
 }
@@ -85,7 +87,7 @@
                         </v-layout>
                         <v-card v-else>
                             <v-card-title>
-                                {{ $t('noItems', ['clients']) }}
+                                {{ $t('noItems', [ $t('clientsInSentence') ]) }}
                             </v-card-title>
                         </v-card>
                     </v-tab-item>
