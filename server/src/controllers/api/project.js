@@ -22,6 +22,7 @@ function getValues(project) {
     }
 
     return {
+        id: project.id ? project.id : '',
         name: project.name,
         slug: project.slug,
         description: project.description,
