@@ -18,18 +18,17 @@ const template = [
                         }
                     },
                     {
+                        label: 'Project',
+                        click: (item, focusedWindow) => {
+                            focusedWindow.webContents.send('open-route-name', 'projects', { query: { new: true } });
+                        }
+                    },
+                    {
                         label: 'Category',
                         click: (item, focusedWindow) => {
                             focusedWindow.webContents.send('open-route-name', 'categories', { query: { new: true } });
                         }
-                    },
-                    // {
-                    //     label: 'Project',
-                    //     accelerator: 'CmdOrCtrl+N',
-                    //     click: (item, focusedWindow) => {
-                    //         focusedWindow.webContents.send('project-event', 'new');
-                    //     }
-                    // },
+                    }
                 ]
             },
             {type: 'separator'},
@@ -68,19 +67,19 @@ const template = [
                 }
             },
             {
-                label: 'Categories',
+                label: 'Projects',
                 accelerator: 'CmdOrCtrl+3',
+                click: async (item, focusedWindow) => {
+                    focusedWindow.webContents.send('open-route-name', 'projects');
+                }
+            },
+            {
+                label: 'Categories',
+                accelerator: 'CmdOrCtrl+4',
                 click: async (item, focusedWindow) => {
                     focusedWindow.webContents.send('open-route-name', 'categories');
                 }
             },
-            // {
-            //     label: 'Projects',
-            //     accelerator: 'CmdOrCtrl+1',
-            //     click: async (item, focusedWindow) => {
-            //         focusedWindow.webContents.send('open-route-name', '/projects');
-            //     }
-            // },
             {type: 'separator'},
             {role: 'resetzoom'},
             {role: 'zoomin'},
