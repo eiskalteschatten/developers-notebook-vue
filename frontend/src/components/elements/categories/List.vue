@@ -1,6 +1,7 @@
 <i18n>
 {
     "en": {
+        "delete": "Delete",
         "archive": "Archive",
         "unarchive": "Restore",
         "save": "Save",
@@ -17,6 +18,7 @@
         "unarchivedSuccessfully": "The category was successfully restored."
     },
     "de": {
+        "delete": "Löschen",
         "archive": "Archivieren",
         "unarchive": "Wiederherstellen",
         "save": "Speichern",
@@ -115,16 +117,35 @@
                         </v-card-text>
 
                         <v-card-actions>
-                            <v-btn flat @click="deleteCategory(props.item.id)" color="red" small icon>
-                                <v-icon>delete</v-icon>
+                            <v-btn
+                                flat
+                                @click="deleteCategory(props.item.id)"
+                                color="red"
+                                small
+                                :icon="!$vuetify.breakpoint.smAndUp"
+                            >
+                                <v-icon :class="{ 'mr-2': $vuetify.breakpoint.smAndUp }">delete</v-icon>
+                                <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('delete') }}</span>
                             </v-btn>
 
-                            <v-btn v-if="!props.item.archived" flat @click="archiveCategory(props.item.id, true)" small>
-                                <v-icon class="mr-2">archive</v-icon>
+                            <v-btn
+                                v-if="!props.item.archived"
+                                flat
+                                @click="archiveCategory(props.item.id, true)"
+                                small
+                                :icon="!$vuetify.breakpoint.smAndUp"
+                            >
+                                <v-icon :class="{ 'mr-2': $vuetify.breakpoint.smAndUp }">archive</v-icon>
                                 <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('archive') }}</span>
                             </v-btn>
-                            <v-btn v-else flat @click="archiveCategory(props.item.id, false)" small>
-                                <v-icon class="mr-2">unarchive</v-icon>
+                            <v-btn
+                                v-else
+                                flat
+                                @click="archiveCategory(props.item.id, false)"
+                                small
+                                :icon="!$vuetify.breakpoint.smAndUp"
+                            >
+                                <v-icon :class="{ 'mr-2': $vuetify.breakpoint.smAndUp }">unarchive</v-icon>
                                 <span v-if="$vuetify.breakpoint.smAndUp">{{ $t('unarchive') }}</span>
                             </v-btn>
 
