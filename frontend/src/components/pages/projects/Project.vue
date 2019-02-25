@@ -1,97 +1,80 @@
 <i18n>
 {
     "en": {
-        "category": "Category",
+        "project": "Project",
+        "finished": "Finished",
         "archived": "Archived",
-        "noItems": "No {0} were found.",
-        "clients": "Clients",
-        "goToClient": "Go to the Client"
+        "notes": "Notes",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "client": "Client",
+        "website": "Website"
     },
     "de": {
-        "category": "Kategorie",
+        "project": "Projekt",
+
+        "finished": "Abgeschlossen",
         "archived": "Archiviert",
-        "noItems": "Keine {0} wurde gefunden.",
-        "clients": "Kunden",
-        "goToClient": "Zum Kunden"
+        "notes": "Notizen",
+        "startDate": "Startdatum",
+        "endDate": "Endedatum",
+        "client": "Kunde",
+        "website": "Webseite"
     }
 }
 </i18n>
 
 <template>
     <div>
-        <v-card :style="{ borderLeft: `2px solid ${category.color}` }" class="mb-5">
+        <v-card :style="{ borderLeft: `2px solid ${project.color}` }" class="mb-5">
             <v-card-title>
                 <div class="avatar-container mr-3">
-                    <v-avatar :color="category.color" :size="avatarSize" class="mr-4">
-                        <v-icon :dark="!!category.color">category</v-icon>
+                    <v-avatar :color="project.color" :size="avatarSize" class="mr-4">
+                        <v-icon :dark="!!project.color">description</v-icon>
                     </v-avatar>
                 </div>
                 <div>
-                    <h1>{{ category.name }}</h1>
+                    <h1>{{ project.name }}</h1>
                 </div>
             </v-card-title>
             <v-card-text>
-                <div class="mb-3" v-if="category.archived">
-                    <i>{{ $t('archived') }}</i>
-                </div>
-                <div v-if="category.description">
-                    {{ category.description }}
-                </div>
+                <v-layout wrap>
+                    <v-flex xs12 sm6 :class="{ 'mb-5': $vuetify.breakpoint.xs }">
+                        <div class="mb-3" v-if="project.finished">
+                            <v-icon small class="mr-2">done</v-icon>{{ $t('finished') }}
+                        </div>
+                        <div class="mb-3" v-if="project.archived">
+                            <v-icon small class="mr-2">archive</v-icon>{{ $t('archived') }}
+                        </div>
+                        <div class="mb-3" v-if="project.description">
+                            {{ project.description }}
+                        </div>
+                        <div v-if="project.notes">
+                            <h3 class="mb-1">{{ $t('notes') }}</h3>
+                            {{ project.notes }}
+                        </div>
+                    </v-flex>
+                    <v-flex xs12 sm6>
+                        <div class="mb-3" v-if="project.startDate">
+                            <div class="row-label">{{ $t('startDate') }}:</div>
+                            {{ startDate }}
+                        </div>
+                        <div class="mb-3" v-if="project.endDate">
+                            <div class="row-label">{{ $t('endDate') }}:</div>
+                            {{ endDate }}
+                        </div>
+                        <div class="mb-3" v-if="project.client">
+                            <div class="row-label">{{ $t('client') }}:</div>
+                            <router-link :to="{ name: 'client', params: { id: project.client.id } }">{{ project.client.name }}</router-link>
+                        </div>
+                        <div class="mb-3" v-if="project.website">
+                            <div class="row-label">{{ $t('website') }}:</div>
+                            <external-link :href="project.website" :link-content="project.website" />
+                        </div>
+                    </v-flex>
+                </v-layout>
             </v-card-text>
         </v-card>
-
-        <v-layout wrap>
-            <v-flex xs12 md2 :class="{ 'pr-3': $vuetify.breakpoint.mdAndUp }">
-                <sub-side-nav :items="sidenavItems" @clicked="changeTab" />
-            </v-flex>
-            <v-flex xs12 md10>
-                <v-tabs-items v-model="tab">
-                    <v-tab-item value="clients">
-                        <v-layout wrap v-if="related.clients && related.clients.length > 0">
-                            <v-flex
-                                v-for="client in related.clients"
-                                :key="client.id"
-                                xs12
-                                sm6
-                                lg4
-                                xl3
-                                pa-2
-                                d-flex
-                            >
-                                <v-card :style="{ borderTop: `2px solid ${client.color}` }">
-                                    <v-card-title>
-                                        <v-layout>
-                                            <v-flex xs2>
-                                                <v-avatar :color="client.color" :size="avatarSize" class="mr-3">
-                                                    <v-icon :dark="!!client.color">person</v-icon>
-                                                </v-avatar>
-                                            </v-flex>
-                                            <v-flex xs10>
-                                                <h3>{{ client.name }}</h3>
-                                                <div>
-                                                    {{ client.companyName }}
-                                                </div>
-                                            </v-flex>
-                                        </v-layout>
-                                    </v-card-title>
-                                    <v-card-actions>
-                                        <v-spacer />
-                                        <v-btn flat @click="$router.push({ name: 'client', params: { id: client.id } })">
-                                            {{ $t('goToClient') }}
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-flex>
-                        </v-layout>
-                        <v-card v-else>
-                            <v-card-title>
-                                {{ $t('noItems', ['clients']) }}
-                            </v-card-title>
-                        </v-card>
-                    </v-tab-item>
-                </v-tabs-items>
-            </v-flex>
-        </v-layout>
     </div>
 </template>
 
@@ -101,11 +84,11 @@
 
     import { setDocumentTitle } from '../../../router';
 
-    import SubSideNav from '../../elements/SubSideNav.vue';
+    import ExternalLink from '../../elements/ExternalLink.vue';
 
     export default Vue.extend({
         components: {
-            SubSideNav
+            ExternalLink
         },
         props: {
             id: [String, Number]
@@ -116,39 +99,34 @@
             };
         },
         computed: {
-            ...mapState('categories', [
+            ...mapState('projects', [
                 'related'
             ]),
-            category() {
-                return this.$store.getters['categories/getCategory'](this.id);
-            },
-            sidenavItems() {
-                return [
-                    {
-                        title: this.$t('clients'),
-                        icon: 'people',
-                        class: { active: this.tab === 'clients' },
-                        click: () => 'clients'
-                    }
-                ];
+            project() {
+                return this.$store.getters['projects/getProject'](this.id);
             },
             avatarSize() {
                 return this.$vuetify.breakpoint.smAndUp ? '48px' : '32px';
+            },
+            startDate() {
+                return this.project.startDate
+                    ? new Date(this.project.startDate).toISOString().substr(0, 10)
+                    : this.project.startDate;
+            },
+            endDate() {
+                return this.project.endDate
+                    ? new Date(this.project.endDate).toISOString().substr(0, 10)
+                    : this.project.endDate;
             }
         },
         async mounted() {
-            await this.getCategories();
-            setDocumentTitle(`${this.category.name} - ${this.$t('category')}`);
-            await this.getRelated(this.id);
+            await this.getProjects();
+            setDocumentTitle(`${this.project.name} - ${this.$t('project')}`);
         },
         methods: {
-            ...mapActions('categories', [
-                'getCategories',
-                'getRelated'
-            ]),
-            changeTab(getTab) {
-                this.tab = getTab();
-            }
+            ...mapActions('projects', [
+                'getProjects'
+            ])
         }
     });
 </script>
@@ -157,5 +135,11 @@
     .avatar-container {
         float: left;
         width: 50px;
+    }
+
+    .row-label {
+        display: inline-block;
+        font-weight: bold;
+        width: 100px;
     }
 </style>
