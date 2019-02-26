@@ -63,6 +63,13 @@ Category.getSingleFrontendWithRelated = async function(id, userId) {
     return await this.getSingleFrontend(id, userId);
 };
 
+Category.getSubcategoryIds = async function(parentId, userId) {
+    return await this.findAll({
+        where: { parentId, userId },
+        attributes: [ 'id' ]
+    });
+};
+
 
 Category.sync();
 

@@ -86,6 +86,7 @@ export default {
         },
         async getCategories({ commit }) {
             eventBus.$emit('show-loader');
+
             try {
                 const res = await http.get('api/category');
 
@@ -113,6 +114,7 @@ export default {
         },
         async getRelated({ commit }, categoryId) {
             eventBus.$emit('show-loader');
+
             try {
                 const res = await http.get(`api/category/related/${categoryId}`);
 

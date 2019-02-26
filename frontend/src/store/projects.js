@@ -74,6 +74,7 @@ export default {
         },
         async getProjects({ commit }) {
             eventBus.$emit('show-loader');
+
             try {
                 const res = await http.get('api/project');
 
@@ -101,6 +102,7 @@ export default {
         },
         async getRelated({ commit }, projectId) {
             eventBus.$emit('show-loader');
+
             try {
                 const res = await http.get(`api/project/related/${projectId}`);
 

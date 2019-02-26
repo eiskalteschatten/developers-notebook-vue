@@ -62,9 +62,15 @@ module.exports = router => {
                 return filtered;
             }, []);
 
+            const subcategories = await Category.getSubcategoryIds(categoryModel.id, userId);
+
             res.json({
                 ...category.frontendValues,
-                related: { clients, projects }
+                related: {
+                    clients,
+                    projects,
+                    subcategories
+                }
             });
         }
         catch(error) {

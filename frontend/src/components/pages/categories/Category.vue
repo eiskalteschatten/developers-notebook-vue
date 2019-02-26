@@ -4,13 +4,15 @@
         "category": "Category",
         "archived": "Archived",
         "clients": "Clients",
-        "projects": "Projects"
+        "projects": "Projects",
+        "subcategories": "Subcategories"
     },
     "de": {
         "category": "Kategorie",
         "archived": "Archiviert",
         "clients": "Kunden",
-        "projects": "Projekte"
+        "projects": "Projekte",
+        "subcategories": "Unterkategorien"
     }
 }
 </i18n>
@@ -50,6 +52,9 @@
                     <v-tab-item value="projects">
                         <project-list :projects="related.projects" />
                     </v-tab-item>
+                    <v-tab-item value="subcategories">
+                        <category-list :categories="related.subcategories" />
+                    </v-tab-item>
                 </v-tabs-items>
             </v-flex>
         </v-layout>
@@ -65,12 +70,14 @@
     import SubSideNav from '../../elements/SubSideNav.vue';
     import ClientList from '../../elements/overview-pages/ClientList.vue';
     import ProjectList from '../../elements/overview-pages/ProjectList.vue';
+    import CategoryList from '../../elements/overview-pages/CategoryList.vue';
 
     export default Vue.extend({
         components: {
             SubSideNav,
             ClientList,
-            ProjectList
+            ProjectList,
+            CategoryList
         },
         props: {
             id: [String, Number]
@@ -100,6 +107,12 @@
                         icon: 'description',
                         class: { active: this.tab === 'projects' },
                         click: () => 'projects'
+                    },
+                    {
+                        title: this.$t('subcategories'),
+                        icon: 'category',
+                        class: { active: this.tab === 'subcategories' },
+                        click: () => 'subcategories'
                     }
                 ];
             },
@@ -108,9 +121,7 @@
             }
         },
         async mounted() {
-            await this.getCategories();
-            setDocumentTitle(`${this.category.name} - ${this.$t('category')}`);
-            await this.getRelated(this.id);
+            await this.load();
         },
         methods: {
             ...mapActions('categories', [
@@ -119,6 +130,16 @@
             ]),
             changeTab(getTab) {
                 this.tab = getTab();
+            },
+            async load() {
+                await this.getCategories();
+                setDocumentTitle(`${this.category.name} - ${this.$t('category')}`);
+                await this.getRelated(this.id);
+            }
+        },
+        watch: {
+            async id() {
+                await this.load();
             }
         }
     });

@@ -86,6 +86,7 @@ export default {
         },
         async getClients({ commit }) {
             eventBus.$emit('show-loader');
+
             try {
                 const res = await http.get('api/client');
 
@@ -113,6 +114,7 @@ export default {
         },
         async getRelated({ commit }, clientId) {
             eventBus.$emit('show-loader');
+
             try {
                 const res = await http.get(`api/client/related/${clientId}`);
 
