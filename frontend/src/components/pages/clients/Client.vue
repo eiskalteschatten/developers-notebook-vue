@@ -152,9 +152,7 @@
             }
         },
         async mounted() {
-            await this.getClients();
-            setDocumentTitle(`${this.client.name} - ${this.$t('clients')}`);
-            await this.getRelated(this.id);
+            await this.load();
         },
         methods: {
             ...mapActions('clients', [
@@ -163,6 +161,16 @@
             ]),
             changeTab(getTab) {
                 this.tab = getTab();
+            },
+            async load() {
+                await this.getClients();
+                setDocumentTitle(`${this.client.name} - ${this.$t('clients')}`);
+                await this.getRelated(this.id);
+            }
+        },
+        watch: {
+            async id() {
+                await this.load();
             }
         }
     });

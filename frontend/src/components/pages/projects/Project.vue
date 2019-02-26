@@ -120,8 +120,7 @@
             }
         },
         async mounted() {
-            await this.getProjects();
-            setDocumentTitle(`${this.project.name} - ${this.$t('project')}`);
+            await this.load();
         },
         methods: {
             ...mapActions('projects', [
@@ -129,6 +128,15 @@
             ]),
             formatDate(date) {
                 return date ? this.$d(new Date(date)) : '';
+            },
+            async load() {
+                await this.getProjects();
+                setDocumentTitle(`${this.project.name} - ${this.$t('project')}`);
+            }
+        },
+        watch: {
+            async id() {
+                await this.load();
             }
         }
     });
