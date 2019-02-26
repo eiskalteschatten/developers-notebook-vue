@@ -62,7 +62,7 @@ export default {
                     ? await http.put('api/client', client)
                     : await http.post('api/client', client);
 
-                if (res.body && res.status < 300) {
+                if (res.status < 300) {
                     dispatch('getClients');
                     eventBus.$emit('close-loader');
 

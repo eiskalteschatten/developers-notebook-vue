@@ -12,21 +12,9 @@ function getSlug(category) {
     return slug(slugStr);
 }
 
-function getValues(category) {
-    return {
-        id: category.id ? category.id : '',
-        name: category.name,
-        slug: category.slug,
-        description: category.description,
-        color: category.color,
-        parentId: category.parentId,
-        archived: category.archived
-    };
-}
-
 module.exports = router => {
     router.use((req, res, next) => {
-        req.controllerFactory = new ApiControllerFactory(Category, getValues);
+        req.controllerFactory = new ApiControllerFactory(Category);
         next();
     });
 
@@ -37,10 +25,10 @@ module.exports = router => {
         const id = req.params.id;
 
         try {
-            const category = await Category.findOne({ where: { id, userId }});
-            const values = getValues(category.get());
+            const category = await Category.getSingleFrontend(id, userId);
+            const categoryModel = category.model;
 
-            const clientModels = await category.getClients();
+            const clientModels = await categoryModel.getClients();
             const clients = clientModels.reduce((filtered, client) => {
                 if (!client.archived) {
                     const raw = client.get();
@@ -57,7 +45,7 @@ module.exports = router => {
                 return filtered;
             }, []);
 
-            const projectModels = await category.getProjects();
+            const projectModels = await categoryModel.getProjects();
             const projects = projectModels.reduce((filtered, project) => {
                 if (!project.archived) {
                     const raw = project.get();
@@ -75,7 +63,7 @@ module.exports = router => {
             }, []);
 
             res.json({
-                ...values,
+                ...category.frontendValues,
                 related: { clients, projects }
             });
         }
@@ -94,8 +82,7 @@ module.exports = router => {
         try {
             const category = await Category.create(body);
             await category.setUser(req.user);
-            const returnValues = getValues(category.get());
-            res.json(returnValues);
+            res.status(201).send('');
         }
         catch(error) {
             console.error(new Error(error));
@@ -117,8 +104,8 @@ module.exports = router => {
             else {
                 throw new Error(`No category with the id ${body.id} exists`);
             }
-            const returnValues = getValues(category.get());
-            res.json(returnValues);
+
+            res.status(201).send('');
         }
         catch(error) {
             console.error(new Error(error));

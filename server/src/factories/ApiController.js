@@ -1,21 +1,17 @@
 'use strict';
 
 class ApiControllerFactory {
-    constructor(Model, getFrontendValues) {
+    constructor(Model) {
         this.Model = Model;
-        this.getFrontendValues = getFrontendValues ? getFrontendValues : values => values;
     }
 
     async getAll(req, res) {
         try {
-            const results = this.Model.getAllWithRelated
-                ? await this.Model.getAllWithRelated(req.user.id)
+            const results = this.Model.getAllFrontendWithRelated
+                ? await this.Model.getAllFrontendWithRelated(req.user.id)
                 : await this.Model.findAll({ where: { userId: req.user.id } });
 
-            const values = results.map(result => {
-                return this.getFrontendValues(result.get());
-            });
-            res.json(values);
+            res.json(results);
         }
         catch(error) {
             console.error(new Error(error));
@@ -25,9 +21,11 @@ class ApiControllerFactory {
 
     async getSingle(req, res) {
         try {
-            const result = await this.Model.findOne({ where: { id: req.params.id, userId: req.user.id } });
-            const values = this.getFrontendValues(result.get());
-            res.json(values);
+            const result = this.Model.getSingleFrontendWithRelated
+                ? await this.Model.getSingleFrontendWithRelated(req.params.id, req.user.id)
+                : this.Model.findOne({ where: { id: req.params.id, userId: req.user.id } });
+
+            res.json(result.frontendValues);
         }
         catch(error) {
             console.error(new Error(error));

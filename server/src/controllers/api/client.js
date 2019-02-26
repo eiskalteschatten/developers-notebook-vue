@@ -13,39 +13,9 @@ function getSlug(client) {
     return slug(slugStr);
 }
 
-function getValues(client) {
-    const categoryIds = [];
-
-    if (client.categories && client.categories.length > 0) {
-        for (const category of client.categories) {
-            categoryIds.push(category.id);
-        }
-    }
-
-    return {
-        id: client.id ? client.id : '',
-        name: client.name,
-        slug: client.slug,
-        description: client.description,
-        color: client.color,
-        archived: client.archived,
-        avatar: client.avatar,
-        companyName: client.companyName,
-        isCompany: client.isCompany,
-        website: client.website,
-        email: client.email,
-        telephone: client.telephone,
-        fax: client.fax,
-        address: client.address,
-        notes: client.notes,
-        tags: client.tags,
-        categoryIds
-    };
-}
-
 module.exports = router => {
     router.use((req, res, next) => {
-        req.controllerFactory = new ApiControllerFactory(Client, getValues);
+        req.controllerFactory = new ApiControllerFactory(Client);
         next();
     });
 
@@ -56,10 +26,10 @@ module.exports = router => {
         const id = req.params.id;
 
         try {
-            const client = await Client.findOne({ where: { id, userId }});
-            const values = getValues(client.get());
+            const client = await Client.getSingleFrontend(id, userId);
+            const clientModel = client.model;
 
-            const projectModels = await client.getProjects();
+            const projectModels = await clientModel.getProjects();
             const projects = projectModels.reduce((filtered, project) => {
                 if (!project.archived) {
                     const raw = project.get();
@@ -77,7 +47,7 @@ module.exports = router => {
             }, []);
 
             res.json({
-                ...values,
+                ...client.frontendValues,
                 related: { projects }
             });
         }
@@ -101,8 +71,7 @@ module.exports = router => {
                 await client.setCategories(body.categoryIds);
             }
 
-            const returnValues = getValues(client.get());
-            res.json(returnValues);
+            res.status(201).send('');
         }
         catch(error) {
             console.error(new Error(error));
@@ -129,8 +98,7 @@ module.exports = router => {
                 throw new Error(`No client with the id ${body.id} exists`);
             }
 
-            const returnValues = getValues(client.get());
-            res.json(returnValues);
+            res.status(201).send('');
         }
         catch(error) {
             console.error(new Error(error));

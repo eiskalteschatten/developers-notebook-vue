@@ -62,7 +62,7 @@ export default {
                     ? await http.put('api/category', category)
                     : await http.post('api/category', category);
 
-                if (res.body && res.status < 300) {
+                if (res.status < 300) {
                     dispatch('getCategories');
                     eventBus.$emit('close-loader');
 

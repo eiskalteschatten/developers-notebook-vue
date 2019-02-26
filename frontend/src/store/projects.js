@@ -50,7 +50,7 @@ export default {
                     ? await http.put('api/project', project)
                     : await http.post('api/project', project);
 
-                if (res.body && res.status < 300) {
+                if (res.status < 300) {
                     dispatch('getProjects');
                     eventBus.$emit('close-loader');
 

@@ -33,8 +33,36 @@ Client.hasMany(Project);
 Project.belongsTo(Client);
 
 
-Project.getAllWithRelated = async function(userId) {
-    return await this.findAll({
+function getFrontendValues(project) {
+    const categoryIds = [];
+
+    if (project.categories && project.categories.length > 0) {
+        for (const category of project.categories) {
+            categoryIds.push(category.id);
+        }
+    }
+
+    return {
+        id: project.id ? project.id : '',
+        name: project.name,
+        slug: project.slug,
+        description: project.description,
+        color: project.color,
+        website: project.website,
+        archived: project.archived,
+        finished: project.finished,
+        startDate: project.startDate,
+        endDate: project.endDate,
+        notes: project.notes,
+        tags: project.tags,
+        clientId: project.client ? project.client.id : '',
+        categoryIds
+    };
+}
+
+
+Project.getAllFrontendWithRelated = async function(userId) {
+    const projects = await this.findAll({
         where: { userId },
         include: [
             {
@@ -47,6 +75,37 @@ Project.getAllWithRelated = async function(userId) {
             }
         ]
     });
+
+    return projects.map(result => {
+        return getFrontendValues(result.get());
+    });
+};
+
+Project.getSingleFrontend = async function(id, userId) {
+    const project = await this.findOne({
+        where: { id, userId }
+    });
+
+    return {
+        frontendValues: getFrontendValues(project),
+        model: project
+    };
+};
+
+Project.getSingleFrontendWithRelated = async function(id, userId) {
+    const project = await this.findOne({
+        where: { id, userId },
+        include: [{
+            model: Category,
+            attributes: [ 'id' ]
+        },
+        {
+            model: Client,
+            attributes: [ 'id', 'name' ]
+        }]
+    });
+
+    return getFrontendValues(project);
 };
 
 

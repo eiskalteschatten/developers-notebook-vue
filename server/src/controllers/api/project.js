@@ -12,36 +12,9 @@ function getSlug(project) {
     return slug(slugStr);
 }
 
-function getValues(project) {
-    const categoryIds = [];
-
-    if (project.categories && project.categories.length > 0) {
-        for (const category of project.categories) {
-            categoryIds.push(category.id);
-        }
-    }
-
-    return {
-        id: project.id ? project.id : '',
-        name: project.name,
-        slug: project.slug,
-        description: project.description,
-        color: project.color,
-        website: project.website,
-        archived: project.archived,
-        finished: project.finished,
-        startDate: project.startDate,
-        endDate: project.endDate,
-        notes: project.notes,
-        tags: project.tags,
-        clientId: project.client ? project.client.id : '',
-        categoryIds
-    };
-}
-
 module.exports = router => {
     router.use((req, res, next) => {
-        req.controllerFactory = new ApiControllerFactory(Project, getValues);
+        req.controllerFactory = new ApiControllerFactory(Project);
         next();
     });
 
@@ -64,8 +37,7 @@ module.exports = router => {
                 await project.setClient(body.clientId);
             }
 
-            const returnValues = getValues(project.get());
-            res.json(returnValues);
+            res.status(201).send('');
         }
         catch(error) {
             console.error(new Error(error));
@@ -96,8 +68,7 @@ module.exports = router => {
                 throw new Error(`No project with the id ${body.id} exists`);
             }
 
-            const returnValues = getValues(project.get());
-            res.json(returnValues);
+            res.status(201).send('');
         }
         catch(error) {
             console.error(new Error(error));
