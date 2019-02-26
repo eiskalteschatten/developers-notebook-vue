@@ -73,6 +73,7 @@
                         :label="$t('startDate')"
                         prepend-icon="event"
                         readonly
+                        clearable
                     />
                     <v-date-picker
                         v-model="startDate"
@@ -99,6 +100,7 @@
                         :label="$t('endDate')"
                         prepend-icon="event"
                         readonly
+                        clearable
                     />
                     <v-date-picker
                         v-model="endDate"
@@ -206,11 +208,9 @@
                 tagSearch: null,
                 initialTags: this.editProject ? this.editProject.tags : [],
                 startDateMenu: false,
-                startDateData:  this.editProject.startDate ? new Date(this.editProject.startDate) : '',
-                startDateDisplay: this.editProject.startDate ? this.$d(new Date(this.editProject.startDate)) : '',
+                startDateDisplay: this.editProject.startDate ? this.$d(new Date(this.editProject.startDate)) : null,
                 endDateMenu: false,
-                endDateData:  this.editProject.startDate ? new Date(this.editProject.startDate) : '',
-                endDateDisplay: this.editProject.endDate ? this.$d(new Date(this.editProject.endDate)) : ''
+                endDateDisplay: this.editProject.endDate ? this.$d(new Date(this.editProject.endDate)) : null
             };
         },
         computed: {
@@ -265,28 +265,40 @@
             },
             startDate: {
                 get() {
-                    return this.startDateData instanceof Date
-                        ? this.startDateData.toISOString().substr(0,10)
-                        : this.startDateData;
+                    const startDate = this.editProject.startDate ? new Date(this.editProject.startDate) : null;
+
+                    return startDate instanceof Date
+                        ? startDate.toISOString().substr(0,10)
+                        : startDate;
                 },
                 set(newDate) {
-                    const date = new Date(newDate);
-                    this.startDateDisplay = this.$d(date);
-                    this.startDateData = date;
-                    this.project.startDate = date;
+                    if (newDate) {
+                        const date = new Date(newDate);
+                        this.startDateDisplay = this.$d(date);
+                        this.project.startDate = date;
+                    }
+                    else {
+                        this.project.startDate = newDate;
+                    }
                 }
             },
             endDate: {
                 get() {
-                    return this.endDateData instanceof Date
-                        ? this.endDateData.toISOString().substr(0,10)
-                        : this.endDateData;
+                    const endDate = this.editProject.endDate ? new Date(this.editProject.endDate) : null;
+
+                    return endDate instanceof Date
+                        ? endDate.toISOString().substr(0,10)
+                        : endDate;
                 },
                 set(newDate) {
-                    const date = new Date(newDate);
-                    this.endDateDisplay = this.$d(date);
-                    this.endDateData = date;
-                    this.project.endDate = date;
+                    if (newDate) {
+                        const date = new Date(newDate);
+                        this.endDateDisplay = this.$d(date);
+                        this.project.endDate = date;
+                    }
+                    else {
+                        this.project.endDate = newDate;
+                    }
                 }
             }
         },
@@ -296,6 +308,16 @@
                     this.$emit('input', this.project);
                 },
                 deep: true
+            },
+            startDateDisplay(newDate) {
+                if (!newDate) {
+                    this.startDate = newDate;
+                }
+            },
+            endDateDisplay(newDate) {
+                if (!newDate) {
+                    this.endDate = newDate;
+                }
             }
         },
         methods: {
