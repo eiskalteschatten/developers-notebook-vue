@@ -167,7 +167,7 @@
 
 <script>
     import Vue from 'vue';
-    import { mapState, mapActions, mapGetters } from 'vuex';
+    import { mapState, mapGetters } from 'vuex';
 
     import Swatches from 'vue-swatches';
     import 'vue-swatches/dist/vue-swatches.min.css';
@@ -282,19 +282,9 @@
                 deep: true
             }
         },
-        async mounted() {
-            await this.getCategories();
-            await this.getClients();
-        },
         methods: {
-            ...mapActions('categories', [
-                'getCategories'
-            ]),
             ...mapGetters('categories', [
                 'getComboBoxCategories'
-            ]),
-            ...mapActions('clients', [
-                'getClients'
             ]),
             ...mapGetters('clients', [
                 'getComboBoxClients'
