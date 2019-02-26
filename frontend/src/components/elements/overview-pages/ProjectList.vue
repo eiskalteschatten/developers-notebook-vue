@@ -39,7 +39,7 @@
                         <v-layout>
                             <v-flex xs2>
                                 <v-avatar :color="project.color" :size="avatarSize" class="mr-3">
-                                    <v-icon :dark="!!project.color">person</v-icon>
+                                    <v-icon :dark="!!project.color">description</v-icon>
                                 </v-avatar>
                             </v-flex>
                             <v-flex xs10>
