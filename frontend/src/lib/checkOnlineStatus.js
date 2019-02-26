@@ -12,7 +12,7 @@ let lastRouteQuery;
 function goOnline() {
     clearInterval(interval);
     numberOfAttempts = 0;
-    interval = setInterval(pingServer, 1000);
+    interval = setInterval(pingServer, 60000);
 
     if (wasOffline) {
         wasOffline = false;
