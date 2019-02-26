@@ -57,9 +57,25 @@ module.exports = router => {
                 return filtered;
             }, []);
 
+            const projectModels = await category.getProjects();
+            const projects = projectModels.reduce((filtered, project) => {
+                if (!project.archived) {
+                    const raw = project.get();
+                    filtered.push({
+                        id: raw.id,
+                        name: raw.name,
+                        color: raw.color,
+                        startDate: raw.startDate,
+                        endDate: raw.endDate
+                    });
+                }
+
+                return filtered;
+            }, []);
+
             res.json({
                 ...values,
-                related: { clients }
+                related: { clients, projects }
             });
         }
         catch(error) {
