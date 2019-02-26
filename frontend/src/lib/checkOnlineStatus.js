@@ -4,18 +4,33 @@ let router;
 let route;
 let interval;
 let numberOfAttempts = 0;
+let wasOffline = false;
+let lastRouteName;
+let lastRouteParams;
+let lastRouteQuery;
 
 function goOnline() {
     clearInterval(interval);
     numberOfAttempts = 0;
-    interval = setInterval(pingServer, 60000);
+    interval = setInterval(pingServer, 1000);
 
-    const newRoute = route.name === 'errorNoConnection' ? 'home' : route.name;
-    router.replace({ name: newRoute });
+    if (wasOffline) {
+        wasOffline = false;
+        router.replace({
+            name: lastRouteName,
+            params: lastRouteParams,
+            query: lastRouteQuery
+        });
+    }
 }
 
 function goOffline() {
     clearInterval(interval);
+
+    wasOffline = true;
+    lastRouteName = route.name;
+    lastRouteParams = route.params;
+    lastRouteQuery = route.query;
 
     if (numberOfAttempts < 10) {
         interval = setInterval(() => {
