@@ -54,7 +54,7 @@
                     :label="$t('name')"
                     :rules="rules"
                     :error="errors.name"
-                    prepend-icon="person"
+                    prepend-icon="library_books"
                 />
 
                 <v-menu

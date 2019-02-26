@@ -148,7 +148,7 @@
                 return [
                     {
                         title: this.$t('activeProjects'),
-                        icon: 'description',
+                        icon: 'library_books',
                         class: { active: this.archiveTab === 'notArchived' },
                         click: () => 'notArchived'
                     },

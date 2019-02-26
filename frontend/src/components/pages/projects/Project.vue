@@ -30,7 +30,7 @@
             <v-card-title>
                 <div class="avatar-container mr-3">
                     <v-avatar :color="project.color" :size="avatarSize" class="mr-4">
-                        <v-icon :dark="!!project.color">description</v-icon>
+                        <v-icon :dark="!!project.color">library_books</v-icon>
                     </v-avatar>
                 </div>
                 <div>

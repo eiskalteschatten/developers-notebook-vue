@@ -92,7 +92,7 @@
                 items: [
                     { title: 'dashboard', icon: 'dashboard', routeName: 'home' },
                     { title: 'clients', icon: 'people', routeName: 'clients' },
-                    { title: 'projects', icon: 'description', routeName: 'projects' },
+                    { title: 'projects', icon: 'library_books', routeName: 'projects' },
                     { title: 'categories', icon: 'category', routeName: 'categories' }
                 ],
                 miniData: true
