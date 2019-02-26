@@ -238,7 +238,7 @@
                         : '';
                 },
                 set(selectClient) {
-                    this.project.clientId = selectClient ? selectClient.value : '';
+                    this.project.clientId = selectClient ? selectClient.value : null;
                 }
             },
             selectedCategory: {
