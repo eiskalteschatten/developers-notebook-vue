@@ -5,6 +5,7 @@
         "archived": "Archived",
         "clients": "Clients",
         "projects": "Projects",
+        "parentCategory": "Parent Category",
         "subcategories": "Subcategories"
     },
     "de": {
@@ -12,6 +13,7 @@
         "archived": "Archiviert",
         "clients": "Kunden",
         "projects": "Projekte",
+        "parentCategory": "Oberkategorie",
         "subcategories": "Unterkategorien"
     }
 }
@@ -33,6 +35,12 @@
             <v-card-text>
                 <div class="mb-3" v-if="category.archived">
                     <v-icon small class="mr-2">archive</v-icon>{{ $t('archived') }}
+                </div>
+                <div class="mb-3" v-if="category.parentId">
+                    <h4 class="parent-category-label">
+                        <v-icon small class="mr-2">category</v-icon>{{ $t('parentCategory') }}:
+                    </h4>
+                    <router-link :to="{ name: 'category', params: { id: category.parentId }  }">{{ parentCategory.name }}</router-link>
                 </div>
                 <div v-if="category.description">
                     {{ category.description }}
@@ -94,6 +102,9 @@
             category() {
                 return this.$store.getters['categories/getCategory'](this.id);
             },
+            parentCategory() {
+                return this.$store.getters['categories/getCategory'](this.category.parentId);
+            },
             sidenavItems() {
                 return [
                     {
@@ -149,5 +160,9 @@
     .avatar-container {
         float: left;
         width: 50px;
+    }
+
+    .parent-category-label {
+        display: inline-block;
     }
 </style>
