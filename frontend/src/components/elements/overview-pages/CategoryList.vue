@@ -36,6 +36,9 @@
                             </v-flex>
                             <v-flex xs10>
                                 <h3>{{ category.name }}</h3>
+                                <div v-if="category.description">
+                                    {{ category.description }}
+                                </div>
                             </v-flex>
                         </v-layout>
                     </v-card-title>
