@@ -66,7 +66,8 @@ module.exports = router => {
                         name: raw.name,
                         color: raw.color,
                         startDate: raw.startDate,
-                        endDate: raw.endDate
+                        endDate: raw.endDate,
+                        finished: raw.finished
                     });
                 }
 

@@ -50,6 +50,43 @@ module.exports = router => {
     });
 
     router.get('/', (req, res) => req.controllerFactory.getAll(req, res));
+
+    router.get('/related/:id', async (req, res) => {
+        const userId = req.user.id;
+        const id = req.params.id;
+
+        try {
+            const client = await Client.findOne({ where: { id, userId }});
+            const values = getValues(client.get());
+
+            const projectModels = await client.getProjects();
+            const projects = projectModels.reduce((filtered, project) => {
+                if (!project.archived) {
+                    const raw = project.get();
+                    filtered.push({
+                        id: raw.id,
+                        name: raw.name,
+                        color: raw.color,
+                        startDate: raw.startDate,
+                        endDate: raw.endDate,
+                        finished: raw.finished
+                    });
+                }
+
+                return filtered;
+            }, []);
+
+            res.json({
+                ...values,
+                related: { projects }
+            });
+        }
+        catch(error) {
+            console.error(new Error(error));
+            res.status(500).send('');
+        }
+    });
+
     router.get('/:id', (req, res) => req.controllerFactory.getSingle(req, res));
 
     router.post('/', async (req, res) => {

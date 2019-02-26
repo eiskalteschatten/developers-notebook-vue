@@ -5,6 +5,7 @@
         "projects": "Projects",
         "projectsInSentence": "projects",
         "goToProject": "Go to the Project",
+        "finished": "Finished",
         "startDate": "Start Date",
         "endDate": "End Date"
     },
@@ -13,6 +14,7 @@
         "projects": "Projekte",
         "projectsInSentence": "Projekte",
         "goToProject": "Zum Projekt",
+        "finished": "Abgeschlossen",
         "startDate": "Startdatum",
         "endDate": "Endedatum"
     }
@@ -41,7 +43,12 @@
                                 </v-avatar>
                             </v-flex>
                             <v-flex xs10>
-                                <h3 class="mb-3">{{ project.name }}</h3>
+                                <div class="mb-3">
+                                    <h3>{{ project.name }}</h3>
+                                    <div v-if="project.finished">
+                                        <v-icon small class="mr-2">done</v-icon>{{ $t('finished') }}
+                                    </div>
+                                </div>
                                 <div v-if="project.startDate">
                                     <div class="row-label">{{ $t('startDate') }}:</div>
                                     {{ $d(new Date(project.startDate)) }}

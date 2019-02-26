@@ -5,6 +5,7 @@ export default {
     namespaced: true,
     state: {
         clients: [],
+        related: {}
     },
 
     getters: {
@@ -18,6 +19,7 @@ export default {
             }
             return '';
         },
+        related: state => state.related,
         getComboBoxClients: state => {
             const notArchivedClients = state.clients.filter(client => {
                 if (!client.archived) return client;
@@ -45,6 +47,9 @@ export default {
                     break;
                 }
             }
+        },
+        setRelated(state, related) {
+            state.related = related;
         }
     },
 
@@ -86,6 +91,33 @@ export default {
 
                 if (res.body && res.status < 300) {
                     commit('setClients', res.body);
+                    eventBus.$emit('close-loader');
+
+                    return {
+                        code: res.status,
+                        message: res.bodyText
+                    };
+                }
+                else {
+                    throw new Error(res.bodyText);
+                }
+            }
+            catch(error) {
+                eventBus.$emit('close-loader');
+                console.error(error);
+                return {
+                    code: 500,
+                    message: error
+                };
+            }
+        },
+        async getRelated({ commit }, clientId) {
+            eventBus.$emit('show-loader');
+            try {
+                const res = await http.get(`api/client/related/${clientId}`);
+
+                if (res.body && res.status < 300) {
+                    commit('setRelated', res.body.related);
                     eventBus.$emit('close-loader');
 
                     return {

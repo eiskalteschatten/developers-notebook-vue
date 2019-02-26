@@ -9,7 +9,8 @@
         "email": "Email",
         "telephone": "Phone Number",
         "fax": "Fax Number",
-        "address": "Address"
+        "address": "Address",
+        "projects": "Projects"
     },
     "de": {
         "clients": "Kunden",
@@ -20,7 +21,8 @@
         "email": "Email",
         "telephone": "Telefonnummer",
         "fax": "Faxnummer",
-        "address": "Adresse"
+        "address": "Adresse",
+        "projects": "Projekte"
     }
 }
 </i18n>
@@ -81,37 +83,77 @@
                 </v-layout>
             </v-card-text>
         </v-card>
+
+        <v-layout wrap>
+            <v-flex xs12 md2 :class="{ 'pr-3': $vuetify.breakpoint.mdAndUp }">
+                <sub-side-nav :items="sidenavItems" @clicked="changeTab" />
+            </v-flex>
+            <v-flex xs12 md10>
+                <v-tabs-items v-model="tab">
+                    <v-tab-item value="projects">
+                        <project-list :projects="related.projects" />
+                    </v-tab-item>
+                </v-tabs-items>
+            </v-flex>
+        </v-layout>
     </div>
 </template>
 
 <script>
     import Vue from 'vue';
-    import { mapActions } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
 
     import { setDocumentTitle } from '../../../router';
 
     import ExternalLink from '../../elements/ExternalLink.vue';
+    import SubSideNav from '../../elements/SubSideNav.vue';
+    import ProjectList from '../../elements/overview-pages/ProjectList.vue';
 
     export default Vue.extend({
         components: {
-            ExternalLink
+            ExternalLink,
+            SubSideNav,
+            ProjectList
         },
         props: {
             id: [String, Number]
         },
+        data() {
+            return {
+                tab: null
+            };
+        },
         computed: {
+            ...mapState('clients', [
+                'related'
+            ]),
             client() {
                 return this.$store.getters['clients/getClient'](this.id);
+            },
+            sidenavItems() {
+                return [
+                    {
+                        title: this.$t('projects'),
+                        icon: 'description',
+                        class: { active: this.tab === 'projects' },
+                        click: () => 'projects'
+                    }
+                ];
             }
         },
         async mounted() {
             await this.getClients();
             setDocumentTitle(`${this.client.name} - ${this.$t('clients')}`);
+            await this.getRelated(this.id);
         },
         methods: {
             ...mapActions('clients', [
-                'getClients'
-            ])
+                'getClients',
+                'getRelated'
+            ]),
+            changeTab(getTab) {
+                this.tab = getTab();
+            }
         }
     });
 </script>
