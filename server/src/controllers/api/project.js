@@ -34,7 +34,7 @@ function getValues(project) {
         endDate: project.endDate,
         notes: project.notes,
         tags: project.tags,
-        client: project.client,
+        clientId: project.client ? project.client.id : '',
         categoryIds
     };
 }

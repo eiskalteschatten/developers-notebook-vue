@@ -37,8 +37,14 @@ Project.getAllWithRelated = async function(userId) {
     return await this.findAll({
         where: { userId },
         include: [
-            { model: Category },
-            { model: Client }
+            {
+                model: Category,
+                attributes: [ 'id' ]
+            },
+            {
+                model: Client,
+                attributes: [ 'id', 'name' ]
+            }
         ]
     });
 };

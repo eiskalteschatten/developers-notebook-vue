@@ -63,9 +63,9 @@
                             <div class="row-label">{{ $t('endDate') }}:</div>
                             {{ formatDate(project.endDate) }}
                         </div>
-                        <div class="mb-3" v-if="project.client">
+                        <div class="mb-3" v-if="project.clientId">
                             <div class="row-label">{{ $t('client') }}:</div>
-                            <router-link :to="{ name: 'client', params: { id: project.client.id } }">{{ project.client.name }}</router-link>
+                            <router-link :to="{ name: 'client', params: { id: project.clientId } }">{{ clientName }}</router-link>
                         </div>
                         <div class="mb-3" v-if="project.website">
                             <div class="row-label">{{ $t('website') }}:</div>
@@ -107,6 +107,10 @@
             },
             avatarSize() {
                 return this.$vuetify.breakpoint.smAndUp ? '48px' : '32px';
+            },
+            clientName() {
+                const client = this.$store.getters['clients/getClient'](this.project.clientId);
+                return client.name;
             }
         },
         async mounted() {
