@@ -3,28 +3,14 @@
     "en": {
         "category": "Category",
         "archived": "Archived",
-        "noItems": "No {0} were found.",
         "clients": "Clients",
-        "projects": "Projects",
-        "clientsInSentence": "clients",
-        "projectsInSentence": "projects",
-        "goToClient": "Go to the Client",
-        "goToProject": "Go to the Project",
-        "startDate": "Start Date",
-        "endDate": "End Date"
+        "projects": "Projects"
     },
     "de": {
         "category": "Kategorie",
         "archived": "Archiviert",
-        "noItems": "Keine {0} wurden gefunden.",
         "clients": "Kunden",
-        "projects": "Projekte",
-        "clientsInSentence": "Kunden",
-        "projectsInSentence": "Projekte",
-        "goToClient": "Zum Kunden",
-        "goToProject": "Zum Projekt",
-        "startDate": "Startdatum",
-        "endDate": "Endedatum"
+        "projects": "Projekte"
     }
 }
 </i18n>
@@ -59,95 +45,10 @@
             <v-flex xs12 md10>
                 <v-tabs-items v-model="tab">
                     <v-tab-item value="clients">
-                        <v-layout wrap v-if="related.clients && related.clients.length > 0">
-                            <v-flex
-                                v-for="client in related.clients"
-                                :key="client.id"
-                                xs12
-                                sm6
-                                lg4
-                                xl3
-                                pa-2
-                                d-flex
-                            >
-                                <v-card :style="{ borderTop: `2px solid ${client.color}` }">
-                                    <v-card-title>
-                                        <v-layout>
-                                            <v-flex xs2>
-                                                <v-avatar :color="client.color" :size="avatarSize" class="mr-3">
-                                                    <v-icon :dark="!!client.color">person</v-icon>
-                                                </v-avatar>
-                                            </v-flex>
-                                            <v-flex xs10>
-                                                <h3>{{ client.name }}</h3>
-                                                <div>
-                                                    {{ client.companyName }}
-                                                </div>
-                                            </v-flex>
-                                        </v-layout>
-                                    </v-card-title>
-                                    <v-card-actions>
-                                        <v-spacer />
-                                        <v-btn flat @click="$router.push({ name: 'client', params: { id: client.id } })">
-                                            {{ $t('goToClient') }}
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-flex>
-                        </v-layout>
-                        <v-card v-else>
-                            <v-card-title>
-                                {{ $t('noItems', [ $t('clientsInSentence') ]) }}
-                            </v-card-title>
-                        </v-card>
+                        <client-list :clients="related.clients" />
                     </v-tab-item>
                     <v-tab-item value="projects">
-                        <v-layout wrap v-if="related.projects && related.projects.length > 0">
-                            <v-flex
-                                v-for="project in related.projects"
-                                :key="project.id"
-                                xs12
-                                sm6
-                                lg4
-                                xl3
-                                pa-2
-                                d-flex
-                            >
-                                <v-card :style="{ borderTop: `2px solid ${project.color}` }">
-                                    <v-card-title>
-                                        <v-layout>
-                                            <v-flex xs2>
-                                                <v-avatar :color="project.color" :size="avatarSize" class="mr-3">
-                                                    <v-icon :dark="!!project.color">person</v-icon>
-                                                </v-avatar>
-                                            </v-flex>
-                                            <v-flex xs10>
-                                                <h3 class="mb-3">{{ project.name }}</h3>
-                                                <div v-if="project.startDate">
-                                                    <div class="row-label">{{ $t('startDate') }}:</div>
-                                                    {{ $d(new Date(project.startDate)) }}
-                                                </div>
-                                                <div v-if="project.endDate">
-                                                    <div class="row-label">{{ $t('endDate') }}:</div>
-                                                    {{ $d(new Date(project.endDate)) }}
-                                                </div>
-                                            </v-flex>
-                                        </v-layout>
-                                    </v-card-title>
-                                    <v-card-actions>
-                                        <v-spacer />
-                                        <v-btn flat @click="$router.push({ name: 'project', params: { id: project.id } })">
-                                            {{ $t('goToProject') }}
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-flex>
-                        </v-layout>
-                        <v-card v-else>
-                            <v-card-title>
-                                {{ $t('noItems', [ $t('projectsInSentence') ]) }}
-                            </v-card-title>
-                        </v-card>
+                        <project-list :projects="related.projects" />
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -162,10 +63,14 @@
     import { setDocumentTitle } from '../../../router';
 
     import SubSideNav from '../../elements/SubSideNav.vue';
+    import ClientList from '../../elements/overview-pages/ClientList.vue';
+    import ProjectList from '../../elements/overview-pages/ProjectList.vue';
 
     export default Vue.extend({
         components: {
-            SubSideNav
+            SubSideNav,
+            ClientList,
+            ProjectList
         },
         props: {
             id: [String, Number]
@@ -223,11 +128,5 @@
     .avatar-container {
         float: left;
         width: 50px;
-    }
-
-    .row-label {
-        display: inline-block;
-        font-weight: bold;
-        width: 85px;
     }
 </style>
