@@ -36,9 +36,10 @@
             :label="$t('name')"
             :rules="rules"
             :error="errors.name"
+            prepend-icon="category"
         />
 
-        <v-textarea v-model="category.description" :label="$t('description')" />
+        <v-textarea v-model="category.description" :label="$t('description')" prepend-icon="description" />
 
         <v-combobox
             v-model="selectedParentCategory"
@@ -46,6 +47,7 @@
             :label="$t('parentCategory')"
             single-line
             class="mb-3"
+            prepend-icon="category"
         />
 
         <h4>{{ $t('color') }}</h4>

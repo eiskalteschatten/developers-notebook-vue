@@ -56,15 +56,21 @@
                     </v-flex>
                     <v-flex xs12 sm6>
                         <div class="mb-3" v-if="project.startDate">
-                            <div class="row-label">{{ $t('startDate') }}:</div>
+                            <div class="row-label">
+                                <v-icon small class="mr-2">event</v-icon>{{ $t('startDate') }}:
+                            </div>
                             {{ formatDate(project.startDate) }}
                         </div>
                         <div class="mb-3" v-if="project.endDate">
-                            <div class="row-label">{{ $t('endDate') }}:</div>
+                            <div class="row-label">
+                                <v-icon small class="mr-2">event</v-icon>{{ $t('endDate') }}:
+                            </div>
                             {{ formatDate(project.endDate) }}
                         </div>
                         <div class="mb-3" v-if="project.clientId">
-                            <div class="row-label">{{ $t('client') }}:</div>
+                            <div class="row-label">
+                                <v-icon small class="mr-2">people</v-icon>{{ $t('client') }}:
+                            </div>
                             <router-link :to="{ name: 'client', params: { id: project.clientId } }">{{ clientName }}</router-link>
                         </div>
                         <div class="mb-3" v-if="project.website">

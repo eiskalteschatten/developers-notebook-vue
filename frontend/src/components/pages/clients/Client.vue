@@ -60,23 +60,33 @@
                     <v-flex xs12 sm6>
                         <h3 class="mb-3">{{ $t('contactInfo') }}</h3>
                         <div class="mb-2" v-if="client.email">
-                            <div class="contact-info-label">{{ $t('email') }}:</div>
+                            <div class="contact-info-label">
+                                <v-icon small class="mr-2">email</v-icon>{{ $t('email') }}:
+                            </div>
                             <external-link :href="`mailto:${client.email}`" :link-content="client.email" />
                         </div>
                         <div class="mb-2" v-if="client.website">
-                            <div class="contact-info-label">{{ $t('website') }}:</div>
+                            <div class="contact-info-label">
+                                <v-icon small class="mr-2">web</v-icon>{{ $t('website') }}:
+                            </div>
                             <external-link :href="client.website" :link-content="client.website" />
                         </div>
                         <div class="mb-2" v-if="client.telephone">
-                            <div class="contact-info-label">{{ $t('telephone') }}:</div>
+                            <div class="contact-info-label">
+                                <v-icon small class="mr-2">phone</v-icon>{{ $t('telephone') }}:
+                            </div>
                             {{ client.telephone }}
                         </div>
                         <div class="mb-2" v-if="client.fax">
-                            <div class="contact-info-label">{{ $t('fax') }}:</div>
+                            <div class="contact-info-label">
+                                <v-icon small class="mr-2">print</v-icon>{{ $t('fax') }}:
+                            </div>
                             {{ client.fax }}
                         </div>
                         <div v-if="client.address">
-                            <div class="contact-info-label">{{ $t('address') }}:</div>
+                            <div class="contact-info-label">
+                                <v-icon small class="mr-2">markunread_mailbox</v-icon>{{ $t('address') }}:
+                            </div>
                             {{ client.address }}
                         </div>
                     </v-flex>
@@ -167,6 +177,6 @@
     .contact-info-label {
         display: inline-block;
         font-weight: bold;
-        width: 125px;
+        width: 150px;
     }
 </style>

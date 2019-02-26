@@ -54,6 +54,7 @@
                     :label="$t('name')"
                     :rules="rules"
                     :error="errors.name"
+                    prepend-icon="person"
                 />
 
                 <v-menu
@@ -108,8 +109,16 @@
                     />
                 </v-menu>
 
-                <v-textarea v-model="project.description" :label="$t('description')" />
-                <v-textarea v-model="project.notes" :label="$t('notes')" />
+                <v-textarea
+                    v-model="project.description"
+                    :label="$t('description')"
+                    prepend-icon="description"
+                />
+                <v-textarea
+                    v-model="project.notes"
+                    :label="$t('notes')"
+                    prepend-icon="notes"
+                />
             </v-flex>
             <v-flex xs12 sm6>
                 <v-combobox
@@ -118,6 +127,7 @@
                     :label="$t('client')"
                     single-line
                     class="mb-3"
+                    prepend-icon="people"
                 />
 
                 <v-combobox
@@ -127,6 +137,7 @@
                     multiple
                     chips
                     class="mb-3"
+                    prepend-icon="category"
                 />
 
                 <v-combobox
@@ -137,6 +148,7 @@
                     :label="$t('tags')"
                     multiple
                     small-chips
+                    prepend-icon="label"
                 >
                     <template slot="no-data">
                         <v-list-tile>
@@ -152,7 +164,11 @@
                     </template>
                 </v-combobox>
 
-                <v-text-field v-model="project.website" :label="$t('website')" />
+                <v-text-field
+                    v-model="project.website"
+                    :label="$t('website')"
+                    prepend-icon="web"
+                />
 
                 <h4>{{ $t('color') }}</h4>
                 <swatches

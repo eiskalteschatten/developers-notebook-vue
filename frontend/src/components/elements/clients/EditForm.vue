@@ -64,12 +64,14 @@
                     :label="$t('name')"
                     :rules="rules"
                     :error="errors.name"
+                    prepend-icon="people"
                 />
 
                 <v-text-field
                     v-model="client.companyName"
                     :label="$t('companyName')"
                     :error="errors.companyName"
+                    prepend-icon="business"
                 />
 
                 <v-checkbox v-model="client.isCompany" :label="$t('isCompany')" />
@@ -79,6 +81,7 @@
                     :label="$t('categories')"
                     multiple
                     chips
+                    prepend-icon="category"
                 />
                 <v-combobox
                     v-model="client.tags"
@@ -88,6 +91,7 @@
                     :label="$t('tags')"
                     multiple
                     small-chips
+                    prepend-icon="label"
                 >
                     <template slot="no-data">
                         <v-list-tile>
@@ -102,16 +106,16 @@
                         </v-list-tile>
                     </template>
                 </v-combobox>
-                <v-textarea v-model="client.description" :label="$t('description')" />
-                <v-textarea v-model="client.notes" :label="$t('notes')" />
+                <v-textarea v-model="client.description" :label="$t('description')" prepend-icon="description" />
+                <v-textarea v-model="client.notes" :label="$t('notes')" prepend-icon="notes" />
             </v-flex>
             <v-flex xs12 sm6>
                 <h4>{{ $t('contactInfo') }}</h4>
-                <v-text-field v-model="client.website" :label="$t('website')" />
-                <v-text-field v-model="client.email" :label="$t('email')" type="email" />
-                <v-text-field v-model="client.telephone" :label="$t('telephone')" />
-                <v-text-field v-model="client.fax" :label="$t('fax')" />
-                <v-textarea v-model="client.address" :label="$t('address')" />
+                <v-text-field v-model="client.website" :label="$t('website')" prepend-icon="web" />
+                <v-text-field v-model="client.email" :label="$t('email')" type="email" prepend-icon="email" />
+                <v-text-field v-model="client.telephone" :label="$t('telephone')" prepend-icon="phone" />
+                <v-text-field v-model="client.fax" :label="$t('fax')" prepend-icon="print" />
+                <v-textarea v-model="client.address" :label="$t('address')" prepend-icon="markunread_mailbox" />
                 <h4>{{ $t('color') }}</h4>
                 <swatches
                     v-model="client.color"
