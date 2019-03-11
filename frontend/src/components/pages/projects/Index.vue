@@ -39,6 +39,7 @@
                     @clicked="changeTab"
                     show-categories
                     @categoryClicked="changeCategory"
+                    :selected-tab="subSideNavTab"
                 />
             </v-flex>
             <v-flex xs12 md10>
@@ -51,6 +52,13 @@
                     </v-tab-item>
                     <v-tab-item value="archived">
                         <project-list :projects="archivedProjects" />
+                    </v-tab-item>
+                    <v-tab-item
+                        v-for="category in categories"
+                        :key="category.id"
+                        :value="`category${category.id}`"
+                    >
+                        <project-list :projects="projectsInCategory(category.id)" />
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -135,6 +143,9 @@
             ...mapState('projects', [
                 'projects'
             ]),
+            ...mapState('categories', [
+                'categories'
+            ]),
             notArchivedProjects() {
                 return this.projects.filter(project => {
                     if (!project.finished && !project.archived) return project;
@@ -186,11 +197,18 @@
                 'saveProject',
                 'getProjects'
             ]),
+            projectsInCategory(categoryId) {
+                return this.projects.filter(project => {
+                    if (project.categoryIds.includes(categoryId)) {
+                        return project;
+                    }
+                });
+            },
             changeTab(getTab) {
                 this.subSideNavTab = getTab();
             },
             changeCategory(id) {
-                console.log('change category', id);
+                this.subSideNavTab = `category${id}`;
             },
             async createNewProject(event) {
                 event.preventDefault();

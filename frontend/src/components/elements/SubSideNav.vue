@@ -34,6 +34,7 @@
                 v-for="category in sortedCategories"
                 :key="category.id"
                 @click="emitCategoryClick(category.id)"
+                :class="{ active: selectedTab === `category${category.id}` }"
             >
                 <v-list-tile-action>
                     <div class="category-color-circle" :style="{ backgroundColor: category.color }" />
@@ -53,7 +54,8 @@
     export default Vue.extend({
         props: {
             items: Array,
-            showCategories: Boolean
+            showCategories: Boolean,
+            selectedTab: String
         },
         computed: {
             ...mapState('categories', [

@@ -37,6 +37,7 @@
                     @clicked="changeTab"
                     show-categories
                     @categoryClicked="changeCategory"
+                    :selected-tab="subSideNavTab"
                 />
             </v-flex>
             <v-flex xs12 md10>
@@ -47,8 +48,12 @@
                     <v-tab-item value="archived">
                         <client-list :clients="archivedClients" />
                     </v-tab-item>
-                    <v-tab-item value="category">
-                        <!-- <client-list :clients="categoryClients" /> -->
+                    <v-tab-item
+                        v-for="category in categories"
+                        :key="category.id"
+                        :value="`category${category.id}`"
+                    >
+                        <client-list :clients="clientsInCategory(category.id)" />
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -133,6 +138,9 @@
             ...mapState('clients', [
                 'clients'
             ]),
+            ...mapState('categories', [
+                'categories'
+            ]),
             notArchivedClients() {
                 return this.clients.filter(client => {
                     if (!client.archived) return client;
@@ -184,8 +192,7 @@
                 this.subSideNavTab = getTab();
             },
             changeCategory(id) {
-                const clients = this.clientsInCategory(id);
-                console.log('change category', clients);
+                this.subSideNavTab = `category${id}`;
             },
             async createNewClient(event) {
                 event.preventDefault();
