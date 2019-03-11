@@ -40,7 +40,7 @@
                     <h4 class="parent-category-label">
                         <v-icon small class="mr-2">category</v-icon>{{ $t('parentCategory') }}:
                     </h4>
-                    <router-link :to="{ name: 'category', params: { id: category.parentId }  }">{{ parentCategory.name }}</router-link>
+                    <router-link :to="{ name: 'category', params: { id: category.parentId } }">{{ parentCategory.name }}</router-link>
                 </div>
                 <div v-if="category.description">
                     {{ category.description }}
@@ -131,6 +131,11 @@
                 return this.$vuetify.breakpoint.smAndUp ? '48px' : '32px';
             }
         },
+        watch: {
+            async id() {
+                await this.load();
+            }
+        },
         async mounted() {
             await this.load();
         },
@@ -146,11 +151,6 @@
                 await this.getCategories();
                 setDocumentTitle(`${this.category.name} - ${this.$t('category')}`);
                 await this.getRelated(this.id);
-            }
-        },
-        watch: {
-            async id() {
-                await this.load();
             }
         }
     });

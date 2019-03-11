@@ -151,6 +151,11 @@
                 ];
             }
         },
+        watch: {
+            async id() {
+                await this.load();
+            }
+        },
         async mounted() {
             await this.load();
         },
@@ -166,11 +171,6 @@
                 await this.getClients();
                 setDocumentTitle(`${this.client.name} - ${this.$t('clients')}`);
                 await this.getRelated(this.id);
-            }
-        },
-        watch: {
-            async id() {
-                await this.load();
             }
         }
     });

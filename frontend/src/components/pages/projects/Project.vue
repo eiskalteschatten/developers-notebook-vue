@@ -119,6 +119,11 @@
                 return client.name;
             }
         },
+        watch: {
+            async id() {
+                await this.load();
+            }
+        },
         async mounted() {
             await this.load();
         },
@@ -132,11 +137,6 @@
             async load() {
                 await this.getProjects();
                 setDocumentTitle(`${this.project.name} - ${this.$t('project')}`);
-            }
-        },
-        watch: {
-            async id() {
-                await this.load();
             }
         }
     });
