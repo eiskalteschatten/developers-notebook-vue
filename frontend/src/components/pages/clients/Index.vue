@@ -31,15 +31,24 @@
                     <v-icon left>create</v-icon>
                     {{ $t('newClient') }}
                 </v-btn>
-                <sub-side-nav class="mt-1" :items="sidenavItems" @clicked="changeTab" />
+                <sub-side-nav
+                    class="mt-1"
+                    :items="sidenavItems"
+                    @clicked="changeTab"
+                    show-categories
+                    @categoryClicked="changeCategory"
+                />
             </v-flex>
             <v-flex xs12 md10>
-                <v-tabs-items v-model="archiveTab">
+                <v-tabs-items v-model="subSideNavTab">
                     <v-tab-item value="notArchived">
-                        <client-list :categories="notArchivedClients" />
+                        <client-list :clients="notArchivedClients" />
                     </v-tab-item>
                     <v-tab-item value="archived">
-                        <client-list :categories="archivedClients" />
+                        <client-list :clients="archivedClients" />
+                    </v-tab-item>
+                    <v-tab-item value="category">
+                        <!-- <client-list :clients="categoryClients" /> -->
                     </v-tab-item>
                 </v-tabs-items>
             </v-flex>
@@ -108,7 +117,7 @@
         },
         data() {
             return {
-                archiveTab: null,
+                subSideNavTab: null,
                 newClient: {
                     dialog: this.$route.query.new || false,
                     loading: false,
@@ -139,13 +148,13 @@
                     {
                         title: this.$t('activeClients'),
                         icon: 'people',
-                        class: { active: this.archiveTab === 'notArchived' },
+                        class: { active: this.subSideNavTab === 'notArchived' },
                         click: () => 'notArchived'
                     },
                     {
                         title: this.$t('archive'),
                         icon: 'archive',
-                        class: { active: this.archiveTab === 'archived' },
+                        class: { active: this.subSideNavTab === 'archived' },
                         click: () => 'archived'
                     }
                 ];
@@ -164,8 +173,19 @@
                 'saveClient',
                 'getClients'
             ]),
+            clientsInCategory(categoryId) {
+                return this.clients.filter(client => {
+                    if (client.categoryIds.includes(categoryId)) {
+                        return client;
+                    }
+                });
+            },
             changeTab(getTab) {
-                this.archiveTab = getTab();
+                this.subSideNavTab = getTab();
+            },
+            changeCategory(id) {
+                const clients = this.clientsInCategory(id);
+                console.log('change category', clients);
             },
             async createNewClient(event) {
                 event.preventDefault();

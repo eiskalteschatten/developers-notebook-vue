@@ -34,7 +34,7 @@
                 <sub-side-nav class="mt-1" :items="sidenavItems" @clicked="changeTab" />
             </v-flex>
             <v-flex xs12 md10>
-                <v-tabs-items v-model="archiveTab">
+                <v-tabs-items v-model="subSideNavTab">
                     <v-tab-item value="notArchived">
                         <category-list :categories="notArchivedCategories" />
                     </v-tab-item>
@@ -108,7 +108,7 @@
         },
         data() {
             return {
-                archiveTab: null,
+                subSideNavTab: null,
                 newCategory: {
                     dialog: this.$route.query.new || false,
                     loading: false,
@@ -139,13 +139,13 @@
                     {
                         title: this.$t('activeCategories'),
                         icon: 'category',
-                        class: { active: this.archiveTab === 'notArchived' },
+                        class: { active: this.subSideNavTab === 'notArchived' },
                         click: () => 'notArchived'
                     },
                     {
                         title: this.$t('archive'),
                         icon: 'archive',
-                        class: { active: this.archiveTab === 'archived' },
+                        class: { active: this.subSideNavTab === 'archived' },
                         click: () => 'archived'
                     }
                 ];
@@ -165,7 +165,7 @@
                 'getCategories'
             ]),
             changeTab(getTab) {
-                this.archiveTab = getTab();
+                this.subSideNavTab = getTab();
             },
             async createNewCategory(event) {
                 event.preventDefault();

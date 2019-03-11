@@ -33,10 +33,16 @@
                     <v-icon left>create</v-icon>
                     {{ $t('newProject') }}
                 </v-btn>
-                <sub-side-nav class="mt-1" :items="sidenavItems" @clicked="changeTab" />
+                <sub-side-nav
+                    class="mt-1"
+                    :items="sidenavItems"
+                    @clicked="changeTab"
+                    show-categories
+                    @categoryClicked="changeCategory"
+                />
             </v-flex>
             <v-flex xs12 md10>
-                <v-tabs-items v-model="archiveTab">
+                <v-tabs-items v-model="subSideNavTab">
                     <v-tab-item value="notArchived">
                         <project-list :projects="notArchivedProjects" />
                     </v-tab-item>
@@ -113,7 +119,7 @@
         },
         data() {
             return {
-                archiveTab: null,
+                subSideNavTab: null,
                 newProject: {
                     dialog: this.$route.query.new || false,
                     loading: false,
@@ -149,19 +155,19 @@
                     {
                         title: this.$t('activeProjects'),
                         icon: 'library_books',
-                        class: { active: this.archiveTab === 'notArchived' },
+                        class: { active: this.subSideNavTab === 'notArchived' },
                         click: () => 'notArchived'
                     },
                     {
                         title: this.$t('finishedProjects'),
                         icon: 'done',
-                        class: { active: this.archiveTab === 'finished' },
+                        class: { active: this.subSideNavTab === 'finished' },
                         click: () => 'finished'
                     },
                     {
                         title: this.$t('archive'),
                         icon: 'archive',
-                        class: { active: this.archiveTab === 'archived' },
+                        class: { active: this.subSideNavTab === 'archived' },
                         click: () => 'archived'
                     }
                 ];
@@ -181,7 +187,10 @@
                 'getProjects'
             ]),
             changeTab(getTab) {
-                this.archiveTab = getTab();
+                this.subSideNavTab = getTab();
+            },
+            changeCategory(id) {
+                console.log('change category', id);
             },
             async createNewProject(event) {
                 event.preventDefault();

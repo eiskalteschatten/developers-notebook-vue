@@ -61,7 +61,7 @@
 
         <v-data-table
             :headers="headers"
-            :items="categories"
+            :items="clients"
             :search="search"
             expand
             item-key="id"
@@ -224,7 +224,7 @@
             ExternalLink
         },
         props: {
-            categories: Array
+            clients: Array
         },
         data() {
             return {
