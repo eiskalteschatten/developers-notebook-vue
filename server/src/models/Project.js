@@ -43,7 +43,7 @@ function getFrontendValues(project) {
     }
 
     return {
-        id: project.id ? project.id : '',
+        id: project.id ? project.id : null,
         name: project.name,
         slug: project.slug,
         description: project.description,
@@ -55,7 +55,7 @@ function getFrontendValues(project) {
         endDate: project.endDate,
         notes: project.notes,
         tags: project.tags,
-        clientId: project.client ? project.client.id : '',
+        clientId: project.client ? project.client.id : null,
         categoryIds
     };
 }

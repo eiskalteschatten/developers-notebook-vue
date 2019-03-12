@@ -225,7 +225,6 @@
                     const clientId = this.project.clientId;
 
                     if (!clientId) {
-                        this.project.clientId = null;
                         return null;
                     }
 
