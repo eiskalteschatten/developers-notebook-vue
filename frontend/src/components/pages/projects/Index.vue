@@ -42,7 +42,7 @@
                     show-categories
                     @categoryClicked="changeCategory"
                     :selected-tab="subSideNavTab"
-                    :mobileTitle="$t('filters')"
+                    :mobile-title="$t('filters')"
                 />
             </v-flex>
             <v-flex xs12 md10>

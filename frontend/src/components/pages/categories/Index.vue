@@ -37,7 +37,7 @@
                     class="mt-1"
                     :items="sidenavItems"
                     @clicked="changeTab"
-                    :mobileTitle="$t('filters')"
+                    :mobile-title="$t('filters')"
                 />
             </v-flex>
             <v-flex xs12 md10>

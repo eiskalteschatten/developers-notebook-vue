@@ -52,7 +52,7 @@
 
         <v-layout wrap>
             <v-flex xs12 md2 :class="{ 'pr-3': $vuetify.breakpoint.mdAndUp }">
-                <sub-side-nav :items="sidenavItems" @clicked="changeTab" :mobileTitle="$t('views')" />
+                <sub-side-nav :items="sidenavItems" @clicked="changeTab" :mobile-title="$t('views')" />
             </v-flex>
             <v-flex xs12 md10>
                 <v-tabs-items v-model="tab">
