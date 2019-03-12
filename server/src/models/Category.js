@@ -20,7 +20,7 @@ Category.belongsTo(User);
 
 function getFrontendValues(category) {
     return {
-        id: category.id ? category.id : '',
+        id: category.id ? category.id : null,
         name: category.name,
         slug: category.slug,
         description: category.description,

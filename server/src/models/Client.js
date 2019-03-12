@@ -42,7 +42,7 @@ function getFrontendValues(client) {
     }
 
     return {
-        id: client.id ? client.id : '',
+        id: client.id ? client.id : null,
         name: client.name,
         slug: client.slug,
         description: client.description,
