@@ -225,7 +225,8 @@
                     const clientId = this.project.clientId;
 
                     if (!clientId) {
-                        return '';
+                        this.project.clientId = null;
+                        return null;
                     }
 
                     const client = this.$store.getters['clients/getClient'](clientId);
@@ -235,7 +236,7 @@
                             value: clientId,
                             text: client.name
                         }
-                        : '';
+                        : null;
                 },
                 set(selectClient) {
                     this.project.clientId = selectClient ? selectClient.value : null;
