@@ -6,7 +6,8 @@
         "clients": "Clients",
         "projects": "Projects",
         "parentCategory": "Parent Category",
-        "subcategories": "Subcategories"
+        "subcategories": "Subcategories",
+        "views": "Views"
     },
     "de": {
         "category": "Kategorie",
@@ -14,7 +15,8 @@
         "clients": "Kunden",
         "projects": "Projekte",
         "parentCategory": "Oberkategorie",
-        "subcategories": "Unterkategorien"
+        "subcategories": "Unterkategorien",
+        "views": "Bereiche"
     }
 }
 </i18n>
@@ -50,7 +52,7 @@
 
         <v-layout wrap>
             <v-flex xs12 md2 :class="{ 'pr-3': $vuetify.breakpoint.mdAndUp }">
-                <sub-side-nav :items="sidenavItems" @clicked="changeTab" />
+                <sub-side-nav :items="sidenavItems" @clicked="changeTab" :mobileTitle="$t('views')" />
             </v-flex>
             <v-flex xs12 md10>
                 <v-tabs-items v-model="tab">

@@ -8,7 +8,8 @@
         "cancel": "Cancel",
         "activeProjects": "Active Projects",
         "finishedProjects": "Finished Projects",
-        "archive": "Archive"
+        "archive": "Archive",
+        "filters": "Filters"
     },
     "de": {
         "projects": "Projekte",
@@ -18,7 +19,8 @@
         "cancel": "Abbrechen",
         "activeProjects": "Aktive Projekte",
         "finishedProjects": "Abgeschlossene Projekte",
-        "archive": "Archiv"
+        "archive": "Archiv",
+        "filters": "Filter"
     }
 }
 </i18n>
@@ -40,6 +42,7 @@
                     show-categories
                     @categoryClicked="changeCategory"
                     :selected-tab="subSideNavTab"
+                    :mobileTitle="$t('filters')"
                 />
             </v-flex>
             <v-flex xs12 md10>

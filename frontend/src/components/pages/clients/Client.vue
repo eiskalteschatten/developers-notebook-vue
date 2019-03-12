@@ -10,7 +10,8 @@
         "telephone": "Phone Number",
         "fax": "Fax Number",
         "address": "Address",
-        "projects": "Projects"
+        "projects": "Projects",
+        "views": "Views"
     },
     "de": {
         "clients": "Kunden",
@@ -22,7 +23,8 @@
         "telephone": "Telefonnummer",
         "fax": "Faxnummer",
         "address": "Adresse",
-        "projects": "Projekte"
+        "projects": "Projekte",
+        "views": "Bereiche"
     }
 }
 </i18n>
@@ -96,7 +98,7 @@
 
         <v-layout wrap>
             <v-flex xs12 md2 :class="{ 'pr-3': $vuetify.breakpoint.mdAndUp }">
-                <sub-side-nav :items="sidenavItems" @clicked="changeTab" />
+                <sub-side-nav :items="sidenavItems" @clicked="changeTab" :mobileTitle="$t('views')" />
             </v-flex>
             <v-flex xs12 md10>
                 <v-tabs-items v-model="tab">

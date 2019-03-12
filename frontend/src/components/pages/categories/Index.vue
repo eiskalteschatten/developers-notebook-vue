@@ -7,7 +7,8 @@
         "create": "Create",
         "cancel": "Cancel",
         "activeCategories": "Active Categories",
-        "archive": "Archive"
+        "archive": "Archive",
+        "filters": "Filters"
     },
     "de": {
         "categories": "Kategorien",
@@ -16,7 +17,8 @@
         "create": "Erstellen",
         "cancel": "Abbrechen",
         "activeCategories": "Aktive Kategorien",
-        "archive": "Archiv"
+        "archive": "Archiv",
+        "filters": "Filter"
     }
 }
 </i18n>
@@ -31,7 +33,12 @@
                     <v-icon left>create</v-icon>
                     {{ $t('newCategory') }}
                 </v-btn>
-                <sub-side-nav class="mt-1" :items="sidenavItems" @clicked="changeTab" />
+                <sub-side-nav
+                    class="mt-1"
+                    :items="sidenavItems"
+                    @clicked="changeTab"
+                    :mobileTitle="$t('filters')"
+                />
             </v-flex>
             <v-flex xs12 md10>
                 <v-tabs-items v-model="subSideNavTab">

@@ -7,7 +7,8 @@
         "create": "Create",
         "cancel": "Cancel",
         "activeClients": "Active Clients",
-        "archive": "Archive"
+        "archive": "Archive",
+        "filters": "Filters"
     },
     "de": {
         "clients": "Kunden",
@@ -16,7 +17,8 @@
         "create": "Erstellen",
         "cancel": "Abbrechen",
         "activeClients": "Aktive Kunden",
-        "archive": "Archiv"
+        "archive": "Archiv",
+        "filters": "Filter"
     }
 }
 </i18n>
@@ -38,6 +40,7 @@
                     show-categories
                     @categoryClicked="changeCategory"
                     :selected-tab="subSideNavTab"
+                    :mobileTitle="$t('filters')"
                 />
             </v-flex>
             <v-flex xs12 md10>
