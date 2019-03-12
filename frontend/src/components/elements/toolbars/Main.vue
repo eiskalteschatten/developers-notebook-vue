@@ -2,10 +2,12 @@
 {
     "en": {
         "accountSettings": "Account Settings",
+        "about": "About Developer's Notebook",
         "logout": "Logout"
     },
     "de": {
         "accountSettings": "Kontoeinstellungen",
+        "about": "Über Developer's Notebook",
         "logout": "Abmeldung"
     }
 }
@@ -39,6 +41,17 @@
                         </v-list-tile-action>
                         <v-list-tile-content>
                             <v-list-tile-title>{{ $t('accountSettings') }}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+
+                    <v-divider v-if="!isElectron" />
+
+                    <v-list-tile @click="openAboutDialog" v-if="!isElectron">
+                        <v-list-tile-action>
+                            <v-icon>info</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{ $t('about') }}</v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
 
@@ -92,6 +105,9 @@
             },
             toggleSidebar() {
                 eventBus.$emit('toggleSidebar');
+            },
+            openAboutDialog() {
+                eventBus.$emit('open-modal', 'about');
             }
         }
     });

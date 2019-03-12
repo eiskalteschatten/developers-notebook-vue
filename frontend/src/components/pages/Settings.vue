@@ -5,6 +5,7 @@
         "theme": "Theme",
         "light": "Light",
         "dark": "Dark",
+        "language": "Language",
         "serverSettings": "Server Settings",
         "host": "Host",
         "save": "Save",
@@ -18,6 +19,7 @@
         "theme": "Erscheinungsbild",
         "light": "Hell",
         "dark": "Dunkel",
+        "language": "Sprache",
         "serverSettings": "Servereinstellungen",
         "host": "Host",
         "save": "Speichern",
@@ -51,6 +53,11 @@
                         </div>
                         {{ $t('dark') }}
                     </div>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="mb-3">{{ $t('language') }}</h3>
+                    <language-switcher />
                 </div>
             </v-card-text>
         </v-card>
@@ -103,10 +110,12 @@
     import eventBus from '../../eventBus';
 
     import CenteredColumn from '../elements/layout/CenteredColumn.vue';
+    import LanguageSwitcher from '../elements/LanguageSwitcher.vue';
 
     export default Vue.extend({
         components: {
-            CenteredColumn
+            CenteredColumn,
+            LanguageSwitcher
         },
         data() {
             return {
