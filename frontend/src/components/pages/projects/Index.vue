@@ -199,7 +199,7 @@
             ]),
             projectsInCategory(categoryId) {
                 return this.projects.filter(project => {
-                    if (project.categoryIds.includes(categoryId)) {
+                    if (project.categoryIds.includes(categoryId) && !project.archived) {
                         return project;
                     }
                 });

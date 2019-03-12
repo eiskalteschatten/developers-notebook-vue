@@ -183,7 +183,7 @@
             ]),
             clientsInCategory(categoryId) {
                 return this.clients.filter(client => {
-                    if (client.categoryIds.includes(categoryId)) {
+                    if (client.categoryIds.includes(categoryId) && !client.archived) {
                         return client;
                     }
                 });
