@@ -23,7 +23,7 @@
 
 <template>
     <div>
-        <v-card :style="{ borderLeft: `2px solid ${category.color}` }" class="mb-5">
+        <v-card :style="{ borderLeft: `2px solid ${category.color}` }" class="mb-4">
             <v-card-title>
                 <div class="avatar-container mr-3">
                     <v-avatar :color="category.color" :size="avatarSize" class="mr-4">

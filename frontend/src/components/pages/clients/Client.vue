@@ -31,7 +31,7 @@
 
 <template>
     <div>
-        <v-card :style="{ borderLeft: `2px solid ${client.color}` }" class="mb-5">
+        <v-card :style="{ borderLeft: `2px solid ${client.color}` }" class="mb-4">
             <v-card-title>
                 <div class="avatar-container mr-3">
                     <v-avatar :color="client.color" size="48px" class="mr-5">
