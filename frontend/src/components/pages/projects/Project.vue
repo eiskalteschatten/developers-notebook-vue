@@ -12,7 +12,6 @@
     },
     "de": {
         "project": "Projekt",
-
         "finished": "Abgeschlossen",
         "archived": "Archiviert",
         "notes": "Notizen",
