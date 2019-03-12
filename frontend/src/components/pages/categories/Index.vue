@@ -23,7 +23,7 @@
 
 <template>
     <div>
-        <h1 class="mb-4">{{ $t('categories') }}</h1>
+        <page-title :title="$t('categories')" icon="category" />
 
         <v-layout wrap>
             <v-flex xs12 md2 :class="{ 'pr-3': $vuetify.breakpoint.mdAndUp }">
@@ -96,12 +96,14 @@
     import { mapActions, mapState } from 'vuex';
     import eventBus from '../../../eventBus';
 
+    import PageTitle from '../../elements/PageTitle.vue';
     import SubSideNav from '../../elements/SubSideNav.vue';
     import CategoryList from '../../elements/categories/List.vue';
     import EditForm from '../../elements/categories/EditForm.vue';
 
     export default Vue.extend({
         components: {
+            PageTitle,
             SubSideNav,
             CategoryList,
             EditForm

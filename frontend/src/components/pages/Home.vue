@@ -1,13 +1,29 @@
+<i18n>
+{
+    "en": {
+        "dashboard": "Dashboard"
+    },
+    "de": {
+        "dashboard": "Dashboard"
+    }
+}
+</i18n>
+
 <template>
     <div>
-        <h1>Developer's Notebook</h1>
+        <page-title :title="$t('dashboard')" icon="dashboard" />
     </div>
 </template>
 
 <script>
     import Vue from 'vue';
 
+    import PageTitle from '../elements/PageTitle.vue';
+
     export default Vue.extend({
+        components: {
+            PageTitle
+        }
     });
 </script>
 

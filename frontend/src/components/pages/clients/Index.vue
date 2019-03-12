@@ -23,7 +23,7 @@
 
 <template>
     <div>
-        <h1 class="mb-4">{{ $t('clients') }}</h1>
+        <page-title :title="$t('clients')" icon="people" />
 
         <v-layout wrap>
             <v-flex xs12 md2 :class="{ 'pr-3': $vuetify.breakpoint.mdAndUp }">
@@ -110,12 +110,14 @@
     import { mapActions, mapState } from 'vuex';
     import eventBus from '../../../eventBus';
 
+    import PageTitle from '../../elements/PageTitle.vue';
     import SubSideNav from '../../elements/SubSideNav.vue';
     import ClientList from '../../elements/clients/List.vue';
     import EditForm from '../../elements/clients/EditForm.vue';
 
     export default Vue.extend({
         components: {
+            PageTitle,
             SubSideNav,
             ClientList,
             EditForm
