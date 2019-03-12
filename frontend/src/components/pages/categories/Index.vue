@@ -46,17 +46,16 @@
         </v-layout>
 
         <v-dialog v-model="newCategory.dialog" max-width="600">
-            <v-card>
-                <v-card-title class="headline">
-                    {{ $t('newCategory') }}
-
-                    <v-spacer />
-
-                    <v-btn flat @click="newCategory.dialog = false" small icon>
+            <v-toolbar dark color="black">
+                <v-toolbar-title>{{ $t('newCategory') }}</v-toolbar-title>
+                <v-spacer />
+                <v-toolbar-items>
+                    <v-btn icon dark @click="newCategory.dialog = false">
                         <v-icon>close</v-icon>
                     </v-btn>
-                </v-card-title>
-
+                </v-toolbar-items>
+            </v-toolbar>
+            <v-card>
                 <v-form lazy-validation @submit="createNewCategory">
                     <v-card-text>
                         <edit-form

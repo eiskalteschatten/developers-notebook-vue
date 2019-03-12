@@ -65,17 +65,16 @@
         </v-layout>
 
         <v-dialog v-model="newProject.dialog" max-width="1200">
-            <v-card>
-                <v-card-title class="headline">
-                    {{ $t('newProject') }}
-
-                    <v-spacer />
-
-                    <v-btn flat @click="newProject.dialog = false" small icon>
+            <v-toolbar dark color="black">
+                <v-toolbar-title>{{ $t('newProject') }}</v-toolbar-title>
+                <v-spacer />
+                <v-toolbar-items>
+                    <v-btn icon dark @click="newProject.dialog = false">
                         <v-icon>close</v-icon>
                     </v-btn>
-                </v-card-title>
-
+                </v-toolbar-items>
+            </v-toolbar>
+            <v-card>
                 <v-form lazy-validation @submit="createNewProject">
                     <v-card-text>
                         <edit-form
