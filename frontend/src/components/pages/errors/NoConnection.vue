@@ -58,6 +58,17 @@
                 loading: false
             };
         },
+        async mounted() {
+            try {
+                await this.$http.get('status');
+                this.$router.replace({
+                    name: 'home'
+                });
+            }
+            catch(error) {
+                console.log(error);
+            }
+        },
         methods: {
             async refresh() {
                 this.loading = true;
