@@ -17,6 +17,7 @@ const Task = db.define('task', {
     finished: Sequelize.BOOLEAN,
     parentId: Sequelize.INTEGER,
     dueDate: Sequelize.DATE,
+    timeNeeded: Sequelize.STRING,
     notes: Sequelize.STRING,
     tags: Sequelize.ARRAY(Sequelize.STRING)
 });
@@ -51,7 +52,8 @@ function getFrontendValues(task) {
         archived: task.archived,
         finished: task.finished,
         parentId: task.parentId,
-        dueDate: taskdueDate,
+        dueDate: task.dueDate,
+        timeNeeded: task.timeNeeded,
         notes: task.notes,
         tags: task.tags,
         clientId: task.client ? task.client.id : null,
