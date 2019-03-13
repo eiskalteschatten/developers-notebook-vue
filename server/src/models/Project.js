@@ -5,7 +5,6 @@ const {db} = require('../lib/db');
 
 const User = require('./User');
 const Client = require('./Client');
-
 const Category = require('./Category');
 const ProjectCategory = require('./relationships/ProjectCategory');
 
