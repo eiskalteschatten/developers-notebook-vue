@@ -21,27 +21,27 @@ cache:
     - server/node_modules
 
 lint:
-  image: node:10-alpine
+  image: node:11-alpine
   stage: lint
   script: "npm ci && npm run lint"
 
 test-electron:
-  image: node:10-alpine
+  image: node:11-alpine
   stage: test-electron
   script: "cd ./electron && npm ci && npm run test"
 
 test-frontend:
-  image: node:10-alpine
+  image: node:11-alpine
   stage: test-frontend
   script: "cd ./frontend && npm ci && npm run test"
 
 test-server:
-  image: node:10-alpine
+  image: node:11-alpine
   stage: test-server
   script: "cd ./server && npm ci && npm run test"
 
 # node-build:
-#   image: node:10-alpine
+#   image: node:11-alpine
 #   stage: build
 #   script: "npm run install-all --only=production"
 
