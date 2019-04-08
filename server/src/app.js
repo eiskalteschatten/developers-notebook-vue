@@ -3,15 +3,14 @@
 const express = require('express');
 const enrouten = require('express-enrouten');
 
+// const path = require('path');
 const compression = require('compression');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+// const migrateDb = require('sequelize-migration-wrapper');
 
 const {setupSequelize} = require('./lib/db');
-
-// const proxies = require('./lib/proxies');
-// const {cmdMigrate} = require('./lib/dbMigrate');
 
 const passport = require('passport');
 
@@ -28,7 +27,15 @@ const setupCronjobs = require('./cronjobs');
 module.exports = async () => {
     let app = express();
     await setupSequelize();
-    // cmdMigrate();
+    // const sequelize = await setupSequelize();
+
+    // Run database migration scripts
+    // migrateDb({
+    //     sequelize,
+    //     path: path.join(__dirname, 'migrations')
+    // });
+
+    // await migrateDb.migrate();
 
 
     // Express setup
